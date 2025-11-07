@@ -6,9 +6,8 @@ public class SkillTime : MonoBehaviour
 {
     public float skillDurationTime = 2;
 
-    private void Updata()
+    private void Start()
     {
-        gameObject.SetActive(true);
         Destroy(gameObject, skillDurationTime);
     }
 }

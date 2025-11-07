@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 {
@@ -183,7 +184,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
             yield return new WaitForSeconds(hitEffetc.skillSpawnObj.Time);
             GameObject temp = Instantiate(hitEffetc.skillSpawnObj.prefab);
             temp.transform.position = pos + hitEffetc.skillSpawnObj.position;
-            temp.transform.LookAt(Camera.main.transform);
+            //temp.transform.LookAt(Camera.main.transform);
             temp.transform.eulerAngles = pos + hitEffetc.skillSpawnObj.rotation;
             PlayAudio(hitEffetc.hitAudioClip);
         }
@@ -202,9 +203,13 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         
         yield return new WaitForSeconds(skillObj.Time);
         GameObject skillPrefab = Instantiate(skillObj.prefab,null);
-        skillPrefab.transform.position = _playerModle.transform.position + skillObj.position;
+        skillPrefab.transform.position = _PlayerModle.transform.position +
+            _PlayerModle.transform.forward * skillObj.position.z +
+            _PlayerModle.transform.right * skillObj.position.x+
+        _PlayerModle.transform.up* skillObj.position.y;
+
         //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
-        skillPrefab.transform.eulerAngles = _playerModle.transform.eulerAngles + skillObj.rotation;
+        skillPrefab.transform.rotation = _PlayerModle.transform.rotation* Quaternion.Euler(skillObj.rotation);
     }
 
     #endregion

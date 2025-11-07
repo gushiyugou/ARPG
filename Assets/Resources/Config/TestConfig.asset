@@ -15,11 +15,11 @@ MonoBehaviour:
   AnimationName: AtkNormal1
   releaseData:
     spawnObj:
-      prefab: {fileID: 0}
+      prefab: {fileID: 1076338644534325193, guid: 3075a569f7ce592409362cd43da987f1, type: 3}
       spawnAudio: {fileID: 0}
-      position: {x: 0.22, y: 1.14, z: 0}
-      rotation: {x: -180, y: 120, z: 0}
-      Time: 0.25
+      position: {x: 0, y: 0, z: 3}
+      rotation: {x: 0, y: 0, z: 0}
+      Time: 0
     skillAudio: {fileID: 8300000, guid: c428a82d21a3ffd4cb4c60116f194eb2, type: 3}
   attackData:
   - skillObj:
@@ -51,6 +51,6 @@ MonoBehaviour:
     stiffTime: 0
     repelTime: 0
     repelDegree: {x: 0, y: 0, z: 0}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 11400000, guid: 123d4015415e5844ebe1dec8ad8e35c6, type: 2}
     impulseValue: 0
     chromaticValue: 0
