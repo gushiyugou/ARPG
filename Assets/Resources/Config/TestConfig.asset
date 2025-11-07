@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f079361628ebd947848fe0d3b246768, type: 3}
+  m_Name: TestConfig
+  m_EditorClassIdentifier: 
+  AnimationName: AtkNormal1
+  releaseData:
+    spawnObj:
+      prefab: {fileID: 0}
+      spawnAudio: {fileID: 0}
+      position: {x: 0.22, y: 1.14, z: 0}
+      rotation: {x: -180, y: 120, z: 0}
+      Time: 0.25
+    skillAudio: {fileID: 8300000, guid: c428a82d21a3ffd4cb4c60116f194eb2, type: 3}
+  attackData:
+  - skillObj:
+      prefab: {fileID: 0}
+      spawnAudio: {fileID: 0}
+      position: {x: 0, y: 1.14, z: 0}
+      rotation: {x: -180, y: 120, z: 0}
+      Time: 0
+    attackAudio:
+    - {fileID: 0}
+    - {fileID: 0}
+    damageValue: 0
+    stiffTime: 0
+    repelTime: 0
+    repelDegree: {x: 0, y: 0, z: 0}
+    hitEffect: {fileID: 11400000, guid: f21777f40a165d44085aef9d77f996e8, type: 2}
+    impulseValue: 1
+    chromaticValue: 1
+  - skillObj:
+      prefab: {fileID: 0}
+      spawnAudio: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      Time: 0
+    attackAudio:
+    - {fileID: 0}
+    - {fileID: 0}
+    damageValue: 0
+    stiffTime: 0
+    repelTime: 0
+    repelDegree: {x: 0, y: 0, z: 0}
+    hitEffect: {fileID: 0}
+    impulseValue: 0
+    chromaticValue: 0
