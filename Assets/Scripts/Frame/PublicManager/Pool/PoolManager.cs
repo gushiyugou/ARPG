@@ -87,8 +87,8 @@ public class PoolManager : SingletonMono<PoolManager>
         // 构建正确的资源路径
         string resourcePath = string.IsNullOrEmpty(folderName) ? prefabName : $"{folderName}/{prefabName}";
 
-        Debug.Log($" 尝试加载资源: {resourcePath}");
-
+        Debug.Log($" 路径: {resourcePath}");
+        
         // 检查对象池中是否有可用对象
         if (PoolDic.ContainsKey(poolName) && PoolDic[poolName].Count > 0)
         {
@@ -119,16 +119,15 @@ public class PoolManager : SingletonMono<PoolManager>
             GameObject prefab = Resources.Load<GameObject>(resourcePath);
             if (prefab == null)
             {
-                Debug.LogError($" 无法加载预制体: {resourcePath}");
-                Debug.LogError("请检查：");
-                Debug.LogError($"1. 文件是否存在: Assets/Resources/{resourcePath}.prefab");
-                Debug.LogError($"2. 预制体名称是否正确: {prefabName}");
+                Debug.LogError($" 路径不存在: {resourcePath}");
+                Debug.LogError($"1. 具体路径: Assets/Resources/{resourcePath}.prefab");
+                Debug.LogError($"2. 预制体名字: {prefabName}");
                 return null;
             }
 
             obj = Instantiate(prefab);
             obj.name = prefabName;
-            Debug.Log($" 创建新对象: {prefabName}");
+            Debug.Log($" 实例化预制体: {prefabName}");
         }
 
         // 设置父对象
@@ -146,7 +145,7 @@ public class PoolManager : SingletonMono<PoolManager>
     {
         if (obj == null)
         {
-            Debug.LogWarning(" 尝试放入null对象到对象池");
+            Debug.LogWarning(" 要回收对象的引用为null,不能回收");
             return;
         }
 
@@ -167,7 +166,7 @@ public class PoolManager : SingletonMono<PoolManager>
         // 设置父对象
         SetObjectParent(obj, poolName);
 
-        Debug.Log($" 对象已放回对象池: {prefabName}");
+        Debug.Log($" 对象已回收对应对象池: {prefabName}");
     }
 
     /// <summary>
@@ -201,7 +200,7 @@ public class PoolManager : SingletonMono<PoolManager>
         GameObject prefab = Resources.Load<GameObject>(resourcePath);
         if (prefab == null)
         {
-            Debug.LogError($" 预加载失败: 无法加载预制体 {resourcePath}");
+            Debug.LogError($" 预加载无效: 无法预加载预制体 {resourcePath}");
             return;
         }
 
@@ -244,7 +243,7 @@ public class PoolManager : SingletonMono<PoolManager>
                 Transform poolParent = transform.Find(poolName);
                 if (poolParent != null) Destroy(poolParent.gameObject);
 
-                Debug.Log($"清理对象池: {prefabName}");
+                Debug.Log($"清空对象池: {prefabName}");
             }
         }
         else
@@ -263,7 +262,7 @@ public class PoolManager : SingletonMono<PoolManager>
             }
 
             PoolDic.Clear();
-            Debug.Log("清理所有对象池");
+            Debug.Log("清空缓存池");
         }
     }
 }

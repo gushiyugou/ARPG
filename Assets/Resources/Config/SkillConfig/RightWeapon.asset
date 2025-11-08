@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: RightWeapon
   m_EditorClassIdentifier: 
   skillSpawnObj:
-    prefab: {fileID: 346250399274266968, guid: ba2fef5ebd1d2494ebff9fe945937fdf, type: 3}
+    prefab:
+      prefabName: RightKnife
+      folderName: Prefabs
     spawnAudio: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}

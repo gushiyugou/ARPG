@@ -3,6 +3,7 @@ using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
@@ -109,38 +110,49 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     }
 
     #region 技能相关
+
+
     private SkillConfig currentSkillConfig;
     private int currentHitIndex = 0;
-    //技能发起攻击
+    
+
+
+    /// <summary>
+    /// 技能的攻击
+    /// </summary>
+    /// <param name="skillConfig"></param>
     public void StartAttack(SkillConfig skillConfig)
     {
         
+
         currentSkillConfig = skillConfig;
         //表示是新技能的开始
         currentHitIndex = 0;
-
         //播放动画
         PlayAnimation(currentSkillConfig.AnimationName);
-        //技能释放音效
+        //技能释放时角色音效
         PlayAudio(currentSkillConfig.releaseData.skillAudio);
-        //技能释放特效
-        SpawnSkillObject(currentSkillConfig.releaseData.spawnObj);
+        //技能释放时角色的特效
+        SpawnSkill(currentSkillConfig.releaseData.effectObj);
         //击中检测
 
         //伤害传递
     }
 
+
+
     //攻击发起时，（实际的攻击动作，去掉了前摇和后摇的时间）
     public void StartSkillHit(int weaponIndex)
     {
         currentHitWeapIndex = weaponIndex;
-        //技能释放音效
-        PlayAudio(currentSkillConfig.attackData[currentHitIndex].attackAudio[currentHitWeapIndex]);
-        //技能释放特效
-        SpawnSkillObject(currentSkillConfig.attackData[currentHitIndex].skillObj);
-        //特效释放
+        //技能音效
+        PlayAudio(currentSkillConfig.attackData.attackAudio);
+        //技能的特效
+        SpawnAttackEffect(currentSkillConfig.attackData.skillObj);
         weaponTrail.Emit = true;
     }
+
+
 
     //技能结束击中
     public void StopSkillHit(int weaponIndex)
@@ -150,31 +162,72 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         weaponTrail.Emit = false;
     }
 
+
+
     //技能后摇的部分
     public void SkillCanSwitch()
     {
 
     }
-
     public void OnHit(IHurt target, Vector3 hitPosition)
     {
         //Debug.Log("角色控制：我攻击到了" + ((Component)target).gameObject.name);
         //OnHit在Stop之后执行，所以索引要减一
         Debug.Log(currentHitIndex);
-        SkillAttackData skillData = currentSkillConfig.attackData[currentHitIndex];
-        StartCoroutine(DoSkillEffect(skillData.hitEffect, hitPosition));
-
+        SkillAttackData skillData = currentSkillConfig.attackData;
+        StartCoroutine(DoSkillHitEffect(skillData.hitEffect, hitPosition));
         //后处理,色差效果
         if(skillData.impulseValue != 0)
             ScreenImpulse(skillData.impulseValue);
         if (skillData.chromaticValue != 0)
             PostProcessingManager.Instance.ChromaticAberrationEF(skillData.chromaticValue);
+
+        DoFreezeFrameTime(skillData.FreezeFrameTime);
+
+        DoFreezeGame(skillData.FreezeGameTime);
         //TODO:对IHurt传递伤害数据
 
     }
 
+
+
+    /// <summary>
+    /// 卡肉效果
+    /// </summary>
+    /// <param name="force"></param>
+    public void DoFreezeFrameTime(float time)
+    {
+        StartCoroutine(StartFreezeFrameTime(time));
+    }
+    public IEnumerator StartFreezeFrameTime(float time)
+    {
+        _playerModle._Animator.speed = 0; 
+        yield return new WaitForSeconds(time);
+        _playerModle._Animator.speed = 1;
+    }
+
+
+
+    /// <summary>
+    /// 游戏停止
+    /// </summary>
+    /// <param name="force"></param>
+    public void DoFreezeGame(float time)
+    {
+        StartCoroutine(StartFreezeGameTime(time));
+    }
+    public IEnumerator StartFreezeGameTime(float time)
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(time);
+        Time.timeScale = 1;
+    }
+
+
+
+
     //技能击中时的效果
-    private IEnumerator DoSkillEffect(SkillHitEffectConfig hitEffetc, Vector3 pos)
+    private IEnumerator DoSkillHitEffect(SkillHitEffectConfig hitEffetc, Vector3 pos)
     {
         if (hitEffetc == null) yield break;
         PlayAudio(hitEffetc.skillSpawnObj.spawnAudio);
@@ -182,7 +235,13 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         if (hitEffetc != null && hitEffetc.skillSpawnObj != null)
         {
             yield return new WaitForSeconds(hitEffetc.skillSpawnObj.Time);
-            GameObject temp = Instantiate(hitEffetc.skillSpawnObj.prefab);
+            //直接生成预制体
+            //GameObject temp = Instantiate(hitEffetc.skillSpawnObj.prefab);
+            //使用对象池生成预制体
+            GameObject temp = PoolManager.Instance.GetPoolObject(hitEffetc.skillSpawnObj.prefab.prefabName,
+                hitEffetc.skillSpawnObj.prefab.folderName);
+            Debug.Log("触发了");
+
             temp.transform.position = pos + hitEffetc.skillSpawnObj.position;
             //temp.transform.LookAt(Camera.main.transform);
             temp.transform.eulerAngles = pos + hitEffetc.skillSpawnObj.rotation;
@@ -190,27 +249,73 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         }
     }
 
-    private void SpawnSkillObject(SkillSpawnObj skillObj)
+
+
+    /// <summary>
+    /// 技能的特效
+    /// </summary>
+    /// <param name="skillObj"></param>
+    private void SpawnSkill(SkillSpawnObj skillObj)
     {
-        if (skillObj != null && skillObj.prefab != null)
+        if (skillObj != null && (skillObj.prefab.prefabName != null && skillObj.prefab.folderName != null))
         {
-            StartCoroutine(DoSpawnObject(skillObj));
+            StartCoroutine(DoSpawnSkill(skillObj));
+        }
+    }
+    private IEnumerator DoSpawnSkill(SkillSpawnObj skillObj)
+    {
+
+        yield return new WaitForSeconds(skillObj.Time);
+        //直接生成预制体
+        //GameObject skillPrefab = Instantiate(skillObj.prefab,null);
+        //使用对象池生成预制体
+        if (skillObj.prefab.folderName != "" && skillObj.prefab.prefabName != "")
+        {
+            Debug.Log(skillObj.prefab.folderName + "和" + skillObj.prefab.prefabName);
+            GameObject skillPrefab = PoolManager.Instance.GetPoolObject(
+            skillObj.prefab.prefabName, skillObj.prefab.folderName);
+            Debug.Log("触发");
+            skillPrefab.transform.position = _PlayerModle.transform.position +
+            _PlayerModle.transform.forward * skillObj.position.z +
+            _PlayerModle.transform.right * skillObj.position.x +
+             _PlayerModle.transform.up * skillObj.position.y;
+            //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
+            skillPrefab.transform.rotation = _PlayerModle.transform.rotation * Quaternion.Euler(skillObj.rotation);
         }
     }
 
-    private IEnumerator DoSpawnObject(SkillSpawnObj skillObj)
+
+
+    //技能生成
+    private void SpawnAttackEffect(SkillSpawnObj skillObj)
+    {
+        if (skillObj != null && (skillObj.prefab.prefabName != "" && skillObj.prefab.folderName != ""))
+        {
+            StartCoroutine(DoAttackEffect(skillObj));
+        }
+    }
+    private IEnumerator DoAttackEffect(SkillSpawnObj skillObj)
     {
         
         yield return new WaitForSeconds(skillObj.Time);
-        GameObject skillPrefab = Instantiate(skillObj.prefab,null);
-        skillPrefab.transform.position = _PlayerModle.transform.position +
+        //直接生成预制体
+        //GameObject skillPrefab = Instantiate(skillObj.prefab,null);
+        //使用对象池生成预制体
+        if (skillObj.prefab.folderName != null && skillObj.prefab.prefabName != null)
+        {
+            GameObject skillPrefab = PoolManager.Instance.GetPoolObject(
+            skillObj.prefab.prefabName, skillObj.prefab.folderName);
+            skillPrefab.transform.position = _PlayerModle.transform.position +
             _PlayerModle.transform.forward * skillObj.position.z +
-            _PlayerModle.transform.right * skillObj.position.x+
-        _PlayerModle.transform.up* skillObj.position.y;
-
-        //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
-        skillPrefab.transform.rotation = _PlayerModle.transform.rotation* Quaternion.Euler(skillObj.rotation);
+            _PlayerModle.transform.right * skillObj.position.x +
+             _PlayerModle.transform.up * skillObj.position.y;
+            //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
+            skillPrefab.transform.rotation = _PlayerModle.transform.rotation * Quaternion.Euler(skillObj.rotation);
+        }
     }
+
+    
+
 
     #endregion
 
@@ -219,6 +324,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     {
         impulseSource.GenerateImpulse(force * 0.2f);
     }
+
 
 
     /// <summary>
@@ -246,6 +352,8 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     }
 
 
+
+
     /// <summary>
     /// 检查当前是否正在播放指定动画
     /// </summary>
@@ -256,6 +364,8 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     }
 
 
+
+
     /// <summary>
     /// 强制动画过渡
     /// </summary>
@@ -263,6 +373,8 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     {
         _PlayerModle._Animator.CrossFade(targetAnimation, transitionDuration);
     }
+
+
 
 
     /// <summary>
@@ -276,10 +388,14 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         
     }
 
+
+
     public void OnFootStep()
     {
         //_audioSource.PlayOneShot(footStepAudioClips[Random.Range(0, footStepAudioClips.Length)]);
     }
+
+
 
     public void PlayAudio(AudioClip audioClip)
     {
@@ -287,6 +403,8 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
             _audioSource.PlayOneShot(audioClip);
         
     }
+
+
 
     public void OnJumpLoopComplete()
     {

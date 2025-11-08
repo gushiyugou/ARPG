@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4533267806564693873}
   - component: {fileID: 7625449509570230721}
   - component: {fileID: 6726000922264933160}
-  - component: {fileID: -802110185077464172}
+  - component: {fileID: -7929335392554161904}
   m_Layer: 0
   m_Name: RightKnife
   m_TagString: Untagged
@@ -4917,7 +4917,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &-802110185077464172
+--- !u!114 &-7929335392554161904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4926,9 +4926,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 346250399274266968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f80f123e2edbd0241a25be3d6e40cb6a, type: 3}
+  m_Script: {fileID: 11500000, guid: e056502226cc8644c8fad14204a02ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillDurationTime: 0.6
   folderName: Prefabs
   prefabName: RightKnife
 --- !u!1 &956372671371652474

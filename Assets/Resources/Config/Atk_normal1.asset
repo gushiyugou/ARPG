@@ -10,47 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f079361628ebd947848fe0d3b246768, type: 3}
-  m_Name: TestConfig
+  m_Name: Atk_normal1
   m_EditorClassIdentifier: 
   AnimationName: AtkNormal1
   releaseData:
-    spawnObj:
-      prefab: {fileID: 1076338644534325193, guid: 3075a569f7ce592409362cd43da987f1, type: 3}
+    effectObj:
+      prefab:
+        prefabName: 
+        folderName: 
       spawnAudio: {fileID: 0}
-      position: {x: -0.3, y: 0.7, z: 1}
+      position: {x: 0, y: 0.9, z: 0}
       rotation: {x: -10, y: -30, z: 0}
-      Time: 0.25
+      Time: 0
     skillAudio: {fileID: 8300000, guid: c428a82d21a3ffd4cb4c60116f194eb2, type: 3}
   attackData:
-  - skillObj:
-      prefab: {fileID: 0}
-      spawnAudio: {fileID: 0}
-      position: {x: 0, y: 1.14, z: 0}
-      rotation: {x: -180, y: 120, z: 0}
-      Time: 0
-    attackAudio:
-    - {fileID: 0}
-    - {fileID: 0}
-    damageValue: 0
-    stiffTime: 0
-    repelTime: 0
-    repelDegree: {x: 0, y: 0, z: 0}
-    hitEffect: {fileID: 11400000, guid: f21777f40a165d44085aef9d77f996e8, type: 2}
-    impulseValue: 1
-    chromaticValue: 1
-  - skillObj:
-      prefab: {fileID: 0}
+    skillObj:
+      prefab:
+        prefabName: 
+        folderName: 
       spawnAudio: {fileID: 0}
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
       Time: 0
-    attackAudio:
-    - {fileID: 0}
-    - {fileID: 0}
+    attackAudio: {fileID: 0}
     damageValue: 0
     stiffTime: 0
     repelTime: 0
     repelDegree: {x: 0, y: 0, z: 0}
-    hitEffect: {fileID: 11400000, guid: 123d4015415e5844ebe1dec8ad8e35c6, type: 2}
+    hitEffect: {fileID: 11400000, guid: 0db3ad1190720994eb115664d9567221, type: 2}
     impulseValue: 0
     chromaticValue: 0
+    FreezeFrameTime: 0.25
+    FreezeGameTime: 0

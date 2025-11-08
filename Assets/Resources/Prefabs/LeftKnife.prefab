@@ -4914,7 +4914,6 @@ GameObject:
   - component: {fileID: 7202035638289704784}
   - component: {fileID: 6302297982505520569}
   - component: {fileID: 3788701490805929729}
-  - component: {fileID: -8736503334398605074}
   m_Layer: 0
   m_Name: LeftKnife
   m_TagString: Untagged
@@ -9832,19 +9831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e056502226cc8644c8fad14204a02ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillDurationTime: 2
---- !u!114 &-8736503334398605074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1076338644534325193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f80f123e2edbd0241a25be3d6e40cb6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  skillDurationTime: 1
   folderName: Prefabs
   prefabName: LeftKnife
 --- !u!1 &2994512962052007131
