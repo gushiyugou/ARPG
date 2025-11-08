@@ -17,9 +17,9 @@ MonoBehaviour:
     spawnObj:
       prefab: {fileID: 1076338644534325193, guid: 3075a569f7ce592409362cd43da987f1, type: 3}
       spawnAudio: {fileID: 0}
-      position: {x: 0, y: 0, z: 3}
-      rotation: {x: 0, y: 0, z: 0}
-      Time: 0
+      position: {x: -0.3, y: 0.7, z: 1}
+      rotation: {x: -10, y: -30, z: 0}
+      Time: 0.25
     skillAudio: {fileID: 8300000, guid: c428a82d21a3ffd4cb4c60116f194eb2, type: 3}
   attackData:
   - skillObj:
