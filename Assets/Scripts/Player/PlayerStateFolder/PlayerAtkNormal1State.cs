@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
@@ -7,10 +8,11 @@ public class PlayerAtkNormal1State : PlayerStateBase
 {
     //private float rotSpeed = 2f;
     private bool isAtk = true;
+    
     public override void Enter()
     {
         //处理攻击方向
-       
+        
         _player._PlayerModle.SetRootMotionAction(OnRootMotion);
         StandAttck();
     }
@@ -23,13 +25,15 @@ public class PlayerAtkNormal1State : PlayerStateBase
     public override void Update()
     {
         
+
         FaceMouseDirectionAndAttack();
-        if (CheckAnimatorStateName(_player.standAttckCongig[0].AnimationName, out float animTime) && animTime >= 0.55f)
+        if (CheckAnimatorStateName(_player.standAttckCongig[0].AnimationName, out float animTime) && animTime > 0.55f)
         {
             isAtk = false;
             _player.ChangeState(PlayerStateType.Idle);
             return;
         }
+        
     }
 
     

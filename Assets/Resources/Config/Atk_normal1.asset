@@ -42,3 +42,8 @@ MonoBehaviour:
     chromaticValue: 0
     FreezeFrameTime: 0.25
     FreezeGameTime: 0
+    attackcheck:
+      checkPos: {x: 0, y: 0.85, z: 0.7}
+      halfExtents: {x: 0.75, y: 0.02, z: 0.1}
+      checkRot: {x: 0, y: 0, z: -15}
+      checkRange: 2

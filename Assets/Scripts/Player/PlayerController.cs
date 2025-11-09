@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 {
@@ -46,6 +47,14 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 
     public float rotSpeed = 1f;
 
+    public Collider[] enemyCollider;
+
+
+    [Header("扇形攻击检测")]
+    private SectorAttackDetector attackDetector;
+    [SerializeField] private float baseAttackDamage = 10f;
+    public Transform weapon;
+
     /// <summary>
     /// 技能配置数组
     /// </summary>
@@ -59,11 +68,15 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     public CinemachineImpulseSource impulseSource;
 
 
+    
+
+
 
 
     private void Awake()
     {
         //_playerModle = GetComponentWi<PlayerModle>();
+        attackDetector = _PlayerModle.GetComponent<SectorAttackDetector>();
         _PlayerModle.OnInit(this, enemyTagList);
         _stateMachine = new StateMachine();
         _stateMachine.Init(this);
@@ -76,6 +89,8 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         ChangeState(PlayerStateType.Idle);
         
     }
+
+    
 
     /// <summary>
     /// 状态切换
@@ -149,6 +164,24 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         PlayAudio(currentSkillConfig.attackData.attackAudio);
         //技能的特效
         SpawnAttackEffect(currentSkillConfig.attackData.skillObj);
+
+        //攻击检测
+        AttackEffectCheck(currentSkillConfig.attackData);
+
+        //扇形范围检测
+        //List<GameObject> enemyList = attackDetector.DetectEnemiesInSector();
+        //if (enemyList.Count > 0)
+        //{
+        //    IHurt enemy = enemyList[0].GetComponentInChildren<IHurt>();
+        //    Collider enemyCollider = enemyList[0].GetComponent<Collider>();
+        //    if (enemy != null)
+        //    {
+        //        Debug.Log("检测到敌人");
+        //        OnHit(enemy, enemyCollider.ClosestPoint(weapon.position));
+        //    }
+
+
+        //}
         weaponTrail.Emit = true;
     }
 
@@ -173,7 +206,6 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     {
         //Debug.Log("角色控制：我攻击到了" + ((Component)target).gameObject.name);
         //OnHit在Stop之后执行，所以索引要减一
-        Debug.Log(currentHitIndex);
         SkillAttackData skillData = currentSkillConfig.attackData;
         StartCoroutine(DoSkillHitEffect(skillData.hitEffect, hitPosition));
         //后处理,色差效果
@@ -185,9 +217,62 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         DoFreezeFrameTime(skillData.FreezeFrameTime);
 
         DoFreezeGame(skillData.FreezeGameTime);
+        Debug.Log("击中");
         //TODO:对IHurt传递伤害数据
 
     }
+
+
+    /// <summary>
+    /// 攻击范围检测
+    /// </summary>
+    /// <param name="skillConfig"></param>
+    public void AttackEffectCheck(SkillAttackData attackData)
+    {
+        Vector3 checkPos = _PlayerModle.transform.position +
+                          _PlayerModle.transform.forward * attackData.attackcheck.checkPos.z +
+                          _PlayerModle.transform.up * attackData.attackcheck.checkPos.y +
+                          _PlayerModle.transform.right * attackData.attackcheck.checkPos.x;
+
+        Quaternion checkRot = _PlayerModle.transform.rotation * Quaternion.Euler(attackData.attackcheck.checkRot);
+
+        LayerMask enemyLayerMask = LayerMask.GetMask("Enemy");
+
+        Collider[] hitColliders = new Collider[10];
+
+        int numColliders = Physics.OverlapBoxNonAlloc(
+            checkPos,
+            attackData.attackcheck.halfExtents,
+            hitColliders,
+            checkRot,
+            enemyLayerMask,
+            QueryTriggerInteraction.UseGlobal
+        );
+        if(numColliders != 0)
+        {
+            //Vector3 hitPosition = hitColliders[0].gameObject.transform.position;
+            Debug.Log("范围内有敌人");
+            SkillAttackData skillData = currentSkillConfig.attackData;
+            StartCoroutine(DoSkillHitEffect(skillData.hitEffect, hitColliders[0].ClosestPoint(weapon.position)));
+            //后处理,色差效果
+            if (skillData.impulseValue != 0)
+                ScreenImpulse(skillData.impulseValue);
+            if (skillData.chromaticValue != 0)
+                PostProcessingManager.Instance.ChromaticAberrationEF(skillData.chromaticValue);
+
+            DoFreezeFrameTime(skillData.FreezeFrameTime);
+
+            DoFreezeGame(skillData.FreezeGameTime);
+        }
+        //else
+        //{
+        //    Debug.LogWarning(" 未检测到任何敌人");
+
+        //    // 绘制调试图形
+        //    DrawDebugBox(checkPos, attackData.attackcheck.halfExtents, checkRot, Color.red);
+        //}
+    }
+
 
 
 
@@ -418,5 +503,55 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         }
     }
 
-    
+
+
+
+
+
+    #region 调试部分
+    private void DrawDebugBox(Vector3 center, Vector3 halfExtents, Quaternion rotation, Color color, float duration = 5f)
+    {
+        // 绘制盒体的8个顶点
+        Vector3[] points = new Vector3[8];
+
+        // 计算盒体的8个角点
+        points[0] = center + rotation * new Vector3(-halfExtents.x, -halfExtents.y, -halfExtents.z);
+        points[1] = center + rotation * new Vector3(-halfExtents.x, -halfExtents.y, halfExtents.z);
+        points[2] = center + rotation * new Vector3(-halfExtents.x, halfExtents.y, -halfExtents.z);
+        points[3] = center + rotation * new Vector3(-halfExtents.x, halfExtents.y, halfExtents.z);
+        points[4] = center + rotation * new Vector3(halfExtents.x, -halfExtents.y, -halfExtents.z);
+        points[5] = center + rotation * new Vector3(halfExtents.x, -halfExtents.y, halfExtents.z);
+        points[6] = center + rotation * new Vector3(halfExtents.x, halfExtents.y, -halfExtents.z);
+        points[7] = center + rotation * new Vector3(halfExtents.x, halfExtents.y, halfExtents.z);
+
+        // 绘制盒体的12条边
+        Debug.DrawLine(points[0], points[1], color, duration);
+        Debug.DrawLine(points[0], points[2], color, duration);
+        Debug.DrawLine(points[0], points[4], color, duration);
+        Debug.DrawLine(points[1], points[3], color, duration);
+        Debug.DrawLine(points[1], points[5], color, duration);
+        Debug.DrawLine(points[2], points[3], color, duration);
+        Debug.DrawLine(points[2], points[6], color, duration);
+        Debug.DrawLine(points[3], points[7], color, duration);
+        Debug.DrawLine(points[4], points[5], color, duration);
+        Debug.DrawLine(points[4], points[6], color, duration);
+        Debug.DrawLine(points[5], points[7], color, duration);
+        Debug.DrawLine(points[6], points[7], color, duration);
+    }
+
+
+    //可视化
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.green;
+    //    Vector3 checkPos = _PlayerModle.transform.position +
+    //                      _PlayerModle.transform.forward * standAttckCongig[0].attackData.attackcheck.checkPos.z +
+    //                      _PlayerModle.transform.up * standAttckCongig[0].attackData.attackcheck.checkPos.y +
+    //                      _PlayerModle.transform.right * standAttckCongig[0].attackData.attackcheck.checkPos.x;
+    //    Gizmos.DrawCube(checkPos,
+    //        standAttckCongig[0].attackData.attackcheck.halfExtents);
+    //}
+
+
+    #endregion
 }
