@@ -46,11 +46,12 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     public float moveSpeedForAirDown = 2f;
 
     public float rotSpeed = 1f;
+    public float attackRotSpeed = 1f;
 
     public Collider[] enemyCollider;
 
 
-    [Header("扇形攻击检测")]
+    //[Header("扇形攻击检测")]
     private SectorAttackDetector attackDetector;
     [SerializeField] private float baseAttackDamage = 10f;
     public Transform weapon;
@@ -60,9 +61,10 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     /// </summary>
     [Header("技能配置")]
     public SkillConfig[] standAttckCongigs;
+    public SkillConfig CurrentSkillConfig { get; private set; }
+    private int currentHitIndex = 0;
     public int currentHitWeapIndex;
-    private bool canSwitchSkill;
-    public bool CanSwitchSkill { get => canSwitchSkill; }
+    public bool CanSwitchSkill { get; private set; }
     #endregion
     //拖尾组件
     [SerializeField,Header("拖尾插件")] private MeleeWeaponTrail weaponTrail;
@@ -129,8 +131,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     #region 技能相关
 
 
-    private SkillConfig currentSkillConfig;
-    private int currentHitIndex = 0;
+    
     
 
 
@@ -140,17 +141,17 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     /// <param name="skillConfig"></param>
     public void StartAttack(SkillConfig skillConfig)
     {
-        canSwitchSkill = false;
+        CanSwitchSkill = false;
 
-        currentSkillConfig = skillConfig;
+        CurrentSkillConfig = skillConfig;
         //表示是新技能的开始
         currentHitIndex = 0;
         //播放动画
-        PlayAnimation(currentSkillConfig.AnimationName);
+        PlayAnimation(CurrentSkillConfig.AnimationName);
         //技能释放时角色音效
-        PlayAudio(currentSkillConfig.releaseData.skillAudio);
+        PlayAudio(CurrentSkillConfig.releaseData.skillAudio);
         //技能释放时角色的特效
-        SpawnSkill(currentSkillConfig.releaseData.effectObj);
+        SpawnSkill(CurrentSkillConfig.releaseData.effectObj);
         //击中检测
 
         //伤害传递
@@ -163,12 +164,12 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     {
         currentHitWeapIndex = weaponIndex;
         //技能音效
-        PlayAudio(currentSkillConfig.attackData[currentHitIndex].attackAudio);
+        PlayAudio(CurrentSkillConfig.attackData[currentHitIndex].attackAudio);
         //技能的特效
-        SpawnAttackEffect(currentSkillConfig.attackData[currentHitIndex].skillObj);
+        SpawnAttackEffect(CurrentSkillConfig.attackData[currentHitIndex].skillObj);
 
         //攻击检测
-        AttackEffectCheck(currentSkillConfig.attackData[currentHitIndex]);
+        AttackEffectCheck(CurrentSkillConfig.attackData[currentHitIndex]);
 
         #region 扇形范围检测
         //扇形范围检测
@@ -202,13 +203,13 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     //技能后摇的部分
     public void SkillCanSwitch()
     {
-        canSwitchSkill = true;
+        CanSwitchSkill = true;
     }
     public void OnHit(IHurt target, Vector3 hitPosition)
     {
         //Debug.Log("角色控制：我攻击到了" + ((Component)target).gameObject.name);
         //OnHit在Stop之后执行，所以索引要减一
-        SkillAttackData skillData = currentSkillConfig.attackData[currentHitIndex];
+        SkillAttackData skillData = CurrentSkillConfig.attackData[currentHitIndex];
         StartCoroutine(DoSkillHitEffect(skillData.hitEffect, hitPosition));
         //后处理,色差效果
         if(skillData.impulseValue != 0)
@@ -232,9 +233,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     public void AttackEffectCheck(SkillAttackData attackData)
     {
         Vector3 checkPos = _PlayerModle.transform.position +
-                          _PlayerModle.transform.forward * attackData.attackcheck.checkPos.z +
-                          _PlayerModle.transform.up * attackData.attackcheck.checkPos.y +
-                          _PlayerModle.transform.right * attackData.attackcheck.checkPos.x;
+            _PlayerModle.transform.TransformDirection(attackData.attackcheck.checkPos);
 
         Quaternion checkRot = _PlayerModle.transform.rotation * Quaternion.Euler(attackData.attackcheck.checkRot);
 
@@ -250,29 +249,46 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
             enemyLayerMask,
             QueryTriggerInteraction.UseGlobal
         );
-        if(numColliders != 0)
+
+        if (numColliders > 0)  // 修改为 > 0 而不是 != 0
         {
-            //Vector3 hitPosition = hitColliders[0].gameObject.transform.position;
-            Debug.Log("范围内有敌人");
-            SkillAttackData skillData = currentSkillConfig.attackData[currentHitIndex];
-            StartCoroutine(DoSkillHitEffect(skillData.hitEffect, hitColliders[0].ClosestPoint(weapon.position)));
-            //后处理,色差效果
-            if (skillData.impulseValue != 0)
-                ScreenImpulse(skillData.impulseValue);
-            if (skillData.chromaticValue != 0)
-                PostProcessingManager.Instance.ChromaticAberrationEF(skillData.chromaticValue);
+            // 找到第一个有效的碰撞体
+            Collider validCollider = null;
+            for (int i = 0; i < numColliders; i++)
+            {
+                if (hitColliders[i] != null)
+                {
+                    validCollider = hitColliders[i];
+                    break;
+                }
+            }
 
-            DoFreezeFrameTime(skillData.FreezeFrameTime);
+            if (validCollider != null)
+            {
+                Debug.Log("范围内有敌人");
+                SkillAttackData skillData = CurrentSkillConfig.attackData[currentHitIndex];
+                StartCoroutine(DoSkillHitEffect(skillData.hitEffect, validCollider.ClosestPoint(weapon.position)));
 
-            DoFreezeGame(skillData.FreezeGameTime);
+                //后处理,色差效果
+                if (skillData.impulseValue != 0)
+                    ScreenImpulse(skillData.impulseValue);
+                if (skillData.chromaticValue != 0)
+                    PostProcessingManager.Instance.ChromaticAberrationEF(skillData.chromaticValue);
+
+                DoFreezeFrameTime(skillData.FreezeFrameTime);
+                DoFreezeGame(skillData.FreezeGameTime);
+            }
+            else
+            {
+                Debug.LogWarning("检测到碰撞体但都为null");
+                DrawDebugBox(checkPos, attackData.attackcheck.halfExtents, checkRot, Color.yellow);
+            }
         }
-        //else
-        //{
-        //    Debug.LogWarning(" 未检测到任何敌人");
-
-        //    // 绘制调试图形
-        //    DrawDebugBox(checkPos, attackData.attackcheck.halfExtents, checkRot, Color.red);
-        //}
+        else
+        {
+            Debug.LogWarning("未检测到任何敌人");
+            DrawDebugBox(checkPos, attackData.attackcheck.halfExtents, checkRot, Color.red);
+        }
     }
 
 
@@ -361,9 +377,10 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
             GameObject skillPrefab = PoolManager.Instance.GetPoolObject(
             skillObj.prefab.prefabName, skillObj.prefab.folderName);
             skillPrefab.transform.position = _PlayerModle.transform.position +
-            _PlayerModle.transform.forward * skillObj.position.z +
-            _PlayerModle.transform.right * skillObj.position.x +
-             _PlayerModle.transform.up * skillObj.position.y;
+                _PlayerModle.transform.TransformDirection(skillObj.position);
+            //_PlayerModle.transform.forward * skillObj.position.z +
+            //_PlayerModle.transform.right * skillObj.position.x +
+            // _PlayerModle.transform.up * skillObj.position.y;
             skillPrefab.transform.localScale = skillObj.scale;
             //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
             skillPrefab.transform.rotation = _PlayerModle.transform.rotation * Quaternion.Euler(skillObj.rotation);
@@ -392,9 +409,10 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
             GameObject skillPrefab = PoolManager.Instance.GetPoolObject(
             skillObj.prefab.prefabName, skillObj.prefab.folderName);
             skillPrefab.transform.position = _PlayerModle.transform.position +
-            _PlayerModle.transform.forward * skillObj.position.z +
-            _PlayerModle.transform.right * skillObj.position.x +
-             _PlayerModle.transform.up * skillObj.position.y;
+                _PlayerModle.transform.TransformDirection(skillObj.position);
+            //_PlayerModle.transform.forward * skillObj.position.z +
+            //_PlayerModle.transform.right * skillObj.position.x +
+            // _PlayerModle.transform.up * skillObj.position.y;
 
             skillPrefab.transform.localScale = skillObj.scale;
             //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
@@ -406,7 +424,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 
     public void OnSkillOver()
     {
-        canSwitchSkill = true;
+        CanSwitchSkill = true;
     }
     #endregion
 
@@ -547,16 +565,16 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 
 
     //可视化
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.green;
-    //    Vector3 checkPos = _PlayerModle.transform.position +
-    //                      _PlayerModle.transform.forward * standAttckCongig[0].attackData.attackcheck.checkPos.z +
-    //                      _PlayerModle.transform.up * standAttckCongig[0].attackData.attackcheck.checkPos.y +
-    //                      _PlayerModle.transform.right * standAttckCongig[0].attackData.attackcheck.checkPos.x;
-    //    Gizmos.DrawCube(checkPos,
-    //        standAttckCongig[0].attackData.attackcheck.halfExtents);
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Vector3 checkPos = _PlayerModle.transform.position +
+                          _PlayerModle.transform.forward * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.z +
+                          _PlayerModle.transform.up * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.y +
+                          _PlayerModle.transform.right * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.x;
+        Gizmos.DrawCube(checkPos,
+            standAttckCongigs[1].attackData[currentHitIndex].attackcheck.halfExtents);
+    }
 
 
     #endregion

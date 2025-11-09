@@ -19,5 +19,6 @@ MonoBehaviour:
     spawnAudio: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
     Time: 0
-  hitAudioClip: {fileID: 8300000, guid: 11390b4b43824e54e9eaada95422a366, type: 3}
+  hitAudioClip: {fileID: 8300000, guid: 605b36de8b4614d46a68ffc9c42a7f3c, type: 3}

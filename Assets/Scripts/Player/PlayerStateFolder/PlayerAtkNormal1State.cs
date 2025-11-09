@@ -31,7 +31,7 @@ public class PlayerAtkNormal1State : PlayerStateBase
 
     private void StandAttck()
     {
-
+        
         //TODO：实现连续普攻
         CurrentSkillIndex += 1;
         _player.StartAttack(_player.standAttckCongigs[currentSkillIndex]);
@@ -42,7 +42,7 @@ public class PlayerAtkNormal1State : PlayerStateBase
     {
         
 
-        FaceMouseDirectionAndAttack();
+        
         if (CheckAnimatorStateName(_player.standAttckCongigs[currentSkillIndex].AnimationName, out float animTime) && animTime >=0.9f)
         {
             _player._PlayerModle._Animator.SetBool("IsIdle", true);
@@ -53,6 +53,44 @@ public class PlayerAtkNormal1State : PlayerStateBase
         if (CheckNormalhAttack())
         {
             StandAttck();
+            return;
+        }
+
+        if (_player.CurrentSkillConfig.releaseData.isAttackRot)
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+            if(horizontal != 0 ||vertical != 0)
+            {
+                Vector3 input = new Vector3(horizontal, 0, vertical);
+                float y = Camera.main.transform.eulerAngles.y;
+
+                Vector3 targetRot = Quaternion.Euler(0, y, 0) * input;
+                _player._PlayerModle.transform.rotation = Quaternion.Slerp(
+                    _player._PlayerModle.transform.rotation,
+                    Quaternion.LookRotation(targetRot),
+                    Time.deltaTime * _player.attackRotSpeed
+                    );
+            }
+        }
+
+        if (_player.CanSwitchSkill)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                moveStatePower = 0;
+
+                _player.ChangeState(PlayerStateType.Jump);
+                return;
+            }
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                //moveStatePower = 0;
+                _player.ChangeState(PlayerStateType.SidestepReverse);
+                return;
+            }
         }
 
     }

@@ -25,6 +25,8 @@ public class SkillReleaseData
     //技能释放音效
     [Header("技能释放时的音效")]
     public AudioClip skillAudio;
+    //攻击时是否允许旋转
+    public bool isAttackRot;
 }
 
 /// <summary>

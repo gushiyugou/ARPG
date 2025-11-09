@@ -24,6 +24,7 @@ MonoBehaviour:
       scale: {x: 0, y: 0, z: 0}
       Time: 0
     skillAudio: {fileID: 0}
+    isAttackRot: 1
   attackData:
   - skillObj:
       prefab:
@@ -39,16 +40,16 @@ MonoBehaviour:
     stiffTime: 0
     repelTime: 0
     repelDegree: {x: 0, y: 0, z: 0}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 11400000, guid: c5769cdd3845a7348bd990fd7ed7deaf, type: 2}
     impulseValue: 0
     chromaticValue: 0
     FreezeFrameTime: 0
     FreezeGameTime: 0
     attackcheck:
-      checkPos: {x: 0, y: 0, z: 0}
-      halfExtents: {x: 0, y: 0, z: 0}
-      checkRot: {x: 0, y: 0, z: 0}
-      checkRange: 0
+      checkPos: {x: 0, y: 0.75, z: 0.5}
+      halfExtents: {x: 1, y: 0.05, z: 1}
+      checkRot: {x: 0, y: 0, z: 45}
+      checkRange: 2
   - skillObj:
       prefab:
         prefabName: LeftKnife
@@ -63,13 +64,13 @@ MonoBehaviour:
     stiffTime: 0
     repelTime: 0
     repelDegree: {x: 0, y: 0, z: 0}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 11400000, guid: c5769cdd3845a7348bd990fd7ed7deaf, type: 2}
     impulseValue: 0
     chromaticValue: 0
     FreezeFrameTime: 0
     FreezeGameTime: 0
     attackcheck:
-      checkPos: {x: 0, y: 0, z: 0}
-      halfExtents: {x: 0, y: 0, z: 0}
-      checkRot: {x: 0, y: 0, z: 0}
-      checkRange: 0
+      checkPos: {x: 0, y: 0.75, z: 1}
+      halfExtents: {x: 1, y: 0.05, z: 1}
+      checkRot: {x: -10, y: -20, z: 0}
+      checkRange: 2
