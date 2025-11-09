@@ -25,15 +25,17 @@ public class PlayerAtkNormal1State : PlayerStateBase
     {
         //处理攻击方向
         _player._PlayerModle.SetRootMotionAction(OnRootMotion);
-        currentSkillIndex = 0;
+        currentSkillIndex = -1;
         StandAttck();
     }
 
     private void StandAttck()
     {
+
         //TODO：实现连续普攻
+        CurrentSkillIndex += 1;
         _player.StartAttack(_player.standAttckCongigs[currentSkillIndex]);
-        CurrentSkillIndex+=1;
+        
         
     }
     public override void Update()
@@ -41,7 +43,7 @@ public class PlayerAtkNormal1State : PlayerStateBase
         
 
         FaceMouseDirectionAndAttack();
-        if (CheckAnimatorStateName(_player.standAttckCongigs[currentSkillIndex].AnimationName, out float animTime) && animTime >=0.6f)
+        if (CheckAnimatorStateName(_player.standAttckCongigs[currentSkillIndex].AnimationName, out float animTime) && animTime >=0.9f)
         {
             _player._PlayerModle._Animator.SetBool("IsIdle", true);
             _player.ChangeState(PlayerStateType.Idle);
@@ -52,7 +54,6 @@ public class PlayerAtkNormal1State : PlayerStateBase
         {
             StandAttck();
         }
-        Debug.Log(currentSkillIndex);
 
     }
 

@@ -163,12 +163,12 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     {
         currentHitWeapIndex = weaponIndex;
         //技能音效
-        PlayAudio(currentSkillConfig.attackData.attackAudio[weaponIndex]);
+        PlayAudio(currentSkillConfig.attackData[currentHitIndex].attackAudio);
         //技能的特效
-        SpawnAttackEffect(currentSkillConfig.attackData.skillObj[weaponIndex]);
+        SpawnAttackEffect(currentSkillConfig.attackData[currentHitIndex].skillObj);
 
         //攻击检测
-        AttackEffectCheck(currentSkillConfig.attackData);
+        AttackEffectCheck(currentSkillConfig.attackData[currentHitIndex]);
 
         #region 扇形范围检测
         //扇形范围检测
@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     {
         //Debug.Log("角色控制：我攻击到了" + ((Component)target).gameObject.name);
         //OnHit在Stop之后执行，所以索引要减一
-        SkillAttackData skillData = currentSkillConfig.attackData;
+        SkillAttackData skillData = currentSkillConfig.attackData[currentHitIndex];
         StartCoroutine(DoSkillHitEffect(skillData.hitEffect, hitPosition));
         //后处理,色差效果
         if(skillData.impulseValue != 0)
@@ -254,7 +254,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         {
             //Vector3 hitPosition = hitColliders[0].gameObject.transform.position;
             Debug.Log("范围内有敌人");
-            SkillAttackData skillData = currentSkillConfig.attackData;
+            SkillAttackData skillData = currentSkillConfig.attackData[currentHitIndex];
             StartCoroutine(DoSkillHitEffect(skillData.hitEffect, hitColliders[0].ClosestPoint(weapon.position)));
             //后处理,色差效果
             if (skillData.impulseValue != 0)

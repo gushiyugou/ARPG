@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f079361628ebd947848fe0d3b246768, type: 3}
-  m_Name: Atk_normal_02
+  m_Name: Atk_normal_03
   m_EditorClassIdentifier: 
-  AnimationName: AtkNormal2
+  AnimationName: AtkNormal3
   releaseData:
     effectObj:
       prefab:
@@ -21,44 +21,20 @@ MonoBehaviour:
       spawnAudio: {fileID: 0}
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
+      scale: {x: 1, y: 1, z: 1}
       Time: 0
     skillAudio: {fileID: 0}
   attackData:
   - skillObj:
       prefab:
-        prefabName: RightKnife
+        prefabName: Sword Slash 2
         folderName: Prefabs
       spawnAudio: {fileID: 0}
-      position: {x: 0, y: 0.9, z: 0}
-      rotation: {x: 0, y: 0, z: 45}
-      scale: {x: -0.5, y: 0.5, z: 0.5}
-      Time: 0
-    attackAudio: {fileID: 8300000, guid: 479560cbc71d73e408156b20f6fe5563, type: 3}
-    damageValue: 0
-    stiffTime: 0
-    repelTime: 0
-    repelDegree: {x: 0, y: 0, z: 0}
-    hitEffect: {fileID: 0}
-    impulseValue: 0
-    chromaticValue: 0
-    FreezeFrameTime: 0
-    FreezeGameTime: 0
-    attackcheck:
-      checkPos: {x: 0, y: 0, z: 0}
-      halfExtents: {x: 0, y: 0, z: 0}
-      checkRot: {x: 0, y: 0, z: 0}
-      checkRange: 0
-  - skillObj:
-      prefab:
-        prefabName: LeftKnife
-        folderName: Prefabs
-      spawnAudio: {fileID: 0}
-      position: {x: 0, y: 0.7, z: 0}
-      rotation: {x: -10, y: -20, z: 0}
+      position: {x: 0, y: 0.8, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
       scale: {x: 0.5, y: 0.5, z: 0.5}
-      Time: 0
-    attackAudio: {fileID: 8300000, guid: af9cdc6c21099334fa35de14d933ac5f, type: 3}
+      Time: 0.25
+    attackAudio: {fileID: 8300000, guid: d52d545cf6ed4de4f98687ee04686bdd, type: 3}
     damageValue: 0
     stiffTime: 0
     repelTime: 0

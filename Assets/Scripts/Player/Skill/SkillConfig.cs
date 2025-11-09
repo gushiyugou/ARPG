@@ -9,8 +9,8 @@ public class SkillConfig : ScriptableObject
 {
     public string AnimationName;
     public SkillReleaseData releaseData;
-    //public SkillAttackData[] attackData = new SkillAttackData[1];
-    public SkillAttackData attackData;
+    public SkillAttackData[] attackData;
+    //public SkillAttackData attackData;
 }
 
 /// <summary>
@@ -34,11 +34,11 @@ public class SkillReleaseData
 public class SkillAttackData
 {
     //播放粒子
-    public SkillSpawnObj[] skillObj;
+    public SkillSpawnObj skillObj;
 
     //技能释放音效
     //public AudioClip[] attackAudio = new AudioClip[2];
-    public AudioClip[] attackAudio;
+    public AudioClip attackAudio;
 
     //TODO:命中数据
     //伤害值

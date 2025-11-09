@@ -25,37 +25,51 @@ MonoBehaviour:
       Time: 0
     skillAudio: {fileID: 0}
   attackData:
-    skillObj:
-    - prefab:
-        prefabName: 
-        folderName: 
+  - skillObj:
+      prefab:
+        prefabName: RightKnife
+        folderName: Prefabs
       spawnAudio: {fileID: 0}
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
+      position: {x: 0, y: 0.9, z: 0}
+      rotation: {x: 0, y: 0, z: -45}
+      scale: {x: -0.5, y: 0.5, z: 0.5}
       Time: 0
-    - prefab:
-        prefabName: 
-        folderName: 
-      spawnAudio: {fileID: 0}
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      scale: {x: 0, y: 0, z: 0}
-      Time: 0
-    attackAudio:
-    - {fileID: 0}
-    - {fileID: 0}
+    attackAudio: {fileID: 8300000, guid: f270665eedc408f4cbe12be23e06695e, type: 3}
     damageValue: 0
     stiffTime: 0
     repelTime: 0
     repelDegree: {x: 0, y: 0, z: 0}
-    hitEffect: {fileID: 11400000, guid: 0db3ad1190720994eb115664d9567221, type: 2}
+    hitEffect: {fileID: 0}
     impulseValue: 0
     chromaticValue: 0
     FreezeFrameTime: 0
     FreezeGameTime: 0
     attackcheck:
-      checkPos: {x: 0, y: 0.85, z: 0.7}
-      halfExtents: {x: 0.75, y: 0.02, z: 0.1}
-      checkRot: {x: 0, y: 0, z: -15}
-      checkRange: 2
+      checkPos: {x: 0, y: 0, z: 0}
+      halfExtents: {x: 0, y: 0, z: 0}
+      checkRot: {x: 0, y: 0, z: 0}
+      checkRange: 0
+  - skillObj:
+      prefab:
+        prefabName: LeftKnife
+        folderName: Prefabs
+      spawnAudio: {fileID: 0}
+      position: {x: 0, y: 0.9, z: 0}
+      rotation: {x: -10, y: -30, z: 0}
+      scale: {x: 0.5, y: 0.5, z: 0.5}
+      Time: 0
+    attackAudio: {fileID: 8300000, guid: 5470fca03fcbccd4685db4500845fc93, type: 3}
+    damageValue: 0
+    stiffTime: 0
+    repelTime: 0
+    repelDegree: {x: 0, y: 0, z: 0}
+    hitEffect: {fileID: 0}
+    impulseValue: 0
+    chromaticValue: 0
+    FreezeFrameTime: 0
+    FreezeGameTime: 0
+    attackcheck:
+      checkPos: {x: 0, y: 0, z: 0}
+      halfExtents: {x: 0, y: 0, z: 0}
+      checkRot: {x: 0, y: 0, z: 0}
+      checkRange: 0

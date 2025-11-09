@@ -1192,8 +1192,10 @@ MonoBehaviour:
   enemyCollider: []
   baseAttackDamage: 10
   weapon: {fileID: 643101729}
-  standAttckCongig:
-  - {fileID: 11400000, guid: f8e0e918fb5ab30428deb223a5748a51, type: 2}
+  standAttckCongigs:
+  - {fileID: 11400000, guid: 8e641baa3025a9849b9df2f185894815, type: 2}
+  - {fileID: 11400000, guid: 4bf2b471a8d2e3640aa9a9406b3ccccc, type: 2}
+  - {fileID: 11400000, guid: 4b73e7dda6d680a45ab2695c3894ca59, type: 2}
   currentHitWeapIndex: 0
   weaponTrail: {fileID: 643101730}
   impulseSource: {fileID: 1062267860}
