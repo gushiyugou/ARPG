@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillSpawnObj:
     prefab:
-      prefabName: LeftKnife
+      prefabName: Hit
       folderName: Prefabs
     spawnAudio: {fileID: 0}
     position: {x: 0, y: 0, z: 0}

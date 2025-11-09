@@ -16,12 +16,12 @@ MonoBehaviour:
   releaseData:
     effectObj:
       prefab:
-        prefabName: 
-        folderName: 
+        prefabName: LeftKnife
+        folderName: Prefabs
       spawnAudio: {fileID: 0}
       position: {x: 0, y: 0.9, z: 0}
       rotation: {x: -10, y: -30, z: 0}
-      Time: 0
+      Time: 0.25
     skillAudio: {fileID: 8300000, guid: c428a82d21a3ffd4cb4c60116f194eb2, type: 3}
   attackData:
     skillObj:

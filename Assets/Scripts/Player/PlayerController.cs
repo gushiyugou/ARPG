@@ -168,6 +168,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         //¹¥»÷¼ì²â
         AttackEffectCheck(currentSkillConfig.attackData);
 
+        #region ÉÈÐÎ·¶Î§¼ì²â
         //ÉÈÐÎ·¶Î§¼ì²â
         //List<GameObject> enemyList = attackDetector.DetectEnemiesInSector();
         //if (enemyList.Count > 0)
@@ -179,9 +180,8 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         //        Debug.Log("¼ì²âµ½µÐÈË");
         //        OnHit(enemy, enemyCollider.ClosestPoint(weapon.position));
         //    }
-
-
         //}
+        #endregion
         weaponTrail.Emit = true;
     }
 
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 
 
     /// <summary>
-    /// ¹¥»÷·¶Î§¼ì²â
+    /// ¹¥»÷¼ì²â
     /// </summary>
     /// <param name="skillConfig"></param>
     public void AttackEffectCheck(SkillAttackData attackData)
