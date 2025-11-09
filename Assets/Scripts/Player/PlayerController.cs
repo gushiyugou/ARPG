@@ -59,8 +59,10 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     /// 技能配置数组
     /// </summary>
     [Header("技能配置")]
-    public SkillConfig[] standAttckCongig;
+    public SkillConfig[] standAttckCongigs;
     public int currentHitWeapIndex;
+    private bool canSwitchSkill;
+    public bool CanSwitchSkill { get => canSwitchSkill; }
     #endregion
     //拖尾组件
     [SerializeField,Header("拖尾插件")] private MeleeWeaponTrail weaponTrail;
@@ -138,7 +140,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     /// <param name="skillConfig"></param>
     public void StartAttack(SkillConfig skillConfig)
     {
-        
+        canSwitchSkill = false;
 
         currentSkillConfig = skillConfig;
         //表示是新技能的开始
@@ -161,9 +163,9 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     {
         currentHitWeapIndex = weaponIndex;
         //技能音效
-        PlayAudio(currentSkillConfig.attackData.attackAudio);
+        PlayAudio(currentSkillConfig.attackData.attackAudio[weaponIndex]);
         //技能的特效
-        SpawnAttackEffect(currentSkillConfig.attackData.skillObj);
+        SpawnAttackEffect(currentSkillConfig.attackData.skillObj[weaponIndex]);
 
         //攻击检测
         AttackEffectCheck(currentSkillConfig.attackData);
@@ -200,7 +202,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     //技能后摇的部分
     public void SkillCanSwitch()
     {
-
+        canSwitchSkill = true;
     }
     public void OnHit(IHurt target, Vector3 hitPosition)
     {
@@ -356,14 +358,13 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         //使用对象池生成预制体
         if (skillObj.prefab.folderName != "" && skillObj.prefab.prefabName != "")
         {
-            Debug.Log(skillObj.prefab.folderName + "和" + skillObj.prefab.prefabName);
             GameObject skillPrefab = PoolManager.Instance.GetPoolObject(
             skillObj.prefab.prefabName, skillObj.prefab.folderName);
-            Debug.Log("触发");
             skillPrefab.transform.position = _PlayerModle.transform.position +
             _PlayerModle.transform.forward * skillObj.position.z +
             _PlayerModle.transform.right * skillObj.position.x +
              _PlayerModle.transform.up * skillObj.position.y;
+            skillPrefab.transform.localScale = skillObj.scale;
             //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
             skillPrefab.transform.rotation = _PlayerModle.transform.rotation * Quaternion.Euler(skillObj.rotation);
         }
@@ -394,6 +395,8 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
             _PlayerModle.transform.forward * skillObj.position.z +
             _PlayerModle.transform.right * skillObj.position.x +
              _PlayerModle.transform.up * skillObj.position.y;
+
+            skillPrefab.transform.localScale = skillObj.scale;
             //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
             skillPrefab.transform.rotation = _PlayerModle.transform.rotation * Quaternion.Euler(skillObj.rotation);
         }
@@ -401,7 +404,10 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 
     
 
-
+    public void OnSkillOver()
+    {
+        canSwitchSkill = true;
+    }
     #endregion
 
 

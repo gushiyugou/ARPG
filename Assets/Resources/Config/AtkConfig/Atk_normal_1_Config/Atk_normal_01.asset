@@ -10,29 +10,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f079361628ebd947848fe0d3b246768, type: 3}
-  m_Name: Atk_normal1
+  m_Name: Atk_normal_01
   m_EditorClassIdentifier: 
   AnimationName: AtkNormal1
   releaseData:
     effectObj:
-      prefab:
-        prefabName: LeftKnife
-        folderName: Prefabs
-      spawnAudio: {fileID: 0}
-      position: {x: 0, y: 0.9, z: 0}
-      rotation: {x: -10, y: -30, z: 0}
-      Time: 0.25
-    skillAudio: {fileID: 8300000, guid: c428a82d21a3ffd4cb4c60116f194eb2, type: 3}
-  attackData:
-    skillObj:
       prefab:
         prefabName: 
         folderName: 
       spawnAudio: {fileID: 0}
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
       Time: 0
-    attackAudio: {fileID: 0}
+    skillAudio: {fileID: 0}
+  attackData:
+    skillObj:
+    - prefab:
+        prefabName: 
+        folderName: 
+      spawnAudio: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      Time: 0
+    - prefab:
+        prefabName: 
+        folderName: 
+      spawnAudio: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      scale: {x: 0, y: 0, z: 0}
+      Time: 0
+    attackAudio:
+    - {fileID: 0}
+    - {fileID: 0}
     damageValue: 0
     stiffTime: 0
     repelTime: 0
@@ -40,7 +52,7 @@ MonoBehaviour:
     hitEffect: {fileID: 11400000, guid: 0db3ad1190720994eb115664d9567221, type: 2}
     impulseValue: 0
     chromaticValue: 0
-    FreezeFrameTime: 0.25
+    FreezeFrameTime: 0
     FreezeGameTime: 0
     attackcheck:
       checkPos: {x: 0, y: 0.85, z: 0.7}

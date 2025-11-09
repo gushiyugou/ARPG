@@ -65,19 +65,19 @@ public class SectorAttackDetector : MonoBehaviour
     /// <summary>
     /// 在Scene视图中绘制扇形区域
     /// </summary>
-    private void OnDrawGizmos()
-    {
-        if (!showGizmos) return;
+    //private void OnDrawGizmos()
+    //{
+    //    if (!showGizmos) return;
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, attackRadius);
 
-        Gizmos.color = new Color(1, 0, 0, 0.3f);
-        DrawSectorGizmo();
+    //    Gizmos.color = new Color(1, 0, 0, 0.3f);
+    //    DrawSectorGizmo();
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(transform.position, transform.forward * 2f);
-    }
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawRay(transform.position, transform.forward * 2f);
+    //}
 
     private void DrawSectorGizmo()
     {

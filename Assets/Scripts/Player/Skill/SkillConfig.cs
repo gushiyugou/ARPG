@@ -34,30 +34,38 @@ public class SkillReleaseData
 public class SkillAttackData
 {
     //播放粒子
-    public SkillSpawnObj skillObj;
+    public SkillSpawnObj[] skillObj;
+
     //技能释放音效
     //public AudioClip[] attackAudio = new AudioClip[2];
-    public AudioClip attackAudio;
+    public AudioClip[] attackAudio;
 
     //TODO:命中数据
     //伤害值
     public float damageValue;
+
     //技能伤害持续时间（持续技能伤害特有）
     //敌人僵直
     public float stiffTime;
+
     //击退击飞时间
     public float repelTime;
+
     //技能击退击飞
     public Vector3 repelDegree;
+
     //技能击中效果
     public SkillHitEffectConfig hitEffect;
+
     //屏幕震动
     public float impulseValue;
+
     //后处理,目前有色差效果
     public float chromaticValue;
 
     //卡肉效果
     public float FreezeFrameTime;
+
     //时间停止
     public float FreezeGameTime;
 
@@ -81,6 +89,7 @@ public class SkillSpawnObj
     //旋转
     public Vector3 rotation;
 
+    public Vector3 scale = Vector3.one;
     
     //延迟时间
     public float Time;

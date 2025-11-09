@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 004a1f25f492aec46a80695628c82a49, type: 3}
-  m_Name: LetfWeapon
+  m_Name: RightAtk1
   m_EditorClassIdentifier: 
   skillSpawnObj:
     prefab:
-      prefabName: LeftKnife
+      prefabName: RightKnife
       folderName: Prefabs
     spawnAudio: {fileID: 0}
-    position: {x: 0, y: 0, z: 100}
-    rotation: {x: 2.38, y: 0, z: 0}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
     Time: 0
   hitAudioClip: {fileID: 8300000, guid: 11390b4b43824e54e9eaada95422a366, type: 3}

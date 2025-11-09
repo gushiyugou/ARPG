@@ -7,33 +7,53 @@ using static UnityEditor.Searcher.SearcherWindow.Alignment;
 public class PlayerAtkNormal1State : PlayerStateBase
 {
     //private float rotSpeed = 2f;
-    private bool isAtk = true;
-    
+    private int currentSkillIndex;
+    public int CurrentSkillIndex
+    {
+        get => currentSkillIndex;
+        set
+        {
+            if (value >= _player.standAttckCongigs.Length)
+                currentSkillIndex = 0;
+            else 
+                currentSkillIndex = value;
+        }
+
+    }
+
     public override void Enter()
     {
         //处理攻击方向
-        
         _player._PlayerModle.SetRootMotionAction(OnRootMotion);
+        currentSkillIndex = 0;
         StandAttck();
     }
 
     private void StandAttck()
     {
         //TODO：实现连续普攻
-        _player.StartAttack(_player.standAttckCongig[0]);
+        _player.StartAttack(_player.standAttckCongigs[currentSkillIndex]);
+        CurrentSkillIndex+=1;
+        
     }
     public override void Update()
     {
         
 
         FaceMouseDirectionAndAttack();
-        if (CheckAnimatorStateName(_player.standAttckCongig[0].AnimationName, out float animTime) && animTime > 0.55f)
+        if (CheckAnimatorStateName(_player.standAttckCongigs[currentSkillIndex].AnimationName, out float animTime) && animTime >=0.6f)
         {
-            isAtk = false;
+            _player._PlayerModle._Animator.SetBool("IsIdle", true);
             _player.ChangeState(PlayerStateType.Idle);
             return;
         }
-        
+
+        if (CheckNormalhAttack())
+        {
+            StandAttck();
+        }
+        Debug.Log(currentSkillIndex);
+
     }
 
     
@@ -45,7 +65,13 @@ public class PlayerAtkNormal1State : PlayerStateBase
 
     public override void Exit()
     {
-        _player.PlayAnimation("Idle");
+        _player.OnSkillOver();
+    }
+
+    public bool CheckNormalhAttack()
+    {
+        
+        return Input.GetMouseButtonDown(0) && _player.CanSwitchSkill;
     }
 
 
