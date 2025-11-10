@@ -8,7 +8,9 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class WeaponController : MonoBehaviour
 {
     [SerializeField]private new Collider collider;
-    
+    //[SerializeField]private MeleeWeaponTrail weaponTrail;
+
+
 
     private List<string> enemyTagList;
     private List<IHurt> enemyList = new List<IHurt>();
@@ -22,7 +24,7 @@ public class WeaponController : MonoBehaviour
     //TODO WeaponCollider: 初始化函数，进行受伤时的通知
     public void Init(List<string> enemyTagList, Action<IHurt, Vector3> onHitAction)
     {
-        collider.enabled = false;
+        collider.isTrigger = false;
         this.enemyTagList = enemyTagList;   
         this.onHitAction = onHitAction;
         //weaponTrail.Emit = false;
@@ -30,14 +32,13 @@ public class WeaponController : MonoBehaviour
 
     public void StartSkillHit()
     {
-        collider.enabled = true;
-        
+        collider.isTrigger = true;
         //weaponTrail.Emit = true;
     }
 
     public void StopSkillHit()
     {
-        collider.enabled = false;
+        collider.isTrigger = false;
         //weaponTrail.Emit = false;
         enemyList.Clear();
     }
@@ -46,19 +47,20 @@ public class WeaponController : MonoBehaviour
     /// 触发检测函数
     /// </summary>
     /// <param name="other"></param>
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    //检测打击对象的标签
-    //    if (enemyTagList.Contains(other.tag))
-    //    {
-    //        IHurt enemy = other.GetComponentInParent<IHurt>();
-    //        if (enemy != null && !enemyList.Contains(enemy))
-    //        {
-    //            //TODO 武器击中敌人的通知
-    //            Debug.Log("武器：攻击伤害触发");
-    //            onHitAction?.Invoke(enemy, other.ClosestPoint(transform.position));
-    //            enemyList.Add(enemy);
-    //        }
-    //    }
-    //}
+    private void OnTriggerStay(Collider other)
+    {
+        //检测打击对象的标签
+        if (enemyTagList == null) return;
+        if (enemyTagList.Contains(other.tag))
+        {
+            IHurt enemy = other.GetComponentInParent<IHurt>();
+            if (enemy != null && !enemyList.Contains(enemy))
+            {
+                //TODO 武器击中敌人的通知
+                Debug.Log("武器：攻击伤害触发");
+                onHitAction?.Invoke(enemy, other.ClosestPoint(transform.position));
+                enemyList.Add(enemy);
+            }
+        }
+    }
 }

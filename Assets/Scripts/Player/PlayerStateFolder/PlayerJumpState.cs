@@ -78,7 +78,7 @@ public class PlayerJumpState : PlayerStateBase
 
         velocity = _player.jumpStartSpeed;
         _player.PlayAnimation("JumpStart");
-        _player._PlayerModle.SetRootMotionAction(OnRootMotion);
+        _player.Model.SetRootMotionAction(OnRootMotion);
 
         #endregion
     }
@@ -112,7 +112,7 @@ public class PlayerJumpState : PlayerStateBase
 
 
         #region Jump动画只有一个,暂时不用
-        AnimatorStateInfo stateInfo = _player._PlayerModle._Animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo stateInfo = _player.Model._Animator.GetCurrentAnimatorStateInfo(0);
         
         //jump动画为一体的逻辑
         if (stateInfo.IsName("JumpStart"))
@@ -133,7 +133,7 @@ public class PlayerJumpState : PlayerStateBase
                     Vector3 input = new Vector3(horizontal, 0, vertical);
                     float y = Camera.main.transform.rotation.eulerAngles.y;
                     Vector3 targetDir = Quaternion.Euler(0, y, 0) * input;
-                    _player._PlayerModle.transform.rotation = Quaternion.Slerp(_player._PlayerModle.transform.rotation,
+                    _player.Model.transform.rotation = Quaternion.Slerp(_player.Model.transform.rotation,
                         Quaternion.LookRotation(targetDir), Time.deltaTime * _player._rotationSpeed);
                 }
 
@@ -154,7 +154,7 @@ public class PlayerJumpState : PlayerStateBase
         velocity = 0f;
         verticalDisplancement = Vector3.zero;
         //horizontalMotion = Vector3.zero;
-        _player._PlayerModle.ClearRootMotionAction();
+        _player.Model.ClearRootMotionAction();
     }
 
     private void OnRootMotion(Vector3 deltaPosition, Quaternion deltaRotation)

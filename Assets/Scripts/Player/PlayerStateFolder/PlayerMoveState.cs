@@ -43,7 +43,7 @@ public class PlayerMoveState : PlayerStateBase
 
         //_player._PlayerModle._Animator.applyRootMotion = true;
         //AudioManager.Instance.AddAudioClip("RunStop",)
-        _player._PlayerModle.SetRootMotionAction(OnRootMotion);
+        _player.Model.SetRootMotionAction(OnRootMotion);
         MoveState = MoveChildState.Move;
         //注册根运动s
         //_player._PlayerModle.SetRootMotionAction(OnRootMotion);
@@ -151,10 +151,10 @@ public class PlayerMoveState : PlayerStateBase
                    walkToRunTransition - Time.deltaTime * _player.walkToRunTransition, 0, 1);
             }
 
-            _player._PlayerModle._Animator.SetFloat("Move", walkToRunTransition);
+            _player.Model._Animator.SetFloat("Move", walkToRunTransition);
 
             //通过修改动画播放速度，来达到实际的位移距离变化
-            _player._PlayerModle._Animator.speed = Mathf.Lerp(_player.walkSpeed, _player.RunSpeed, walkToRunTransition);
+            _player.Model._Animator.speed = Mathf.Lerp(_player.walkSpeed, _player.RunSpeed, walkToRunTransition);
 
             if(horizontal != 0 || vertical != 0)
             {
@@ -164,8 +164,8 @@ public class PlayerMoveState : PlayerStateBase
 
                 //让四元数与向量相乘，表示让这个向量按照这个四元数所表达的角度进行旋转后得到新的向量
                 Vector3 targetDiretion = Quaternion.Euler(0, y, 0) * input;
-                _player._PlayerModle.transform.rotation = Quaternion.Slerp(
-                    _player._PlayerModle.transform.rotation, Quaternion.LookRotation(targetDiretion),
+                _player.Model.transform.rotation = Quaternion.Slerp(
+                    _player.Model.transform.rotation, Quaternion.LookRotation(targetDiretion),
                     Time.deltaTime * _player._rotationSpeed);
             }
         }
@@ -199,8 +199,8 @@ public class PlayerMoveState : PlayerStateBase
     public override void Exit()
     {
         walkToRunTransition = 0f;
-        _player._PlayerModle._Animator.speed = 1;
-        _player._PlayerModle.ClearRootMotionAction();
+        _player.Model._Animator.speed = 1;
+        _player.Model.ClearRootMotionAction();
     }
 
     //private IEnumerator DelayedDisableRootMotion()

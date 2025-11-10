@@ -8,7 +8,7 @@ public class PlayerIdleState : PlayerStateBase
     //private float gravity = 0f;
     public override void Enter()
     {
-        _player._PlayerModle._Animator.SetBool("IsIdle",true);
+        _player.Model._Animator.SetBool("IsIdle",true);
         //_player.PlayAnimationImmediately("Idle");
         //_player._CharacterController.detectCollisions = false;
     }
@@ -70,8 +70,8 @@ public class PlayerIdleState : PlayerStateBase
     public override void Exit()
     {
         
-        _player._PlayerModle._Animator.SetBool("IsIdle", false);
-        _player._PlayerModle._Animator.applyRootMotion = true;
+        _player.Model._Animator.SetBool("IsIdle", false);
+        _player.Model._Animator.applyRootMotion = true;
         //_player._CharacterController.detectCollisions = true;
         //SyncModelToController();
     }

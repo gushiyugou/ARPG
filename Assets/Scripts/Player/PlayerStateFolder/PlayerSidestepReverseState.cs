@@ -8,7 +8,7 @@ public class PlayerSidestepReverseState : PlayerStateBase
     {
         _player.PlayAnimation("SidestepReverse");
         SetRootAnima(true);
-        _player._PlayerModle.SetRootMotionAction(OnRootMontion);
+        _player.Model.SetRootMotionAction(OnRootMontion);
 
     }
 

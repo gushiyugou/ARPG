@@ -19,7 +19,7 @@ public class PlayerSideStepState : PlayerStateBase
         }
         else
         {
-            _player._PlayerModle.SetRootMotionAction(OnRootMontion);
+            _player.Model.SetRootMotionAction(OnRootMontion);
             _player.PlayAnimation("Sidestep");
         }
     }
@@ -34,13 +34,13 @@ public class PlayerSideStepState : PlayerStateBase
         while(changeValue < 1)
         {
             changeValue += Time.deltaTime * 50;
-            _player._PlayerModle.transform.rotation = Quaternion.Slerp(
-              _player._PlayerModle.transform.rotation, targetRot, changeValue
+            _player.Model.transform.rotation = Quaternion.Slerp(
+              _player.Model.transform.rotation, targetRot, changeValue
             );
             yield return null;
         }
         isRotate = false;
-        _player._PlayerModle.SetRootMotionAction(OnRootMontion);
+        _player.Model.SetRootMotionAction(OnRootMontion);
         _player.PlayAnimation("Sidestep");
     }
 
@@ -63,7 +63,7 @@ public class PlayerSideStepState : PlayerStateBase
     public override void Exit()
     {
         moveStatePower = 0;
-        _player._PlayerModle.ClearRootMotionAction();
+        _player.Model.ClearRootMotionAction();
         if(rotateCoroutine != null) MonoManager.Instance.StopCoroutine(rotateCoroutine);
     }
 

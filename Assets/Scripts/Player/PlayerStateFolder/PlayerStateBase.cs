@@ -17,7 +17,7 @@ public class PlayerStateBase : StateBase
 
     protected virtual bool CheckAnimatorStateName(string stateName,out float normalizedTime)
     {
-        AnimatorStateInfo nextState = _player._PlayerModle._Animator.GetNextAnimatorStateInfo(0);
+        AnimatorStateInfo nextState = _player.Model._Animator.GetNextAnimatorStateInfo(0);
         if (nextState.IsName(stateName))
         {
             normalizedTime = nextState.normalizedTime;
@@ -25,7 +25,7 @@ public class PlayerStateBase : StateBase
         }
 
 
-        AnimatorStateInfo currentState = _player._PlayerModle._Animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo currentState = _player.Model._Animator.GetCurrentAnimatorStateInfo(0);
         normalizedTime = currentState.normalizedTime;
         return currentState.IsName(stateName);
     }
@@ -47,7 +47,7 @@ public class PlayerStateBase : StateBase
         Vector3 controllerPosition = _player.transform.position;
 
         // 同步模型位置到控制器位置
-        _player._PlayerModle.transform.position = controllerPosition;
+        _player.Model.transform.position = controllerPosition;
 
         //// 如果使用根运动，可能需要禁用或调整
         //_player._PlayerModle._Animator.applyRootMotion = false;
@@ -60,12 +60,12 @@ public class PlayerStateBase : StateBase
 
     protected void SetRootAnima(bool setState)
     {
-        _player._PlayerModle._Animator.applyRootMotion = setState;
+        _player.Model._Animator.applyRootMotion = setState;
     }
 
     protected bool GetRootAnimaState()
     {
-        return _player._PlayerModle._Animator.applyRootMotion;
+        return _player.Model._Animator.applyRootMotion;
     }
 
 
@@ -74,18 +74,18 @@ public class PlayerStateBase : StateBase
     protected Vector3 GetMouseWorldDirection()
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, _player._PlayerModle.transform.position);
+        Plane groundPlane = new Plane(Vector3.up, _player.Model.transform.position);
         float enter;
 
         if (groundPlane.Raycast(mouseRay, out enter))
         {
             Vector3 worldPoint = mouseRay.GetPoint(enter);
-            Vector3 direction = (worldPoint - _player._PlayerModle.transform.position).normalized;
+            Vector3 direction = (worldPoint - _player.Model.transform.position).normalized;
             direction.y = 0;
             return direction;
         }
 
-        return _player._PlayerModle.transform.forward;
+        return _player.Model.transform.forward;
     }
 
 

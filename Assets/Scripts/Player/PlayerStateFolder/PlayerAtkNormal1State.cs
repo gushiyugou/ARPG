@@ -24,7 +24,7 @@ public class PlayerAtkNormal1State : PlayerStateBase
     public override void Enter()
     {
         //处理攻击方向
-        _player._PlayerModle.SetRootMotionAction(OnRootMotion);
+        _player.Model.SetRootMotionAction(OnRootMotion);
         currentSkillIndex = -1;
         StandAttck();
     }
@@ -45,7 +45,7 @@ public class PlayerAtkNormal1State : PlayerStateBase
         
         if (CheckAnimatorStateName(_player.standAttckCongigs[currentSkillIndex].AnimationName, out float animTime) && animTime >=0.9f)
         {
-            _player._PlayerModle._Animator.SetBool("IsIdle", true);
+            _player.Model._Animator.SetBool("IsIdle", true);
             _player.ChangeState(PlayerStateType.Idle);
             return;
         }
@@ -67,8 +67,8 @@ public class PlayerAtkNormal1State : PlayerStateBase
                 float y = Camera.main.transform.eulerAngles.y;
 
                 Vector3 targetRot = Quaternion.Euler(0, y, 0) * input;
-                _player._PlayerModle.transform.rotation = Quaternion.Slerp(
-                    _player._PlayerModle.transform.rotation,
+                _player.Model.transform.rotation = Quaternion.Slerp(
+                    _player.Model.transform.rotation,
                     Quaternion.LookRotation(targetRot),
                     Time.deltaTime * _player.attackRotSpeed
                     );
@@ -135,8 +135,8 @@ public class PlayerAtkNormal1State : PlayerStateBase
 
             //让四元数与向量相乘，表示让这个向量按照这个四元数所表达的角度进行旋转后得到新的向量
             Vector3 targetDiretion = Quaternion.Euler(0, y, 0) * input;
-            _player._PlayerModle.transform.rotation = Quaternion.Slerp(
-                _player._PlayerModle.transform.rotation, Quaternion.LookRotation(targetDiretion),
+            _player.Model.transform.rotation = Quaternion.Slerp(
+                _player.Model.transform.rotation, Quaternion.LookRotation(targetDiretion),
                 Time.deltaTime * _player.rotSpeed);
         }
     }

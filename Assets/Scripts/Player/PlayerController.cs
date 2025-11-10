@@ -13,11 +13,8 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 {
     [Header("基础组件")]
-    [SerializeField]private PlayerModle _playerModle;
-    public PlayerModle _PlayerModle 
-    { 
-        get => _playerModle;  
-    }
+    [SerializeField]private PlayerModle _playerModel;
+    public PlayerModle Model { get => _playerModel;}
 
     [SerializeField]private CharacterController _characterController;
     public CharacterController _CharacterController{ get => _characterController; }
@@ -29,8 +26,8 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     //public SkillConfig _skillConfig;
     
     [Header("敌人Tag列表")]public List<string> enemyTagList;
+    private List<IHurt> enemyList = new List<IHurt>();
 
-    
 
 
     #region 配置信息
@@ -80,8 +77,8 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     private void Awake()
     {
         //_playerModle = GetComponentWi<PlayerModle>();
-        attackDetector = _PlayerModle.GetComponent<SectorAttackDetector>();
-        _PlayerModle.OnInit(this, enemyTagList);
+        attackDetector = Model.GetComponent<SectorAttackDetector>();
+        Model.OnInit(this, enemyTagList);
         _stateMachine = new StateMachine();
         _stateMachine.Init(this);
         _characterController = GetComponent<CharacterController>();
@@ -169,7 +166,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         SpawnAttackEffect(CurrentSkillConfig.attackData[currentHitIndex].skillObj);
 
         //攻击检测
-        AttackEffectCheck(CurrentSkillConfig.attackData[currentHitIndex]);
+        //AttackEffectCheck(CurrentSkillConfig.attackData[currentHitIndex]);
 
         #region 扇形范围检测
         //扇形范围检测
@@ -221,7 +218,10 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 
         DoFreezeGame(skillData.FreezeGameTime);
         Debug.Log("击中");
-        //TODO:对IHurt传递伤害数据
+
+        //对IHurt传递伤害数据
+        //TODO:后续做特殊情况的处理
+        target.Hurt();
 
     }
 
@@ -232,10 +232,10 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     /// <param name="skillConfig"></param>
     public void AttackEffectCheck(SkillAttackData attackData)
     {
-        Vector3 checkPos = _PlayerModle.transform.position +
-            _PlayerModle.transform.TransformDirection(attackData.attackcheck.checkPos);
+        Vector3 checkPos = Model.transform.position +
+            Model.transform.TransformDirection(attackData.attackcheck.checkPos);
 
-        Quaternion checkRot = _PlayerModle.transform.rotation * Quaternion.Euler(attackData.attackcheck.checkRot);
+        Quaternion checkRot = Model.transform.rotation * Quaternion.Euler(attackData.attackcheck.checkRot);
 
         LayerMask enemyLayerMask = LayerMask.GetMask("Enemy");
 
@@ -259,6 +259,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
                 if (hitColliders[i] != null)
                 {
                     validCollider = hitColliders[i];
+                    enemyList.Add(validCollider.gameObject.GetComponent<IHurt>());
                     break;
                 }
             }
@@ -266,6 +267,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
             if (validCollider != null)
             {
                 Debug.Log("范围内有敌人");
+                Debug.Log("敌人名字"+((Component)enemyList[0]).gameObject.name);
                 SkillAttackData skillData = CurrentSkillConfig.attackData[currentHitIndex];
                 StartCoroutine(DoSkillHitEffect(skillData.hitEffect, validCollider.ClosestPoint(weapon.position)));
 
@@ -304,9 +306,9 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     }
     public IEnumerator StartFreezeFrameTime(float time)
     {
-        _playerModle._Animator.speed = 0; 
+        _playerModel._Animator.speed = 0; 
         yield return new WaitForSeconds(time);
-        _playerModle._Animator.speed = 1;
+        _playerModel._Animator.speed = 1;
     }
 
 
@@ -376,14 +378,14 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         {
             GameObject skillPrefab = PoolManager.Instance.GetPoolObject(
             skillObj.prefab.prefabName, skillObj.prefab.folderName);
-            skillPrefab.transform.position = _PlayerModle.transform.position +
-                _PlayerModle.transform.TransformDirection(skillObj.position);
+            skillPrefab.transform.position = Model.transform.position +
+                Model.transform.TransformDirection(skillObj.position);
             //_PlayerModle.transform.forward * skillObj.position.z +
             //_PlayerModle.transform.right * skillObj.position.x +
             // _PlayerModle.transform.up * skillObj.position.y;
             skillPrefab.transform.localScale = skillObj.scale;
             //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
-            skillPrefab.transform.rotation = _PlayerModle.transform.rotation * Quaternion.Euler(skillObj.rotation);
+            skillPrefab.transform.rotation = Model.transform.rotation * Quaternion.Euler(skillObj.rotation);
         }
     }
 
@@ -408,15 +410,15 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
         {
             GameObject skillPrefab = PoolManager.Instance.GetPoolObject(
             skillObj.prefab.prefabName, skillObj.prefab.folderName);
-            skillPrefab.transform.position = _PlayerModle.transform.position +
-                _PlayerModle.transform.TransformDirection(skillObj.position);
+            skillPrefab.transform.position = Model.transform.position +
+                Model.transform.TransformDirection(skillObj.position);
             //_PlayerModle.transform.forward * skillObj.position.z +
             //_PlayerModle.transform.right * skillObj.position.x +
             // _PlayerModle.transform.up * skillObj.position.y;
 
             skillPrefab.transform.localScale = skillObj.scale;
             //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
-            skillPrefab.transform.rotation = _PlayerModle.transform.rotation * Quaternion.Euler(skillObj.rotation);
+            skillPrefab.transform.rotation = Model.transform.rotation * Quaternion.Euler(skillObj.rotation);
         }
     }
 
@@ -443,7 +445,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     /// <param name="fixedTransitionDuration">过渡时间</param>
     public void PlayAnimation(string animationName,float fixedTransitionDuration = 0.25f)
     {
-        _playerModle._Animator.CrossFadeInFixedTime(animationName, fixedTransitionDuration);
+        _playerModel._Animator.CrossFadeInFixedTime(animationName, fixedTransitionDuration);
         
     }
 
@@ -457,7 +459,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     /// <param name="num">开始播放的帧数</param>
     public void PlayAnimationImmediately(string animationName,int layer,int num)
     {
-        _PlayerModle._Animator.Play(animationName, layer,num);
+        Model._Animator.Play(animationName, layer,num);
     }
 
 
@@ -468,7 +470,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     /// </summary>
     public bool IsPlayingAnimation(string animationName)
     {
-        AnimatorStateInfo stateInfo = _PlayerModle._Animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo stateInfo = Model._Animator.GetCurrentAnimatorStateInfo(0);
         return stateInfo.IsName(animationName);
     }
 
@@ -480,7 +482,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     /// </summary>
     public void ForceAnimationTransition(string targetAnimation, float transitionDuration = 0.1f)
     {
-        _PlayerModle._Animator.CrossFade(targetAnimation, transitionDuration);
+        Model._Animator.CrossFade(targetAnimation, transitionDuration);
     }
 
 
@@ -492,8 +494,8 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     private void OnAnimatorMove()
     {
         // 应用根运动位移
-        _characterController.Move(_playerModle._Animator.deltaPosition);
-        transform.rotation *= _playerModle._Animator.deltaRotation;
+        _characterController.Move(_playerModel._Animator.deltaPosition);
+        transform.rotation *= _playerModel._Animator.deltaRotation;
         
     }
 
@@ -568,10 +570,10 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Vector3 checkPos = _PlayerModle.transform.position +
-                          _PlayerModle.transform.forward * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.z +
-                          _PlayerModle.transform.up * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.y +
-                          _PlayerModle.transform.right * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.x;
+        Vector3 checkPos = Model.transform.position +
+                          Model.transform.forward * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.z +
+                          Model.transform.up * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.y +
+                          Model.transform.right * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.x;
         Gizmos.DrawCube(checkPos,
             standAttckCongigs[1].attackData[currentHitIndex].attackcheck.halfExtents);
     }

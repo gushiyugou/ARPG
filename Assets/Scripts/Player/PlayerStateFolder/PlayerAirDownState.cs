@@ -335,7 +335,7 @@ public class PlayerAirDownState : PlayerStateBase
             motion.x = _player.moveSpeedForJump * Time.deltaTime * targetDir.x;
             motion.z = _player.moveSpeedForJump * Time.deltaTime*targetDir.z;
             
-            _player._PlayerModle.transform.rotation = Quaternion.Slerp(_player._PlayerModle.transform.rotation,
+            _player.Model.transform.rotation = Quaternion.Slerp(_player.Model.transform.rotation,
                 Quaternion.LookRotation(targetDir), Time.deltaTime * _player._rotationSpeed);
         }
         _player._CharacterController.Move(motion);
