@@ -80,11 +80,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e626bf251459594bafe54192d3da1a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerModel: {fileID: 1581923003639843079}
+  model: {fileID: 0}
   _characterController: {fileID: 271654745633751416}
-  _audioSource: {fileID: 4704950498933260631}
+  audioSource: {fileID: 0}
   enemyTagList:
   - Enemy
+  weaponTrail: {fileID: 1900217599274410991}
+  weapon: {fileID: 616349939696452968}
+  standAttckCongigs:
+  - {fileID: 11400000, guid: 8e641baa3025a9849b9df2f185894815, type: 2}
+  - {fileID: 11400000, guid: 4bf2b471a8d2e3640aa9a9406b3ccccc, type: 2}
+  - {fileID: 11400000, guid: 4b73e7dda6d680a45ab2695c3894ca59, type: 2}
+  - {fileID: 11400000, guid: b90e394cfca768d44a99312069501fca, type: 2}
+  currentHitWeapIndex: 0
   _rotationSpeed: 5
   walkToRunTransition: 3
   walkSpeed: 1
@@ -95,14 +103,6 @@ MonoBehaviour:
   rotSpeed: 100
   attackRotSpeed: 10
   enemyCollider: []
-  weapon: {fileID: 616349939696452968}
-  standAttckCongigs:
-  - {fileID: 11400000, guid: 8e641baa3025a9849b9df2f185894815, type: 2}
-  - {fileID: 11400000, guid: 4bf2b471a8d2e3640aa9a9406b3ccccc, type: 2}
-  - {fileID: 11400000, guid: 4b73e7dda6d680a45ab2695c3894ca59, type: 2}
-  - {fileID: 11400000, guid: b90e394cfca768d44a99312069501fca, type: 2}
-  currentHitWeapIndex: 0
-  weaponTrail: {fileID: 1900217599274410991}
   impulseSource: {fileID: 3259643475810371558}
 --- !u!143 &271654745633751416
 CharacterController:
@@ -3499,9 +3499,6 @@ PrefabInstance:
       addedObject: {fileID: 7795175238358129408}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d5dda726489bab4aa857bc6258701c0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1257764035481778785}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d5dda726489bab4aa857bc6258701c0, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7935791246253147912}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d5dda726489bab4aa857bc6258701c0, type: 3}
       insertIndex: -1
@@ -3582,19 +3579,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ecda973acb5a0b47a85f7bebf21eb2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1257764035481778785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383964963083006137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3224bc8dfd12ab43b38f660c0c3b3e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  knife: {fileID: 0}
 --- !u!114 &7935791246253147912
 MonoBehaviour:
   m_ObjectHideFlags: 0

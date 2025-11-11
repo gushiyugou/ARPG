@@ -33,10 +33,10 @@ public class PlayerStateBase : StateBase
     //主动运用重力
     protected void UpdataGravity()
     {
-        if (!_player._CharacterController.isGrounded)
+        if (!_player.characterController.isGrounded)
         {
             BaseGravityVelocity += _player._gravity * Time.deltaTime;
-            _player._CharacterController.Move(Vector3.down * BaseGravityVelocity * Time.deltaTime);
+            _player.characterController.Move(Vector3.down * BaseGravityVelocity * Time.deltaTime);
             Debug.Log(BaseGravityVelocity);
         }
     }

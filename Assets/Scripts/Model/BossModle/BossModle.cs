@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public class BossModle:ModleBase
+public class BossModle:ModelBase
 {
 
 }

@@ -77,7 +77,7 @@ public class BossHurtState : BossStateBase
                 if (CheckAnimatorStateName("Rise",out float time) && time > 0.99f)
                 {
                     boss.ChangeState(BossStateType.Idle);
-                }
+                } 
                 break;
         }
         

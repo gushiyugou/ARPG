@@ -99,7 +99,7 @@ public class PlayerAtkNormal1State : PlayerStateBase
     private void OnRootMotion(Vector3 deltaPosition, Quaternion deltaRotation)
     {
         deltaPosition.y = _player._gravity * Time.deltaTime;
-        _player._CharacterController.Move(deltaPosition);
+        _player.characterController.Move(deltaPosition);
     }
 
     public override void Exit()

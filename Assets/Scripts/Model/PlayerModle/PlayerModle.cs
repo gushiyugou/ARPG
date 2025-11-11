@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerModle : ModleBase
+public class PlayerModle : ModelBase
 {
     
 }

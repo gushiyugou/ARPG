@@ -99,7 +99,7 @@ public class PlayerJumpState : PlayerStateBase
 
         float displancement = velocity * Time.deltaTime;
         verticalDisplancement = new Vector3(0, displancement, 0);
-        _player._CharacterController.Move(verticalDisplancement);
+        _player.characterController.Move(verticalDisplancement);
         #endregion
 
         #region ¶àÌøÔ¾×´Ì¬
@@ -138,9 +138,9 @@ public class PlayerJumpState : PlayerStateBase
                 }
 
                 Vector3 direction = Camera.main.transform.TransformDirection(new Vector3(horizontal, 0, vertical));
-                _player._CharacterController.Move(direction * Time.deltaTime * _player.moveSpeedForJump);
+                _player.characterController.Move(direction * Time.deltaTime * _player.moveSpeedForJump);
             }
-            else if (animationTime >= 0.3f || isGrounded || _player._CharacterController.isGrounded)
+            else if (animationTime >= 0.3f || isGrounded || _player.characterController.isGrounded)
             {
                 _player.ChangeState(PlayerStateType.Idle);
                 return;
@@ -176,7 +176,7 @@ public class PlayerJumpState : PlayerStateBase
         //²»·Ö½×¶Î
         //deltaPosition.y *= _player.jumpStartSpeed;
         //deltaPosition.y += verticalDisplancement.y;
-        _player._CharacterController.Move(deltaPosition);
+        _player.characterController.Move(deltaPosition);
         #endregion
 
     }

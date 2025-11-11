@@ -51,7 +51,7 @@ public class PlayerMoveState : PlayerStateBase
 
     public override void Update()
     {
-        _player._CharacterController.Move(new Vector3(0, _player._gravity * Time.deltaTime, 0));
+        _player.characterController.Move(new Vector3(0, _player._gravity * Time.deltaTime, 0));
         if (Input.GetMouseButtonDown(0))
         {
             _player.ChangeState(PlayerStateType.AtkNormal1);
@@ -213,6 +213,6 @@ public class PlayerMoveState : PlayerStateBase
     private void OnRootMotion(Vector3 deltaPosition, Quaternion deltaRotation)
     {
         deltaPosition.y = _player._gravity * Time.deltaTime;
-        _player._CharacterController.Move(deltaPosition);
+        _player.characterController.Move(deltaPosition);
     }
 }

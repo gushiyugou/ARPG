@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ModleBase:MonoBehaviour
+public abstract class ModelBase:MonoBehaviour
 {
     protected Animator _animator;
     public Animator _Animator { get { return _animator; } }

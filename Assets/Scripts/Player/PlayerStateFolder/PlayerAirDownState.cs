@@ -190,7 +190,7 @@ public class PlayerAirDownState : PlayerStateBase
 
     public override void Enter()
     {
-        _player._CharacterController.Move(new Vector3(0, _player._gravity * Time.deltaTime, 0));
+        _player.characterController.Move(new Vector3(0, _player._gravity * Time.deltaTime, 0));
         AirState = AirDownChildState.Loop;
 
         needEndAnimation = !Physics.Raycast(_player.transform.position + new Vector3(0, 0.5f, 0),
@@ -274,7 +274,7 @@ public class PlayerAirDownState : PlayerStateBase
                     {
                         AirState = AirDownChildState.End;
                     }
-                    else if (_player._CharacterController.isGrounded)
+                    else if (_player.characterController.isGrounded)
                     {
                         _player.ChangeState(PlayerStateType.Idle);
                         return;
@@ -282,7 +282,7 @@ public class PlayerAirDownState : PlayerStateBase
                 }
                 else
                 {
-                    if (_player._CharacterController.isGrounded)
+                    if (_player.characterController.isGrounded)
                     {
                         _player.ChangeState(PlayerStateType.Idle);
                         return;
@@ -298,7 +298,7 @@ public class PlayerAirDownState : PlayerStateBase
                 {
                     if (time >= 0.15f)
                     {
-                        if (!_player._CharacterController.isGrounded)
+                        if (!_player.characterController.isGrounded)
                         {
                             AirState = AirDownChildState.Loop;
                         }
@@ -338,12 +338,12 @@ public class PlayerAirDownState : PlayerStateBase
             _player.Model.transform.rotation = Quaternion.Slerp(_player.Model.transform.rotation,
                 Quaternion.LookRotation(targetDir), Time.deltaTime * _player._rotationSpeed);
         }
-        _player._CharacterController.Move(motion);
+        _player.characterController.Move(motion);
     }
 
     void CheckLayerMask()
     {
-        Debug.Log("是否到地面："+_player._CharacterController.isGrounded);
+        Debug.Log("是否到地面："+_player.characterController.isGrounded);
         Debug.Log("是否需要播放结束动画："+needEndAnimation);
     }
 }

@@ -71,6 +71,6 @@ public class PlayerSideStepState : PlayerStateBase
     {
         deltaPosition *= Mathf.Clamp(moveStatePower, 1, 2);
         //deltaPosition.y = _player._gravity *Time.deltaTime;
-        _player._CharacterController.Move(deltaPosition);
+        _player.characterController.Move(deltaPosition);
     }
 }
