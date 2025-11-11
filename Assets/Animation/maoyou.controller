@@ -129,7 +129,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AtkNormal2
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7645790846761568629}
@@ -308,7 +308,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AtkNormal1
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5441431384340940489}
@@ -406,7 +406,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AtkNormal5
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3904777705520059589}
@@ -1015,7 +1015,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AtkNormal3
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5856495262027660128}
@@ -1060,7 +1060,7 @@ AnimatorStateMachine:
     m_Position: {x: -170, y: 880, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -963235189793260186}
-    m_Position: {x: -270, y: 350, z: 0}
+    m_Position: {x: -280, y: 580, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4238993302765011956}
     m_Position: {x: -400, y: 930, z: 0}
@@ -1105,9 +1105,9 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: -240, y: 310, z: 0}
-  m_EntryPosition: {x: -250, y: 400, z: 0}
-  m_ExitPosition: {x: -240, y: 270, z: 0}
+  m_AnyStatePosition: {x: -260, y: 540, z: 0}
+  m_EntryPosition: {x: -260, y: 630, z: 0}
+  m_ExitPosition: {x: -260, y: 500, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -1457867578304896973}
 --- !u!1101 &7645790846761568629

@@ -24,7 +24,7 @@ public class WeaponController : MonoBehaviour
     //TODO WeaponCollider: 初始化函数，进行受伤时的通知
     public void Init(List<string> enemyTagList, Action<IHurt, Vector3> onHitAction)
     {
-        collider.isTrigger = false;
+        collider.enabled = false;
         this.enemyTagList = enemyTagList;   
         this.onHitAction = onHitAction;
         //weaponTrail.Emit = false;
@@ -32,13 +32,13 @@ public class WeaponController : MonoBehaviour
 
     public void StartSkillHit()
     {
-        collider.isTrigger = true;
+        collider.enabled = true;
         //weaponTrail.Emit = true;
     }
 
     public void StopSkillHit()
     {
-        collider.isTrigger = false;
+        collider.enabled = false;
         //weaponTrail.Emit = false;
         enemyList.Clear();
     }

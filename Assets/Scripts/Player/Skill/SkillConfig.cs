@@ -43,18 +43,7 @@ public class SkillAttackData
     public AudioClip attackAudio;
 
     //TODO:命中数据
-    //伤害值
-    public float damageValue;
-
-    //技能伤害持续时间（持续技能伤害特有）
-    //敌人僵直
-    public float stiffTime;
-
-    //击退击飞时间
-    public float repelTime;
-
-    //技能击退击飞
-    public Vector3 repelDegree;
+    public SkillHitData hitDatat;
 
     //技能击中效果
     public SkillHitEffectConfig hitEffect;
@@ -75,6 +64,33 @@ public class SkillAttackData
     public attackCheck attackcheck;
 
 }
+
+
+/// <summary>
+/// 技能攻击配置
+/// </summary>
+[Serializable]
+public class SkillHitData
+{
+    //伤害值
+    public float damageValue;
+    //技能伤害持续时间（持续技能伤害特有）
+    //敌人僵直
+    public float stiffTime;
+
+    //击退击飞时间
+    public float repelTime;
+
+    //是否击倒
+    public bool isDown;
+
+    //技能击退击飞
+    public Vector3 repelDegree;
+}
+
+
+
+
 
 [Serializable]
 public class SkillSpawnObj

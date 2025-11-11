@@ -3,6 +3,7 @@ using UnityEngine;
 
 public interface ISkillOwner
 {
+    Transform ModelTransform { get; }
     void StartSkillHit(int weaponIndex);
 
     void StopSkillHit(int weaponIndex);

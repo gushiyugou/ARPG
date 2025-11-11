@@ -36,10 +36,12 @@ MonoBehaviour:
       scale: {x: -0.5, y: 0.5, z: 0.5}
       Time: 0
     attackAudio: {fileID: 8300000, guid: f270665eedc408f4cbe12be23e06695e, type: 3}
-    damageValue: 0
-    stiffTime: 0
-    repelTime: 0
-    repelDegree: {x: 0, y: 0, z: 0}
+    hitDatat:
+      damageValue: 0
+      stiffTime: 0.6
+      repelTime: 0.3
+      isDown: 0
+      repelDegree: {x: 0, y: 0, z: 0.6}
     hitEffect: {fileID: 11400000, guid: 0db3ad1190720994eb115664d9567221, type: 2}
     impulseValue: 0
     chromaticValue: 0
@@ -60,10 +62,12 @@ MonoBehaviour:
       scale: {x: 0.5, y: 0.5, z: 0.5}
       Time: 0
     attackAudio: {fileID: 8300000, guid: 5470fca03fcbccd4685db4500845fc93, type: 3}
-    damageValue: 0
-    stiffTime: 0
-    repelTime: 0
-    repelDegree: {x: 0, y: 0, z: 0}
+    hitDatat:
+      damageValue: 0
+      stiffTime: 0.3
+      repelTime: 0.2
+      isDown: 0
+      repelDegree: {x: 0, y: 0, z: 0.3}
     hitEffect: {fileID: 11400000, guid: 0db3ad1190720994eb115664d9567221, type: 2}
     impulseValue: 0
     chromaticValue: 0

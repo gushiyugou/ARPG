@@ -174,9 +174,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3461344426073798101}
   - component: {fileID: 5608495473051564380}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -358,9 +358,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1298267653950964626}
   - component: {fileID: 1172864487348832569}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001-Head
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -860,9 +860,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5348559484018839387}
   - component: {fileID: 6862858993767581128}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001-L-Forearm
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -916,9 +916,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5605773110711934068}
   - component: {fileID: 8574270251389571950}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001-L-Calf
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1613,6 +1613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossModle: {fileID: 2352031146494635406}
+  _characterController: {fileID: 0}
   enemyTagList:
   - Enemy
   weaponTrail: {fileID: 5659189149375087939}
@@ -1847,9 +1848,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8027941232240357181}
   - component: {fileID: 2628702904449446506}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001-R-Forearm
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2154,9 +2155,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5420547075815272303}
   - component: {fileID: 4708241776879645302}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001-R-Calf
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

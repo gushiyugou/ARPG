@@ -36,10 +36,12 @@ MonoBehaviour:
       scale: {x: 0.5, y: 0.5, z: 0.5}
       Time: 0
     attackAudio: {fileID: 8300000, guid: 0decc6fd2074777489578b15405796f2, type: 3}
-    damageValue: 0
-    stiffTime: 0
-    repelTime: 0
-    repelDegree: {x: 0, y: 0, z: 0}
+    hitDatat:
+      damageValue: 0
+      stiffTime: 0.5
+      repelTime: 0.6
+      isDown: 1
+      repelDegree: {x: 0, y: 1, z: 3}
     hitEffect: {fileID: 11400000, guid: 5dec894b4434cb44d98f3f50c2f96986, type: 2}
     impulseValue: 0
     chromaticValue: 0

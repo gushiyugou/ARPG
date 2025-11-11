@@ -8,7 +8,7 @@ public class SectorAttackDetector : MonoBehaviour
     [SerializeField] private float attackAngle = 90f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask obstacleLayer;
-    [SerializeField] private bool showGizmos = true;
+    //[SerializeField] private bool showGizmos = true;
 
     public float AttackRadius { get => attackRadius; set => attackRadius = value; }
     public float AttackAngle { get => attackAngle; set => attackAngle = Mathf.Clamp(value, 0, 360); }

@@ -1,20 +1,14 @@
 using Cinemachine;
-using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 {
     [Header("基础组件")]
     [SerializeField]private PlayerModle _playerModel;
     public PlayerModle Model { get => _playerModel;}
+    public Transform ModelTransform => Model.transform;
 
     [SerializeField]private CharacterController _characterController;
     public CharacterController _CharacterController{ get => _characterController; }
@@ -50,7 +44,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 
     //[Header("扇形攻击检测")]
     private SectorAttackDetector attackDetector;
-    [SerializeField] private float baseAttackDamage = 10f;
+    //[SerializeField] private float baseAttackDamage = 10f;
     public Transform weapon;
 
     /// <summary>
@@ -74,19 +68,17 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 
 
 
-    private void Awake()
+   
+
+    private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         //_playerModle = GetComponentWi<PlayerModle>();
         attackDetector = Model.GetComponent<SectorAttackDetector>();
         Model.OnInit(this, enemyTagList);
         _stateMachine = new StateMachine();
         _stateMachine.Init(this);
         _characterController = GetComponent<CharacterController>();
-        
-    }
-
-    private void Start()
-    {
         ChangeState(PlayerStateType.Idle);
         
     }
@@ -221,7 +213,7 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 
         //对IHurt传递伤害数据
         //TODO:后续做特殊情况的处理
-        target.Hurt();
+        target.Hurt(CurrentSkillConfig.attackData[currentHitIndex].hitDatat,this);
 
     }
 
@@ -567,16 +559,16 @@ public class PlayerController : MonoBehaviour,IStateMachineOwner,ISkillOwner
 
 
     //可视化
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Vector3 checkPos = Model.transform.position +
-                          Model.transform.forward * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.z +
-                          Model.transform.up * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.y +
-                          Model.transform.right * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.x;
-        Gizmos.DrawCube(checkPos,
-            standAttckCongigs[1].attackData[currentHitIndex].attackcheck.halfExtents);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.green;
+    //    Vector3 checkPos = Model.transform.position + Model.transform.TransformDirection(CurrentSkillConfig.attackData[currentHitIndex].attackcheck.checkPos);
+    //                      //Model.transform.forward * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.z +
+    //                      //Model.transform.up * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.y +
+    //                      //Model.transform.right * standAttckCongigs[1].attackData[currentHitIndex].attackcheck.checkPos.x;
+    //    Gizmos.DrawCube(checkPos,
+    //        CurrentSkillConfig.attackData[currentHitIndex].attackcheck.halfExtents);
+    //}
 
 
     #endregion

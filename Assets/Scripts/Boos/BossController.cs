@@ -1,19 +1,21 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Analytics.IAnalytic;
 
 public class BossController : MonoBehaviour, IHurt, IStateMachineOwner,ISkillOwner
 {
    
     [SerializeField]private BossModle bossModle;
     public BossModle Model { get => bossModle; }
+    public Transform ModelTransform => Model.transform;
+    [SerializeField] private CharacterController _characterController;
+    public CharacterController characterController { get => _characterController; }
     private StateMachine stateMachine;
-
-
     public List<string> enemyTagList;
 
-
-
+    public SkillHitData HitData { get; private set; }
+    public ISkillOwner HitSource { get; private set; }
 
     [SerializeField, Header("ÕœŒ≤≤Âº˛")] private MeleeWeaponTrail weaponTrail;
 
@@ -42,8 +44,13 @@ public class BossController : MonoBehaviour, IHurt, IStateMachineOwner,ISkillOwn
                 break;
         }
     }
-    public void Hurt()
+
+    
+
+    public void Hurt(SkillHitData hitData, ISkillOwner hitSource)
     {
+        HitData = hitData;
+        HitSource = hitSource;
         Debug.Log("boss ‹…À");
         ChangeState(BossStateType.Hurt, true);
     }
