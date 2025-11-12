@@ -33,8 +33,9 @@ public class BossAttackState : BossStateBase
         //TODO：实现连续普攻
         CurrentSkillIndex += 1;
         boss.StartAttack(boss.standAttckCongigs[currentSkillIndex]);
-        
-        
+        boss.transform.LookAt(boss.targetPos.transform);
+
+
     }
     public override void Update()
     {
@@ -46,11 +47,12 @@ public class BossAttackState : BossStateBase
             return;
         }
 
-        if (Input.GetMouseButtonDown(1) && boss.CanSwitchSkill)
+        float distance = Vector3.Distance(boss.transform.position, boss.targetPos.transform.position);
+        if (distance <= boss.atkRange && boss.CanSwitchSkill)
         {
             StandAttck();
-            return;
         }
+
     }
 
     
@@ -62,6 +64,7 @@ public class BossAttackState : BossStateBase
 
     public override void Exit()
     {
+        boss.Model.ClearRootMotionAction();
         Debug.Log($"BossAttackState退出时间: {Time.time}");
         boss.OnSkillOver();
     }

@@ -11,6 +11,7 @@ public class BossController : CharacterBase
     public PlayerController targetPos;
     public float walkSpeed;
     public float runSpeed;
+    public float atkRange;
 
 
     private void Start()

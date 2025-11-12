@@ -1919,6 +1919,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5757314007180093796, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
+      propertyPath: atkRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757314007180093796, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
       propertyPath: targetPos
       value: 
       objectReference: {fileID: 1564961420}
@@ -1936,7 +1940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6015953587221443327, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 41.1
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 6015953587221443327, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1965,6 +1969,10 @@ PrefabInstance:
     - target: {fileID: 6015953587221443327, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6472122475031835168, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 100000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

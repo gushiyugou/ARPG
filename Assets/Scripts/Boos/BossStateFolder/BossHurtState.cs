@@ -28,6 +28,7 @@ public class BossHurtState : BossStateBase
                     boss.PlayAnimation("Hurt");
                     break;
                 case HurtChildState.Down:
+                    boss.transform.LookAt(sourceTransform.ModelTransform);
                     boss.PlayAnimation("Down");
                     break;
                 case HurtChildState.Rise:
