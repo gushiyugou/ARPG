@@ -38,7 +38,7 @@ MonoBehaviour:
     attackAudio: {fileID: 8300000, guid: d52d545cf6ed4de4f98687ee04686bdd, type: 3}
     hitDatat:
       damageValue: 0
-      stiffTime: 0.6
+      stiffTime: 0.3
       repelTime: 0.3
       isDown: 1
       repelDegree: {x: 0, y: 1, z: 3}

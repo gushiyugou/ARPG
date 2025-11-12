@@ -15,6 +15,7 @@ public class StateMachine
     public  Type CurrentStateType { get => currentState.GetType(); }
     public bool IsHasState { get => currentState != null; }
     private StateBase currentState;
+    public StateBase CurrentState { get => currentState; }
     /// <summary>
     /// ≥ı ºªØ
     /// </summary>

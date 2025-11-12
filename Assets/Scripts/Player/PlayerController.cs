@@ -24,6 +24,9 @@ public class PlayerController : CharacterBase
     public Collider[] enemyCollider;
     public AudioClip[] atkEndAudioClip;
 
+    public float waitCounterattackTime;
+    public SkillConfig counterattackConfig;
+
     #endregion
 
     public CinemachineImpulseSource impulseSource;
@@ -85,7 +88,7 @@ public class PlayerController : CharacterBase
         //Debug.Log("角色控制：我攻击到了" + ((Component)target).gameObject.name);
         //OnHit在Stop之后执行，所以索引要减一
         SkillAttackData skillData = CurrentSkillConfig.attackData[currentHitIndex];
-        PlayAudio(skillData.attackAudio);
+        PlayAudio(skillData.hitEffect.hitAudioClip);
 
         //对IHurt传递伤害数据
         //TODO:后续做特殊情况的处理
@@ -201,8 +204,15 @@ public class PlayerController : CharacterBase
             Transform enemyTransofrom = ((CharacterBase)hitSource).ModelTransform;
             Vector3 enemyToPlayerDir = (ModelTransform.position -  enemyTransofrom.position).normalized;
             float dot = Vector3.Dot(ModelTransform.forward, enemyToPlayerDir);
-            if (dot > 0)   
+            if (dot > 0)
+            {
                 isDefence = false;
+            }
+            else
+            {
+                PlayerDefenceState defenceState = (PlayerDefenceState)stateMachine.CurrentState;
+                defenceState.Hurt();
+            }
         }
         if (!isDefence)
             ChangeState(PlayerStateType.Hurt, true);

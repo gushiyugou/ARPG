@@ -83,6 +83,10 @@ public class PlayerHurtState : PlayerStateBase
             //    } 
             //    break;
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+
+        }
         
     }
 
