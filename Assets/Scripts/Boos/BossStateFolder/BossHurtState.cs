@@ -53,7 +53,7 @@ public class BossHurtState : BossStateBase
     {
         if(repelCoroutine == null)
         {
-            boss.characterController.Move(new Vector3(0, -9.8f * Time.deltaTime, 0));
+            boss.characterController.Move(new Vector3(0, boss._gravity * Time.deltaTime, 0));
         }
         currentHurtTime += Time.deltaTime;
         switch (HurtState)

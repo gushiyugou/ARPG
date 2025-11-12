@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 3259643475810371558}
   m_Layer: 6
   m_Name: maoyou
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -80,9 +80,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e626bf251459594bafe54192d3da1a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 0}
+  model: {fileID: 1581923003639843079}
   _characterController: {fileID: 271654745633751416}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 4704950498933260631}
   enemyTagList:
   - Enemy
   weaponTrail: {fileID: 1900217599274410991}
@@ -103,6 +103,11 @@ MonoBehaviour:
   rotSpeed: 100
   attackRotSpeed: 10
   enemyCollider: []
+  atkEndAudioClip:
+  - {fileID: 8300000, guid: c0d35a50467061b4c8c2efb945684eaa, type: 3}
+  - {fileID: 8300000, guid: b3b6c096b99cd5349a4885f0bb501c3b, type: 3}
+  - {fileID: 8300000, guid: f68b408ec3464c04bab9d61b59b89a20, type: 3}
+  - {fileID: 8300000, guid: c0d35a50467061b4c8c2efb945684eaa, type: 3}
   impulseSource: {fileID: 3259643475810371558}
 --- !u!143 &271654745633751416
 CharacterController:
@@ -2087,6 +2092,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8d5dda726489bab4aa857bc6258701c0, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8d5dda726489bab4aa857bc6258701c0, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -3503,6 +3512,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d5dda726489bab4aa857bc6258701c0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8546098793159204626}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8d5dda726489bab4aa857bc6258701c0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3308704208847051392}
     - targetCorrespondingSourceObject: {fileID: -5280256942518059970, guid: 8d5dda726489bab4aa857bc6258701c0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6892136429592113130}
@@ -3620,6 +3632,29 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 119
+--- !u!136 &3308704208847051392
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383964963083006137}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.28
+  m_Height: 1.57
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.72, z: 0}
 --- !u!4 &616349939696452968 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -9144347070797199232, guid: 8d5dda726489bab4aa857bc6258701c0, type: 3}
@@ -3681,8 +3716,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7, y: 0.15, z: 0.45}
-  m_Center: {x: -0.4, y: 0, z: 0}
+  m_Size: {x: 1.2, y: 0.15, z: 0.45}
+  m_Center: {x: -0.7, y: 0, z: 0}
 --- !u!114 &5299580503258263559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3774,8 +3809,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7, y: 0.15, z: 0.45}
-  m_Center: {x: -0.4, y: 0, z: 0}
+  m_Size: {x: 1.2, y: 0.15, z: 0.45}
+  m_Center: {x: -0.7, y: 0, z: 0}
 --- !u!114 &5726327909278943127
 MonoBehaviour:
   m_ObjectHideFlags: 0

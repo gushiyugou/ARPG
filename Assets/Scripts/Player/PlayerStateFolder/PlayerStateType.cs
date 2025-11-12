@@ -6,5 +6,6 @@
     AirDown,
     Sidestep,
     SidestepReverse,
+    Hurt,
     AtkNormal1
 }

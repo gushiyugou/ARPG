@@ -7,7 +7,7 @@ public class PlayerController : CharacterBase
 {
     
     #region 配置信息
-    public readonly float _gravity = -9.8f;
+    
     [Space,Header("基础信息配置")]
     public float _rotationSpeed = 2f;
     public float walkToRunTransition = 1f;
@@ -22,7 +22,7 @@ public class PlayerController : CharacterBase
     public float attackRotSpeed = 1f;
 
     public Collider[] enemyCollider;
-
+    public AudioClip[] atkEndAudioClip;
 
     #endregion
 
@@ -30,11 +30,11 @@ public class PlayerController : CharacterBase
 
     private void Start()
     {
+        Init();
+        (Model as PlayerModle).AddAtkEndAudio(PlayAtkEndAudio);
         Cursor.lockState = CursorLockMode.Locked;
         //_playerModle = GetComponentWi<PlayerModle>();
         attackDetector = Model.GetComponent<SectorAttackDetector>();
-        Model.OnInit(this, enemyTagList);
-        Init();
         ChangeState(PlayerStateType.Idle);
     }
 
@@ -44,30 +44,33 @@ public class PlayerController : CharacterBase
     /// 状态切换
     /// </summary>
     /// <param name="needState">需要切换的状态类型</param>
-    public void ChangeState(PlayerStateType needState)
+    public void ChangeState(PlayerStateType needState,bool reCurrent = false)
     {
         switch (needState)
         {
             case PlayerStateType.Idle:
-                stateMachine.ChangeState<PlayerIdleState>();
+                stateMachine.ChangeState<PlayerIdleState>(reCurrent);
                 break;
             case PlayerStateType.Moevment:
-                stateMachine.ChangeState<PlayerMoveState>();
+                stateMachine.ChangeState<PlayerMoveState>(reCurrent);
                 break;
             case PlayerStateType.Jump:
-                stateMachine.ChangeState<PlayerJumpState>();
+                stateMachine.ChangeState<PlayerJumpState>(reCurrent);
                 break;
             case PlayerStateType.AirDown:
-                stateMachine.ChangeState<PlayerAirDownState>();
+                stateMachine.ChangeState<PlayerAirDownState>(reCurrent);
                 break;
             case PlayerStateType.Sidestep:
-                stateMachine.ChangeState<PlayerSideStepState>();
+                stateMachine.ChangeState<PlayerSideStepState>(reCurrent);
                 break;
             case PlayerStateType.SidestepReverse:
-                stateMachine.ChangeState<PlayerSidestepReverseState>();
+                stateMachine.ChangeState<PlayerSidestepReverseState>(reCurrent);
+                break;
+            case PlayerStateType.Hurt:
+                stateMachine.ChangeState<PlayerHurtState>(reCurrent);
                 break;
             case PlayerStateType.AtkNormal1:
-                stateMachine.ChangeState<PlayerAtkNormal1State>();
+                stateMachine.ChangeState<PlayerAtkNormal1State>(reCurrent);
                 break;
         }
     }
@@ -177,6 +180,15 @@ public class PlayerController : CharacterBase
         }
     }
 
+    public override void Hurt(SkillHitData hitData, ISkillOwner hitSource)
+    {
+        base.Hurt(hitData, hitSource);
+        Debug.Log("玩家受伤");
+        ChangeState(PlayerStateType.Hurt, true);
+    }
 
-
+    public void PlayAtkEndAudio(int index)
+    {
+        PlayAudio(atkEndAudioClip[index]);
+    }
 }

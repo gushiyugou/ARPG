@@ -9,6 +9,7 @@ using UnityEngine;
 public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHurt
 {
     #region 控制器基础组件
+    public readonly float _gravity = -9.8f;
     [Header("基础组件")]
     [SerializeField] protected ModelBase model;
     public ModelBase Model { get => model; }
@@ -41,11 +42,13 @@ public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHur
     public Transform weapon;
 
     #endregion
-    public void Init()
+    public virtual void Init()
     {
+        Model.OnInit(this, enemyTagList);
         stateMachine = new StateMachine();
         stateMachine.Init(this);
         _characterController = GetComponent<CharacterController>();
+        CanSwitchSkill = true;
     }
 
 
@@ -55,20 +58,21 @@ public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHur
     /// </summary>
     [Header("技能配置")]
     public SkillConfig[] standAttckCongigs;
-    public SkillConfig CurrentSkillConfig { get; private set; }
+    public SkillConfig CurrentSkillConfig { get; protected set; }
     protected int currentHitIndex = 0;
     public int currentHitWeapIndex;
-    public bool CanSwitchSkill { get; private set; }
+    public bool CanSwitchSkill { get; protected set; }
 
+    public SkillHitData HitData { get; protected set; }
+    public ISkillOwner HitSource { get; protected set; }
 
-    
 
 
     /// <summary>
     /// 技能的攻击
     /// </summary>
     /// <param name="skillConfig"></param>
-    public void StartAttack(SkillConfig skillConfig)
+    public virtual void StartAttack(SkillConfig skillConfig)
     {
         CanSwitchSkill = false;
 
@@ -91,9 +95,20 @@ public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHur
     //攻击发起时，（实际的攻击动作，去掉了前摇和后摇的时间）
     public virtual void StartSkillHit(int weaponIndex)
     {
+        Debug.Log($"=== StartSkillHit被调用 ===");
+        Debug.Log($"时间: {Time.time}");
+        Debug.Log($"weaponIndex: {weaponIndex}");
+        Debug.Log($"weapons长度: {model.weapons?.Length}");
+        // 添加状态检查
+        //if (!CanSwitchSkill)  // 如果不在技能状态中，忽略攻击事件
+        //{
+        //    //Debug.LogWarning("接收到StartSkillHit但不在技能状态中，已忽略");
+        //    return;
+        //}
         currentHitWeapIndex = weaponIndex;
         //技能音效
         PlayAudio(CurrentSkillConfig.attackData[currentHitIndex].attackAudio);
+        
         //技能的特效
         SpawnAttackEffect(CurrentSkillConfig.attackData[currentHitIndex].skillObj);
 
@@ -122,6 +137,12 @@ public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHur
     //技能结束击中
     public virtual void StopSkillHit(int weaponIndex)
     {
+        // 添加状态检查
+        //if (!CanSwitchSkill)
+        //{
+        //    //Debug.LogWarning("接收到StopSkillHit但不在技能状态中，已忽略");
+        //    return;
+        //}
         currentHitIndex += 1;
         //如果用到了currentHitIndex，则currentHitIndex需要-1，也可以在攻击结束时，currentHitIndex+1
         weaponTrail.Emit = false;
@@ -442,7 +463,8 @@ public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHur
 
     public virtual void Hurt(SkillHitData hitData, ISkillOwner hitSource)
     {
-
+        HitData = hitData;
+        HitSource = hitSource;
     }
 
 

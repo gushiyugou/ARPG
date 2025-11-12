@@ -6,7 +6,6 @@ public class BossStateBase : StateBase
 
     public override void Init(IStateMachineOwner owner)
     {
-        base.Init(owner);
         boss = owner as BossController;
     }
 

@@ -2,4 +2,7 @@
 {
     Idle,
     Hurt,
+    Walk,
+    Run,
+    Attack
 }

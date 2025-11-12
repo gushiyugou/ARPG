@@ -45,6 +45,7 @@ public class PlayerAtkNormal1State : PlayerStateBase
         
         if (CheckAnimatorStateName(_player.standAttckCongigs[currentSkillIndex].AnimationName, out float animTime) && animTime >=0.9f)
         {
+            //_player.PlayAnimation($"Normal0{currentSkillIndex}_End");
             _player.Model._Animator.SetBool("IsIdle", true);
             _player.ChangeState(PlayerStateType.Idle);
             return;

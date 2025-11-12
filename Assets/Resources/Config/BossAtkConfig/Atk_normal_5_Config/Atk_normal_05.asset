@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f079361628ebd947848fe0d3b246768, type: 3}
+  m_Name: Atk_normal_05
+  m_EditorClassIdentifier: 
+  AnimationName: AtkNormal5
+  releaseData:
+    effectObj:
+      prefab:
+        prefabName: 
+        folderName: 
+      spawnAudio: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      scale: {x: 1, y: 1, z: 1}
+      Time: 0
+    skillAudio: {fileID: 0}
+    isAttackRot: 0
+  attackData:
+  - skillObj:
+      prefab:
+        prefabName: atk4_2
+        folderName: Prefabs
+      spawnAudio: {fileID: 0}
+      position: {x: 0, y: 0.8, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+      scale: {x: 0.5, y: 0.5, z: 0.5}
+      Time: 0
+    attackAudio: {fileID: 8300000, guid: 0decc6fd2074777489578b15405796f2, type: 3}
+    hitDatat:
+      damageValue: 0
+      stiffTime: 0.5
+      repelTime: 0.6
+      isDown: 1
+      repelDegree: {x: 0, y: 1, z: 3}
+    hitEffect: {fileID: 11400000, guid: 5dec894b4434cb44d98f3f50c2f96986, type: 2}
+    impulseValue: 0
+    chromaticValue: 0
+    FreezeFrameTime: 0
+    FreezeGameTime: 0
+    attackcheck:
+      checkPos: {x: 0, y: 0.9, z: 3}
+      halfExtents: {x: 1.5, y: 0.05, z: 1.5}
+      checkRot: {x: 0, y: 0, z: 0}
+      checkRange: 2
