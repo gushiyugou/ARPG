@@ -38,14 +38,15 @@ public class PlayerController : CharacterBase
         ChangeState(PlayerStateType.Idle);
     }
 
-    
 
+    private PlayerStateType currentState;
     /// <summary>
     /// 状态切换
     /// </summary>
     /// <param name="needState">需要切换的状态类型</param>
     public void ChangeState(PlayerStateType needState,bool reCurrent = false)
     {
+        currentState = needState;
         switch (needState)
         {
             case PlayerStateType.Idle:
@@ -72,6 +73,9 @@ public class PlayerController : CharacterBase
             case PlayerStateType.AtkNormal1:
                 stateMachine.ChangeState<PlayerAtkNormal1State>(reCurrent);
                 break;
+            case PlayerStateType.Defence:
+                stateMachine.ChangeState<PlayerDefenceState>(reCurrent);
+                break;
         }
     }
 
@@ -81,21 +85,28 @@ public class PlayerController : CharacterBase
         //Debug.Log("角色控制：我攻击到了" + ((Component)target).gameObject.name);
         //OnHit在Stop之后执行，所以索引要减一
         SkillAttackData skillData = CurrentSkillConfig.attackData[currentHitIndex];
-        StartCoroutine(DoSkillHitEffect(skillData.hitEffect, hitPosition));
-        //后处理,色差效果
-        if (skillData.impulseValue != 0)
-            ScreenImpulse(skillData.impulseValue);
-        if (skillData.chromaticValue != 0)
-            PostProcessingManager.Instance.ChromaticAberrationEF(skillData.chromaticValue);
-
-        DoFreezeFrameTime(skillData.FreezeFrameTime);
-
-        DoFreezeGame(skillData.FreezeGameTime);
-        Debug.Log("击中");
+        PlayAudio(skillData.attackAudio);
 
         //对IHurt传递伤害数据
         //TODO:后续做特殊情况的处理
-        target.Hurt(CurrentSkillConfig.attackData[currentHitIndex].hitDatat, this);
+        if (target.Hurt(skillData.hitDatat, this))
+        {
+            StartCoroutine(DoSkillHitEffect(skillData.hitEffect.skillSpawnObj, hitPosition));
+            //后处理,色差效果
+            if (skillData.impulseValue != 0)
+                ScreenImpulse(skillData.impulseValue);
+            if (skillData.chromaticValue != 0)
+                PostProcessingManager.Instance.ChromaticAberrationEF(skillData.chromaticValue);
+
+            DoFreezeFrameTime(skillData.FreezeFrameTime);
+
+            DoFreezeGame(skillData.FreezeGameTime);
+            Debug.Log("击中");
+        }
+        else
+        {
+            StartCoroutine(DoSkillHitEffect(skillData.hitEffect.failSkillSpawnObj, hitPosition));
+        }
 
     }
 
@@ -138,7 +149,7 @@ public class PlayerController : CharacterBase
                 Debug.Log("范围内有敌人");
                 Debug.Log("敌人名字" + ((Component)enemyList[0]).gameObject.name);
                 SkillAttackData skillData = CurrentSkillConfig.attackData[currentHitIndex];
-                StartCoroutine(DoSkillHitEffect(skillData.hitEffect, validCollider.ClosestPoint(weapon.position)));
+                StartCoroutine(DoSkillHitEffect(skillData.skillObj, validCollider.ClosestPoint(weapon.position)));
 
                 //后处理,色差效果
                 if (skillData.impulseValue != 0)
@@ -180,11 +191,22 @@ public class PlayerController : CharacterBase
         }
     }
 
-    public override void Hurt(SkillHitData hitData, ISkillOwner hitSource)
+    public override bool Hurt(SkillHitData hitData, ISkillOwner hitSource)
     {
-        base.Hurt(hitData, hitSource);
+        SetHurtData(hitData, hitSource);
         Debug.Log("玩家受伤");
-        ChangeState(PlayerStateType.Hurt, true);
+        bool isDefence = currentState == PlayerStateType.Defence;
+        if(isDefence)
+        {
+            Transform enemyTransofrom = ((CharacterBase)hitSource).ModelTransform;
+            Vector3 enemyToPlayerDir = (ModelTransform.position -  enemyTransofrom.position).normalized;
+            float dot = Vector3.Dot(ModelTransform.forward, enemyToPlayerDir);
+            if (dot > 0)   
+                isDefence = false;
+        }
+        if (!isDefence)
+            ChangeState(PlayerStateType.Hurt, true);
+        return !isDefence;
     }
 
     public void PlayAtkEndAudio(int index)

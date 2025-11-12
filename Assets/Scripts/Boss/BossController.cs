@@ -91,11 +91,12 @@ public class BossController : CharacterBase
         weaponTrail.Emit = true;
     }
 
-    public override void Hurt(SkillHitData hitData, ISkillOwner hitSource)
+    public override bool Hurt(SkillHitData hitData, ISkillOwner hitSource)
     {
-        base.Hurt(hitData, hitSource);
+        
         Debug.Log("boss ‹…À");
         ChangeState(BossStateType.Hurt, true);
+        return true;
     }
 }
 

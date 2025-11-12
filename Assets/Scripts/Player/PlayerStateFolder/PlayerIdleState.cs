@@ -40,6 +40,12 @@ public class PlayerIdleState : PlayerStateBase
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _player.ChangeState(PlayerStateType.Defence);
+            return;
+        }
+
         //检测玩家移动
         //_player._CharacterController.Move(new Vector3(0, velocity * Time.deltaTime, 0));
         bool isCast = Physics.CheckSphere(_player.transform.position, 0.2f, groundLayerMask);
@@ -57,14 +63,9 @@ public class PlayerIdleState : PlayerStateBase
             _player.ChangeState(PlayerStateType.Moevment);
             return;
         }
-        //if (isCast)
-        //{
-        //    //UpdataGravity();
-        //}
-        //else
-        //{
-        //    BeseGravityVelocity = 0;
-        //}
+
+
+        
     }
 
     public override void Exit()

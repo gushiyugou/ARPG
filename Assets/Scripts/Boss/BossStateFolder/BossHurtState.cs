@@ -67,14 +67,14 @@ public class BossHurtState : BossStateBase
                 }
                 break;
             case HurtChildState.Down:
-                boss.Model.transform.LookAt(sourceTransform.ModelTransform);
+                boss.transform.LookAt(sourceTransform.ModelTransform);
                 if (currentHurtTime >= hitData.stiffTime && repelCoroutine == null)
                 {
                     HurtState = HurtChildState.Rise;
                 }
                 break;
             case HurtChildState.Rise:
-                boss.Model.transform.LookAt(sourceTransform.ModelTransform);
+                boss.transform.LookAt(sourceTransform.ModelTransform);
                 if (CheckAnimatorStateName("Rise",out float time) && time > 0.99f)
                 {
                     boss.ChangeState(BossStateType.Idle);

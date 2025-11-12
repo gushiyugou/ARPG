@@ -7,5 +7,6 @@
     Sidestep,
     SidestepReverse,
     Hurt,
-    AtkNormal1
+    AtkNormal1,
+    Defence
 }

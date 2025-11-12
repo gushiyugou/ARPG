@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
-public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHurt
+public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHurt
 {
     #region 控制器基础组件
     public readonly float _gravity = -9.8f;
@@ -95,10 +95,10 @@ public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHur
     //攻击发起时，（实际的攻击动作，去掉了前摇和后摇的时间）
     public virtual void StartSkillHit(int weaponIndex)
     {
-        Debug.Log($"=== StartSkillHit被调用 ===");
-        Debug.Log($"时间: {Time.time}");
-        Debug.Log($"weaponIndex: {weaponIndex}");
-        Debug.Log($"weapons长度: {model.weapons?.Length}");
+        //Debug.Log($"=== StartSkillHit被调用 ===");
+        //Debug.Log($"时间: {Time.time}");
+        //Debug.Log($"weaponIndex: {weaponIndex}");
+        //Debug.Log($"weapons长度: {model.weapons?.Length}");
         // 添加状态检查
         //if (!CanSwitchSkill)  // 如果不在技能状态中，忽略攻击事件
         //{
@@ -157,19 +157,26 @@ public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHur
     }
     public virtual void OnHit(IHurt target, Vector3 hitPosition)
     {
+
         //Debug.Log("角色控制：我攻击到了" + ((Component)target).gameObject.name);
         //OnHit在Stop之后执行，所以索引要减一
         SkillAttackData skillData = CurrentSkillConfig.attackData[currentHitIndex];
-        StartCoroutine(DoSkillHitEffect(skillData.hitEffect, hitPosition));
-
-        DoFreezeFrameTime(skillData.FreezeFrameTime);
-
-        DoFreezeGame(skillData.FreezeGameTime);
-        Debug.Log("击中");
+        //PlayAudio(skillData.attackAudio);
 
         //对IHurt传递伤害数据
         //TODO:后续做特殊情况的处理
-        target.Hurt(CurrentSkillConfig.attackData[currentHitIndex].hitDatat, this);
+        if (target.Hurt(skillData.hitDatat, this))
+        {
+            StartCoroutine(DoSkillHitEffect(skillData.hitEffect.skillSpawnObj, hitPosition));
+            DoFreezeFrameTime(skillData.FreezeFrameTime);
+
+            DoFreezeGame(skillData.FreezeGameTime);
+            Debug.Log("击中");
+        }
+        else
+        {
+            StartCoroutine(DoSkillHitEffect(skillData.hitEffect.failSkillSpawnObj, hitPosition));
+        }
 
     }
 
@@ -217,7 +224,7 @@ public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHur
                 Debug.Log("范围内有敌人");
                 Debug.Log("敌人名字" + ((Component)enemyList[0]).gameObject.name);
                 SkillAttackData skillData = CurrentSkillConfig.attackData[currentHitIndex];
-                StartCoroutine(DoSkillHitEffect(skillData.hitEffect, validCollider.ClosestPoint(weapon.position)));
+                StartCoroutine(DoSkillHitEffect(skillData.skillObj, validCollider.ClosestPoint(weapon.position)));
 
                 DoFreezeFrameTime(skillData.FreezeFrameTime);
                 DoFreezeGame(skillData.FreezeGameTime);
@@ -274,25 +281,24 @@ public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHur
 
 
     //技能击中时的效果
-    protected IEnumerator DoSkillHitEffect(SkillHitEffectConfig hitEffetc, Vector3 pos)
+    protected IEnumerator DoSkillHitEffect(SkillSpawnObj hitEffetc, Vector3 pos)
     {
         if (hitEffetc == null) yield break;
-        PlayAudio(hitEffetc.skillSpawnObj.spawnAudio);
 
-        if (hitEffetc != null && hitEffetc.skillSpawnObj != null)
+        if (hitEffetc != null && hitEffetc.prefab != null)
         {
-            yield return new WaitForSeconds(hitEffetc.skillSpawnObj.Time);
+            yield return new WaitForSeconds(hitEffetc.Time);
             //直接生成预制体
             //GameObject temp = Instantiate(hitEffetc.skillSpawnObj.prefab);
             //使用对象池生成预制体
-            GameObject temp = PoolManager.Instance.GetPoolObject(hitEffetc.skillSpawnObj.prefab.prefabName,
-                hitEffetc.skillSpawnObj.prefab.folderName);
+            GameObject temp = PoolManager.Instance.GetPoolObject(hitEffetc.prefab.prefabName,
+                hitEffetc.prefab.folderName);
             Debug.Log("触发了");
 
-            temp.transform.position = pos + hitEffetc.skillSpawnObj.position;
+            temp.transform.position = pos + hitEffetc.position;
             //temp.transform.LookAt(Camera.main.transform);
-            temp.transform.eulerAngles = pos + hitEffetc.skillSpawnObj.rotation;
-            PlayAudio(hitEffetc.hitAudioClip);
+            temp.transform.eulerAngles = pos + hitEffetc.rotation;
+            PlayAudio(hitEffetc.spawnAudio);
         }
     }
 
@@ -460,14 +466,13 @@ public class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHur
 
     }
 
-
-    public virtual void Hurt(SkillHitData hitData, ISkillOwner hitSource)
+    public virtual bool SetHurtData(SkillHitData hitData, ISkillOwner hitSource)
     {
         HitData = hitData;
         HitSource = hitSource;
+        return true;
     }
-
-
+    public abstract bool Hurt(SkillHitData hitData, ISkillOwner hitSource);
 
     #region 调试部分
     protected void DrawDebugBox(Vector3 center, Vector3 halfExtents, Quaternion rotation, Color color, float duration = 5f)

@@ -74,6 +74,8 @@ public class PlayerMoveState : PlayerStateBase
             
             return;
         }
+
+       
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //通过控制速度状态的值来动态赋值jumpPower的值0
@@ -100,9 +102,11 @@ public class PlayerMoveState : PlayerStateBase
         //    _player.ChangeState(PlayerStateType.AirDown);
         //    return;
         //}
-
-
-
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _player.ChangeState(PlayerStateType.Defence);
+            return;
+        }
     }
 
     private void MoveOnUpdata()

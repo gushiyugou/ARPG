@@ -42,7 +42,7 @@ MonoBehaviour:
       repelTime: 0.3
       isDown: 1
       repelDegree: {x: 0, y: 1, z: 3}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 11400000, guid: dbde516364455cc4f8aa0d6f0eec94c4, type: 2}
     impulseValue: 0
     chromaticValue: 0
     FreezeFrameTime: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
       repelTime: 0.3
       isDown: 1
       repelDegree: {x: 0, y: 1, z: 3}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 11400000, guid: dbde516364455cc4f8aa0d6f0eec94c4, type: 2}
     impulseValue: 0
     chromaticValue: 0
     FreezeFrameTime: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
       repelTime: 0.3
       isDown: 1
       repelDegree: {x: 0, y: 1, z: 3}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 11400000, guid: dbde516364455cc4f8aa0d6f0eec94c4, type: 2}
     impulseValue: 0
     chromaticValue: 0
     FreezeFrameTime: 0

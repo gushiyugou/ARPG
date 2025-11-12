@@ -105,6 +105,7 @@ public class PlayerAtkNormal1State : PlayerStateBase
 
     public override void Exit()
     {
+        _player.Model.ClearRootMotionAction();
         _player.OnSkillOver();
     }
 

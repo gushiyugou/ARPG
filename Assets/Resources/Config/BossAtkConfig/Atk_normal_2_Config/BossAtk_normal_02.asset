@@ -42,7 +42,7 @@ MonoBehaviour:
       repelTime: 0.3
       isDown: 0
       repelDegree: {x: 0, y: 0, z: 0.6}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 11400000, guid: 1a3b7986b51ac414ab32f0559556820d, type: 2}
     impulseValue: 0
     chromaticValue: 0
     FreezeFrameTime: 0
