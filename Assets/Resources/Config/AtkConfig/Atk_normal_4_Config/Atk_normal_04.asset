@@ -25,6 +25,33 @@ MonoBehaviour:
       Time: 0
     skillAudio: {fileID: 0}
     isAttackRot: 0
+    attackData:
+      skillObj:
+        prefab:
+          prefabName: 
+          folderName: 
+        spawnAudio: {fileID: 0}
+        position: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        scale: {x: 1, y: 1, z: 1}
+        Time: 0
+      attackAudio: {fileID: 0}
+      hitDatat:
+        damageValue: 0
+        stiffTime: 0
+        repelTime: 0
+        isDown: 0
+        repelDegree: {x: 0, y: 0, z: 0}
+      hitEffect: {fileID: 0}
+      impulseValue: 0
+      chromaticValue: 0
+      FreezeFrameTime: 0
+      FreezeGameTime: 0
+      attackcheck:
+        checkPos: {x: 0, y: 0, z: 0}
+        halfExtents: {x: 0, y: 0, z: 0}
+        checkRot: {x: 0, y: 0, z: 0}
+        checkRange: 0
   attackData:
   - skillObj:
       prefab:
@@ -32,7 +59,7 @@ MonoBehaviour:
         folderName: Prefabs
       spawnAudio: {fileID: 0}
       position: {x: 0, y: 0.8, z: 0}
-      rotation: {x: 0, y: 0, z: 45}
+      rotation: {x: 0, y: 0, z: 90}
       scale: {x: 0.5, y: 0.5, z: 0.5}
       Time: 0.25
     attackAudio: {fileID: 8300000, guid: 0decc6fd2074777489578b15405796f2, type: 3}
@@ -58,7 +85,7 @@ MonoBehaviour:
         folderName: Prefabs
       spawnAudio: {fileID: 0}
       position: {x: 0, y: 0.8, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
+      rotation: {x: 90, y: 0, z: 0}
       scale: {x: 0.5, y: 0.5, z: -0.5}
       Time: 0.3
     attackAudio: {fileID: 0}
@@ -80,7 +107,7 @@ MonoBehaviour:
       checkRange: 2
   - skillObj:
       prefab:
-        prefabName: Sword Slash 2
+        prefabName: Sword Slash 7
         folderName: Prefabs
       spawnAudio: {fileID: 0}
       position: {x: 0, y: 0.8, z: 0}

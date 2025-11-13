@@ -19,10 +19,12 @@ public class BossAttackState : BossStateBase
 
     }
 
+    private float currentAttackTime = 0;
     public override void Enter()
     {
         //处理攻击方向
         currentSkillIndex = -1;
+        currentAttackTime = 0;
         boss.Model.SetRootMotionAction(OnRootMotion);
         StandAttck();
     }
@@ -39,19 +41,22 @@ public class BossAttackState : BossStateBase
     }
     public override void Update()
     {
-        
-        if (CheckAnimatorStateName(boss.standAttckCongigs[currentSkillIndex].AnimationName, out float animTime) && animTime >=0.9f)
+        currentAttackTime += Time.deltaTime;
+        if (boss.CanSwitchSkill)
         {
-            //boss.Model._Animator.SetBool("IsIdle", true);
-            boss.ChangeState(BossStateType.Idle);
-            return;
+            float distance = Vector3.Distance(boss.transform.position, boss.targetPos.transform.position);
+            if (distance <= boss.atkRange && currentAttackTime < boss.vigilantTime)
+            {
+                StandAttck();
+            }
+            else
+            {
+                boss.ChangeState(BossStateType.Walk);
+            }
         }
 
-        float distance = Vector3.Distance(boss.transform.position, boss.targetPos.transform.position);
-        if (distance <= boss.atkRange && boss.CanSwitchSkill)
-        {
-            StandAttck();
-        }
+        
+       
 
     }
 

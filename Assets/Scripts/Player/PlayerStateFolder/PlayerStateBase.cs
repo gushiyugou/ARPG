@@ -39,6 +39,10 @@ public class PlayerStateBase : StateBase
             _player.characterController.Move(Vector3.down * BaseGravityVelocity * Time.deltaTime);
             Debug.Log(BaseGravityVelocity);
         }
+        else
+        {
+            BaseGravityVelocity = 0.1f;
+        }
     }
 
     protected void SyncModelToController()

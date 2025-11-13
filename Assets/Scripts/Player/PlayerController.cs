@@ -27,6 +27,7 @@ public class PlayerController : CharacterBase
     public float waitCounterattackTime;
     public SkillConfig counterattackConfig;
 
+    public BossController targetPos;
     [Header("技能信息")]
     public List<SkillInfo> skillList = new List<SkillInfo>();
     #endregion
@@ -209,8 +210,16 @@ public class PlayerController : CharacterBase
     {
         SetHurtData(hitData, hitSource);
         Debug.Log("玩家受伤");
+
+
+        
         bool isDefence = currentState == PlayerStateType.Defence;
-        if(isDefence)
+        if (isDefence && hitData.isBreak)
+        {
+            //破防，防御无效
+            isDefence = false;
+        }
+        if (isDefence)
         {
             Transform enemyTransofrom = ((CharacterBase)hitSource).ModelTransform;
             Vector3 enemyToPlayerDir = (ModelTransform.position -  enemyTransofrom.position).normalized;

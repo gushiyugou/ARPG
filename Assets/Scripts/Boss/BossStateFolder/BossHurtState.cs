@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BossHurtState : BossStateBase
 {
@@ -88,11 +89,13 @@ public class BossHurtState : BossStateBase
     {
         float currentTime = 0f;
         time = time==0? 0.00001f:time;
-        Vector3 repelDir = sourceTransform.ModelTransform.TransformDirection(velocity);
-
-        while(currentTime< time)
+        //Vector3 repelDir = sourceTransform.ModelTransform.TransformDirection(velocity);
+        Vector3 targetPos = sourceTransform.ModelTransform.TransformPoint(velocity);
+        Vector3 dir = targetPos - boss.transform.position;
+        while (currentTime< time)
         {
-            boss.characterController.Move(repelDir / time * Time.deltaTime);
+            //boss.characterController.Move(repelDir / time * Time.deltaTime);
+            boss.characterController.Move(dir / time * Time.deltaTime);
             currentTime += Time.deltaTime;
             yield return null;
         }

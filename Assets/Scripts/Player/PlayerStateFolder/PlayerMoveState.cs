@@ -20,14 +20,14 @@ public class PlayerMoveState : PlayerStateBase
             switch (moveState)
             {
                 case MoveChildState.Move:
-                    _player.PlayAnimation("Move", 0.15f);
+                    _player.PlayAnimation("Move");
                     
                     break;
                 case MoveChildState.RunStop:
-                    _player.PlayAnimation("RunStop",0.25f);
+                    _player.PlayAnimation("RunStop");
                     break;
                 case MoveChildState.WalkStop:
-                    _player.PlayAnimation("WalkStop",0.25f);
+                    _player.PlayAnimation("WalkStop");
                     break;
             }
         }

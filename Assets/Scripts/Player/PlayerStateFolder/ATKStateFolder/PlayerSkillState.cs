@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class PlayerSkillState : PlayerStateBase
 {
@@ -93,7 +90,7 @@ public class PlayerSkillState : PlayerStateBase
     
     private void OnRootMotion(Vector3 deltaPosition, Quaternion deltaRotation)
     {
-        deltaPosition.y = _player._gravity * Time.deltaTime;
+        //deltaPosition.y = _player._gravity * Time.deltaTime;
         _player.characterController.Move(deltaPosition);
     }
 

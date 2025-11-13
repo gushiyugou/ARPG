@@ -93,11 +93,12 @@ public class PlayerHurtState : PlayerStateBase
     {
         float currentTime = 0f;
         time = time==0? 0.00001f:time;
-        Vector3 repelDir = sourceTransform.ModelTransform.TransformDirection(velocity);
-
+        //Vector3 repelDir = sourceTransform.ModelTransform.TransformDirection(velocity);
+        Vector3 targetPos = sourceTransform.ModelTransform.TransformPoint(velocity);
+        Vector3 dir = targetPos - _player.transform.position;
         while(currentTime< time)
         {
-            _player.characterController.Move(repelDir / time * Time.deltaTime);
+            _player.characterController.Move(dir / time * Time.deltaTime);
             currentTime += Time.deltaTime;
             yield return null;
         }

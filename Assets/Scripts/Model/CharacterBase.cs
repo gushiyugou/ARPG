@@ -337,7 +337,39 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
             skillPrefab.transform.localScale = skillObj.scale;
             //使用eulerAngles(欧拉角)来进行计算,移动和旋转都是模型层在做
             skillPrefab.transform.rotation = Model.transform.rotation * Quaternion.Euler(skillObj.rotation);
+
+
+            if (skillPrefab.TryGetComponent<SkillObjectBase>(out SkillObjectBase skillObject))
+            {
+                skillObject.Init(enemyTagList, OnHitForReleaseData);
+            }
         }
+    }
+
+
+    public virtual void OnHitForReleaseData(IHurt target, Vector3 hitPosition)
+    {
+
+        //Debug.Log("角色控制：我攻击到了" + ((Component)target).gameObject.name);
+        //OnHit在Stop之后执行，所以索引要减一
+        SkillAttackData skillData = CurrentSkillConfig.releaseData.attackData;
+        //PlayAudio(skillData.attackAudio);
+
+        //对IHurt传递伤害数据
+        //TODO:后续做特殊情况的处理
+        if (target.Hurt(skillData.hitDatat, this))
+        {
+            StartCoroutine(DoSkillHitEffect(skillData.hitEffect.skillSpawnObj, hitPosition));
+            DoFreezeFrameTime(skillData.FreezeFrameTime);
+
+            DoFreezeGame(skillData.FreezeGameTime);
+            Debug.Log("击中");
+        }
+        else
+        {
+            StartCoroutine(DoSkillHitEffect(skillData.hitEffect.failSkillSpawnObj, hitPosition));
+        }
+
     }
 
 
@@ -388,13 +420,19 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
 
 
     #region 动画播放相关
+    private string currentAnimationName;
     /// <summary>
     /// 播放动画
     /// </summary>
     /// <param name="animationName">动画名字</param>
     /// <param name="fixedTransitionDuration">过渡时间</param>
-    public void PlayAnimation(string animationName, float fixedTransitionDuration = 0.25f)
+    public void PlayAnimation(string animationName, bool reState = true, float fixedTransitionDuration = 0.25f)
     {
+        currentAnimationName = animationName;
+        if (currentAnimationName == animationName && !reState)
+        {
+            return;
+        }
         Model._Animator.CrossFadeInFixedTime(animationName, fixedTransitionDuration);
 
     }

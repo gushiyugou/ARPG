@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+
 using UnityEngine;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class PlayerAtkNormal1State : PlayerStateBase
 {
@@ -35,15 +31,17 @@ public class PlayerAtkNormal1State : PlayerStateBase
         
         //TODO：实现连续普攻
         CurrentSkillIndex += 1;
+        if(CurrentSkillIndex == _player.standAttckCongigs.Length)
+        {
+            _player.Model.transform.forward = (_player.targetPos.transform.position - _player.Model.transform.position).normalized;
+        }
         _player.StartAttack(_player.standAttckCongigs[currentSkillIndex]);
         
         
     }
     public override void Update()
     {
-        
 
-        
         if (CheckAnimatorStateName(_player.standAttckCongigs[currentSkillIndex].AnimationName, out float animTime) && animTime >=0.9f)
         {
             //_player.PlayAnimation($"Normal0{currentSkillIndex}_End");

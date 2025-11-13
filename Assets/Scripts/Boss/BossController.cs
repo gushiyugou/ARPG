@@ -7,11 +7,18 @@ public class BossController : CharacterBase
 {
     public NavMeshAgent navMeshAgent;
     public float runRange = 10f;
-    public float walkRange = 5f;
+    public float walkRange = 8f;
     public PlayerController targetPos;
     public float walkSpeed;
     public float runSpeed;
     public float atkRange;
+
+    public float vigilantTime = 10f;
+    public float vigilantRange = 6f;
+    public float vigilantSpeed = 2f;
+
+    public float attackTime = 5f;
+    public bool anger;
 
 
     private void Start()
@@ -43,9 +50,11 @@ public class BossController : CharacterBase
                 stateMachine.ChangeState<BossRunState>(isCurrentState);
                 break;
             case BossStateType.Hurt:
+                anger = true;
                 stateMachine.ChangeState<BossHurtState>(isCurrentState);
                 break;
             case BossStateType.Attack:
+                anger = false;
                 stateMachine.ChangeState<BossAttackState>(isCurrentState);
                 break;
         }

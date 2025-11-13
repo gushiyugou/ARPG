@@ -27,6 +27,8 @@ public class SkillReleaseData
     public AudioClip skillAudio;
     //攻击时是否允许旋转
     public bool isAttackRot;
+
+    public SkillAttackData attackData;
 }
 
 /// <summary>
@@ -83,6 +85,8 @@ public class SkillHitData
 
     //是否击倒
     public bool isDown;
+
+    public bool isBreak;
 
     //技能击退击飞
     public Vector3 repelDegree;
