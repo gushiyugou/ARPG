@@ -27,6 +27,8 @@ public class PlayerController : CharacterBase
     public float waitCounterattackTime;
     public SkillConfig counterattackConfig;
 
+    [Header("技能信息")]
+    public List<SkillInfo> skillList = new List<SkillInfo>();
     #endregion
 
     public CinemachineImpulseSource impulseSource;
@@ -41,6 +43,12 @@ public class PlayerController : CharacterBase
         ChangeState(PlayerStateType.Idle);
     }
 
+
+    private void Update()
+    {
+        //玩家死亡时也会执行，存在不严谨性。
+        UpdateSkillCdTime();
+    }
 
     private PlayerStateType currentState;
     /// <summary>
@@ -75,6 +83,9 @@ public class PlayerController : CharacterBase
                 break;
             case PlayerStateType.AtkNormal1:
                 stateMachine.ChangeState<PlayerAtkNormal1State>(reCurrent);
+                break;
+            case PlayerStateType.SkillAttack:
+                stateMachine.ChangeState<PlayerSkillState>(reCurrent);
                 break;
             case PlayerStateType.Defence:
                 stateMachine.ChangeState<PlayerDefenceState>(reCurrent);
@@ -222,5 +233,40 @@ public class PlayerController : CharacterBase
     public void PlayAtkEndAudio(int index)
     {
         PlayAudio(atkEndAudioClip[index]);
+    }
+
+
+    /// <summary>
+    /// 技能状态检测
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckAndEnterSkillState()
+    {
+        if (!CanSwitchSkill) return false;
+
+        for(int i = 0; i< skillList.Count; i++)
+        {
+            if (skillList[i].currentTime ==0 && Input.GetKeyDown(skillList[i].skillKey))
+            {
+                ChangeState(PlayerStateType.SkillAttack, true);
+                PlayerSkillState skillAttackState = (PlayerSkillState)stateMachine.CurrentState;
+                skillAttackState.InitData(skillList[i].skillConfig);
+                //技能进入cd状态
+                skillList[i].currentTime = skillList[i].cdTime;
+                return true;
+            }
+        }
+       
+        return false;
+    }
+
+
+    public void UpdateSkillCdTime()
+    {
+        for (int i = 0; i < skillList.Count; i++)
+        {
+            skillList[i].currentTime = Mathf.Clamp(skillList[i].currentTime - Time.deltaTime, 0, skillList[i].cdTime);
+            skillList[i].skillMaskImg.fillAmount = skillList[i].currentTime/skillList[i].cdTime;
+        }
     }
 }

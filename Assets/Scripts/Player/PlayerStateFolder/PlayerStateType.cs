@@ -8,5 +8,6 @@
     SidestepReverse,
     Hurt,
     AtkNormal1,
+    SkillAttack,
     Defence
 }

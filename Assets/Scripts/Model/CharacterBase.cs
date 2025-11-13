@@ -3,13 +3,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHurt
 {
     #region 控制器基础组件
-    public readonly float _gravity = -9.8f;
+    public  float _gravity = -9.8f;
     [Header("基础组件")]
     [SerializeField] protected ModelBase model;
     public ModelBase Model { get => model; }
@@ -74,6 +75,8 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
     /// <param name="skillConfig"></param>
     public virtual void StartAttack(SkillConfig skillConfig)
     {
+        //Debug.Log(stateMachine.CurrentState);
+        //if (CurrentSkillConfig == null) return;
         CanSwitchSkill = false;
 
         CurrentSkillConfig = skillConfig;

@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e626bf251459594bafe54192d3da1a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gravity: -9.8
   model: {fileID: 1581923003639843079}
   _characterController: {fileID: 271654745633751416}
   audioSource: {fileID: 4704950498933260631}
@@ -91,7 +92,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8e641baa3025a9849b9df2f185894815, type: 2}
   - {fileID: 11400000, guid: 4bf2b471a8d2e3640aa9a9406b3ccccc, type: 2}
   - {fileID: 11400000, guid: 4b73e7dda6d680a45ab2695c3894ca59, type: 2}
-  - {fileID: 11400000, guid: b90e394cfca768d44a99312069501fca, type: 2}
+  - {fileID: 11400000, guid: 74c8a290780872846a9c5193818e3334, type: 2}
   currentHitWeapIndex: 0
   _rotationSpeed: 5
   walkToRunTransition: 3
@@ -108,6 +109,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b3b6c096b99cd5349a4885f0bb501c3b, type: 3}
   - {fileID: 8300000, guid: f68b408ec3464c04bab9d61b59b89a20, type: 3}
   - {fileID: 8300000, guid: c0d35a50467061b4c8c2efb945684eaa, type: 3}
+  waitCounterattackTime: 0.5
+  counterattackConfig: {fileID: 11400000, guid: 70f07cf49b4d63341a380dae04035f04, type: 2}
+  skillList:
+  - skillKey: 113
+    skillConfig: {fileID: 11400000, guid: 4b73e7dda6d680a45ab2695c3894ca59, type: 2}
+    cdTime: 3
+    skillMaskImg: {fileID: 0}
   impulseSource: {fileID: 3259643475810371558}
 --- !u!143 &271654745633751416
 CharacterController:

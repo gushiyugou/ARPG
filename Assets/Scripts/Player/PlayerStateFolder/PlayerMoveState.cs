@@ -75,7 +75,13 @@ public class PlayerMoveState : PlayerStateBase
             return;
         }
 
-       
+
+        if (_player.CheckAndEnterSkillState())
+        {
+            _player.ChangeState(PlayerStateType.SkillAttack);
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //通过控制速度状态的值来动态赋值jumpPower的值0

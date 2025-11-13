@@ -28,7 +28,7 @@ MonoBehaviour:
   attackData:
   - skillObj:
       prefab:
-        prefabName: Sword Slash 2
+        prefabName: Sword Slash 4
         folderName: Prefabs
       spawnAudio: {fileID: 0}
       position: {x: 0, y: 0.8, z: 0}

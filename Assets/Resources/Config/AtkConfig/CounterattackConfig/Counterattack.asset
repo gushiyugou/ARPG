@@ -56,7 +56,7 @@ MonoBehaviour:
       prefab:
         prefabName: LeftKnife
         folderName: Prefabs
-      spawnAudio: {fileID: 0}
+      spawnAudio: {fileID: 8300000, guid: af9cdc6c21099334fa35de14d933ac5f, type: 3}
       position: {x: 0, y: 0.9, z: 0}
       rotation: {x: -10, y: -30, z: 0}
       scale: {x: 0.5, y: 0.5, z: 0.5}

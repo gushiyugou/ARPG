@@ -18,6 +18,13 @@ public class PlayerIdleState : PlayerStateBase
         //UpdataGravity();
 
 
+        if (_player.CheckAndEnterSkillState())
+        {
+            Debug.Log(1);
+            _player.ChangeState(PlayerStateType.SkillAttack);
+            return;
+        }
+
         //TODO:检测攻击
         if (Input.GetMouseButtonDown(0))
         {

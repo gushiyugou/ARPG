@@ -83,11 +83,10 @@ public class PlayerHurtState : PlayerStateBase
             //    } 
             //    break;
         }
-        if (Input.GetMouseButtonDown(0))
-        {
 
-        }
         
+
+
     }
 
     private IEnumerator DoRepel(float time,Vector3 velocity)
