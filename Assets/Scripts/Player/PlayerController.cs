@@ -237,7 +237,11 @@ public class PlayerController : CharacterBase
             }
         }
         if (!isDefence)
+        {
+            UpdateHp(hitData);
             ChangeState(PlayerStateType.Hurt, true);
+        }
+            
         return !isDefence;
     }
 

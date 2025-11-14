@@ -41,6 +41,7 @@ MonoBehaviour:
         stiffTime: 0
         repelTime: 0
         isDown: 0
+        isBreak: 0
         repelDegree: {x: 0, y: 0, z: 0}
       hitEffect: {fileID: 0}
       impulseValue: 0
@@ -64,10 +65,11 @@ MonoBehaviour:
       Time: 0.25
     attackAudio: {fileID: 8300000, guid: 0decc6fd2074777489578b15405796f2, type: 3}
     hitDatat:
-      damageValue: 0
+      damageValue: 40
       stiffTime: 0.3
       repelTime: 0
       isDown: 0
+      isBreak: 0
       repelDegree: {x: 0, y: 0, z: 0}
     hitEffect: {fileID: 11400000, guid: bbf8679d012310943835c3210ed4a7f4, type: 2}
     impulseValue: 0
@@ -90,10 +92,11 @@ MonoBehaviour:
       Time: 0.3
     attackAudio: {fileID: 0}
     hitDatat:
-      damageValue: 0
-      stiffTime: 0
+      damageValue: 40
+      stiffTime: 1
       repelTime: 0
       isDown: 0
+      isBreak: 0
       repelDegree: {x: 0, y: 0, z: 0}
     hitEffect: {fileID: 11400000, guid: bbf8679d012310943835c3210ed4a7f4, type: 2}
     impulseValue: 0
@@ -116,10 +119,11 @@ MonoBehaviour:
       Time: 0.25
     attackAudio: {fileID: 0}
     hitDatat:
-      damageValue: 0
-      stiffTime: 0
+      damageValue: 40
+      stiffTime: 0.5
       repelTime: 0
       isDown: 0
+      isBreak: 0
       repelDegree: {x: 0, y: 0, z: 0}
     hitEffect: {fileID: 11400000, guid: 216b100a5beda0f40b2034a342d01ac5, type: 2}
     impulseValue: 0
@@ -142,10 +146,11 @@ MonoBehaviour:
       Time: 0.25
     attackAudio: {fileID: 0}
     hitDatat:
-      damageValue: 0
-      stiffTime: 0
+      damageValue: 40
+      stiffTime: 0.3
       repelTime: 0
       isDown: 0
+      isBreak: 0
       repelDegree: {x: 0, y: 0, z: 0}
     hitEffect: {fileID: 11400000, guid: 216b100a5beda0f40b2034a342d01ac5, type: 2}
     impulseValue: 0

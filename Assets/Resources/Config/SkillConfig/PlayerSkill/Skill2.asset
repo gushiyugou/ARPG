@@ -37,7 +37,7 @@ MonoBehaviour:
         Time: 0
       attackAudio: {fileID: 0}
       hitDatat:
-        damageValue: 0
+        damageValue: 10
         stiffTime: 0
         repelTime: 0
         isDown: 0

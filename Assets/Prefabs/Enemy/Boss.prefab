@@ -1621,6 +1621,13 @@ MonoBehaviour:
   audioSource: {fileID: 5452022404393644316}
   enemyTagList:
   - Player
+  skillList:
+  - skillKey: 0
+    skillConfig: {fileID: 11400000, guid: 3d3289ddde5d46b4eb304f770e67d63b, type: 2}
+    cdTime: 5
+    skillMaskImg: {fileID: 0}
+  HpFillImage: {fileID: 0}
+  maxHp: 10000
   weaponTrail: {fileID: 5659189149375087939}
   weapon: {fileID: 6366172861146712118}
   standAttckCongigs:
@@ -1632,15 +1639,16 @@ MonoBehaviour:
   navMeshAgent: {fileID: 6472122475031835168}
   runRange: 10
   walkRange: 8
-  targetPos: {fileID: 0}
+  target: {fileID: 0}
   walkSpeed: 3
   runSpeed: 5
-  atkRange: 3
+  atkRange: 2
   vigilantTime: 10
-  vigilantRange: 6
+  vigilantRange: 4
   vigilantSpeed: 2
-  attackTime: 5
+  attackTime: 3
   anger: 0
+  currentSkillCDTimer: 0
 --- !u!143 &2219368487328107272
 CharacterController:
   m_ObjectHideFlags: 0

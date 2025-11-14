@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillOwner,IHurt
 {
@@ -39,6 +41,26 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
     //[SerializeField] private float baseAttackDamage = 10f;
 
 
+    [Header("血条相关")]
+    public Image HpFillImage;
+    [SerializeField]protected float maxHp;
+    protected float currentHp;
+    protected float CurrentHp
+    {
+        get => currentHp;
+        set
+        {
+            currentHp = value;
+            if(currentHp <= 0)
+            {
+                currentHp = 0;
+                SceneManager.LoadScene(0);
+            }else HpFillImage.fillAmount = currentHp/maxHp;
+        }
+    }
+
+
+
     #region 武器相关
     //拖尾组件
     [SerializeField, Header("拖尾插件")] protected MeleeWeaponTrail weaponTrail;
@@ -47,6 +69,7 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
     #endregion
     public virtual void Init()
     {
+        CurrentHp = maxHp;
         Model.OnInit(this, enemyTagList);
         stateMachine = new StateMachine();
         stateMachine.Init(this);
@@ -517,6 +540,12 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
         return true;
     }
     public abstract bool Hurt(SkillHitData hitData, ISkillOwner hitSource);
+
+
+    public void UpdateHp(SkillHitData hitData)
+    {
+        CurrentHp -= hitData.damageValue;
+    }
 
     #region 调试部分
     protected void DrawDebugBox(Vector3 center, Vector3 halfExtents, Quaternion rotation, Color color, float duration = 5f)

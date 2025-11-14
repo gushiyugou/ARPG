@@ -37,8 +37,8 @@ MonoBehaviour:
         Time: 0
       attackAudio: {fileID: 0}
       hitDatat:
-        damageValue: 0
-        stiffTime: 0
+        damageValue: 10
+        stiffTime: 0.2
         repelTime: 0
         isDown: 0
         isBreak: 0
@@ -56,8 +56,8 @@ MonoBehaviour:
   attackData:
   - skillObj:
       prefab:
-        prefabName: 
-        folderName: 
+        prefabName: atk4_3
+        folderName: prefabs
       spawnAudio: {fileID: 0}
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
@@ -65,13 +65,13 @@ MonoBehaviour:
       Time: 0
     attackAudio: {fileID: 0}
     hitDatat:
-      damageValue: 0
-      stiffTime: 0
+      damageValue: 10
+      stiffTime: 0.2
       repelTime: 0
-      isDown: 0
+      isDown: 1
       isBreak: 0
       repelDegree: {x: 0, y: 0, z: 0}
-    hitEffect: {fileID: 0}
+    hitEffect: {fileID: 11400000, guid: 68132e3a3ac7d554c913d9a3408505b1, type: 2}
     impulseValue: 0
     chromaticValue: 0
     FreezeFrameTime: 0

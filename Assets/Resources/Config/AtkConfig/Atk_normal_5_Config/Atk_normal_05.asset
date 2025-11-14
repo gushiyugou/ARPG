@@ -25,6 +25,34 @@ MonoBehaviour:
       Time: 0
     skillAudio: {fileID: 0}
     isAttackRot: 0
+    attackData:
+      skillObj:
+        prefab:
+          prefabName: 
+          folderName: 
+        spawnAudio: {fileID: 0}
+        position: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0}
+        scale: {x: 1, y: 1, z: 1}
+        Time: 0
+      attackAudio: {fileID: 0}
+      hitDatat:
+        damageValue: 0
+        stiffTime: 0
+        repelTime: 0
+        isDown: 0
+        isBreak: 0
+        repelDegree: {x: 0, y: 0, z: 0}
+      hitEffect: {fileID: 0}
+      impulseValue: 0
+      chromaticValue: 0
+      FreezeFrameTime: 0
+      FreezeGameTime: 0
+      attackcheck:
+        checkPos: {x: 0, y: 0, z: 0}
+        halfExtents: {x: 0, y: 0, z: 0}
+        checkRot: {x: 0, y: 0, z: 0}
+        checkRange: 0
   attackData:
   - skillObj:
       prefab:
@@ -37,10 +65,11 @@ MonoBehaviour:
       Time: 0
     attackAudio: {fileID: 8300000, guid: 0decc6fd2074777489578b15405796f2, type: 3}
     hitDatat:
-      damageValue: 0
+      damageValue: 50
       stiffTime: 0.3
       repelTime: 0.6
       isDown: 1
+      isBreak: 0
       repelDegree: {x: 0, y: 1, z: 3}
     hitEffect: {fileID: 11400000, guid: 5dec894b4434cb44d98f3f50c2f96986, type: 2}
     impulseValue: 0

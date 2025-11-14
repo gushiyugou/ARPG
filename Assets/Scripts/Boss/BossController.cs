@@ -131,6 +131,7 @@ public class BossController : CharacterBase
 
     public override bool Hurt(SkillHitData hitData, ISkillOwner hitSource)
     {
+        UpdateHp(hitData);
         SetHurtData(hitData, hitSource);
         Debug.Log("boss ‹…À");
         ChangeState(BossStateType.Hurt, true);
