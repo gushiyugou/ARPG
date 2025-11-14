@@ -2530,6 +2530,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5757314007180093796, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1564961420}
+    - target: {fileID: 5757314007180093796, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
       propertyPath: atkRange
       value: 2
       objectReference: {fileID: 0}
@@ -2545,6 +2549,18 @@ PrefabInstance:
       propertyPath: vigilantRange
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5757314007180093796, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
+      propertyPath: skillList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757314007180093796, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
+      propertyPath: skillList.Array.data[0].cdTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5757314007180093796, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
+      propertyPath: skillList.Array.data[0].skillConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d3289ddde5d46b4eb304f770e67d63b, type: 2}
     - target: {fileID: 5782371781798007882, guid: 744c24ae57b6e7840a81e2acde69e2e5, type: 3}
       propertyPath: m_Name
       value: Boss

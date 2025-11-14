@@ -67,7 +67,9 @@ public class PlayerHurtState : PlayerStateBase
                 }
                 break;
             case HurtChildState.Down:
-                _player.Model.transform.LookAt(sourceTransform.ModelTransform);
+                Vector3 playerPos = sourceTransform.ModelTransform.position;
+                _player.Model.transform.LookAt(new Vector3(playerPos.x, _player.ModelTransform.position.y, playerPos.z));
+                //_player.Model.transform.LookAt(sourceTransform.ModelTransform);
                 if (currentHurtTime >= hitData.stiffTime && repelCoroutine == null)
                 {
                     //HurtState = HurtChildState.Rise;

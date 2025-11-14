@@ -12,14 +12,14 @@ public class BossRunState : BossStateBase
 
     public override void Update()
     {
-        float distance = Vector3.Distance(boss.transform.position, boss.targetPos.transform.position);
+        float distance = Vector3.Distance(boss.transform.position, boss.target.transform.position);
         if (distance <= boss.runRange)
         {
             boss.ChangeState(BossStateType.Walk);
         }
         else
         {
-            boss.navMeshAgent.SetDestination(boss.targetPos.transform.position);
+            boss.navMeshAgent.SetDestination(boss.target.transform.position);
         }
     }
 

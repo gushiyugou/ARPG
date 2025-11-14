@@ -29,10 +29,12 @@ public class PlayerController : CharacterBase
 
     public BossController targetPos;
     [Header("技能信息")]
-    public List<SkillInfo> skillList = new List<SkillInfo>();
+    
     #endregion
 
     public CinemachineImpulseSource impulseSource;
+
+    public bool isDefence { get => currentState == PlayerStateType.Defence; }
 
     private void Start()
     {

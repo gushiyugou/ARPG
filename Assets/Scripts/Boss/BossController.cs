@@ -8,7 +8,7 @@ public class BossController : CharacterBase
     public NavMeshAgent navMeshAgent;
     public float runRange = 10f;
     public float walkRange = 8f;
-    public PlayerController targetPos;
+    public PlayerController target;
     public float walkSpeed;
     public float runSpeed;
     public float atkRange;
@@ -32,7 +32,12 @@ public class BossController : CharacterBase
         
     }
 
-    
+
+    private void Update()
+    {
+        UpdateSkillCdTime();
+    }
+
 
 
     //切换状态
@@ -60,6 +65,28 @@ public class BossController : CharacterBase
         }
     }
 
+
+    public float currentSkillCDTimer;
+    public void StartSkill(int index)
+    {
+        currentSkillCDTimer = 2;
+        //技能播放后倒计时
+        skillList[index].currentTime = skillList[index].cdTime;
+        StartAttack(skillList[index].skillConfig);
+    }
+
+    public void UpdateSkillCdTime()
+    {
+        for (int i = 0; i < skillList.Count; i++)
+        {
+            skillList[i].currentTime = Mathf.Clamp(skillList[i].currentTime - Time.deltaTime, 0, skillList[i].cdTime);
+        }
+        if(currentSkillCDTimer > 0)
+        {
+            currentSkillCDTimer -= Time.deltaTime;
+        }
+    }
+
     //攻击发起时，（实际的攻击动作，去掉了前摇和后摇的时间）
     public override void StartSkillHit(int weaponIndex)
     {
@@ -75,6 +102,8 @@ public class BossController : CharacterBase
         //}
         currentHitWeapIndex = weaponIndex;
         //技能音效
+        if(CurrentSkillConfig.attackData == null)
+            return;
         PlayAudio(CurrentSkillConfig.attackData[currentHitIndex].attackAudio);
 
         //技能的特效

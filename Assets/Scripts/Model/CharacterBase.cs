@@ -29,6 +29,8 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
     //TODO 测试的配置信息，直接拖拽，后续会改
     //public SkillConfig _skillConfig;
     [Header("敌人Tag列表")] public List<string> enemyTagList;
+    [Header("技能信息")]
+    public List<SkillInfo> skillList = new List<SkillInfo>();
     protected List<IHurt> enemyList = new List<IHurt>();
 
 
@@ -86,8 +88,10 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
         PlayAnimation(CurrentSkillConfig.AnimationName);
         //技能释放时角色音效
         PlayAudio(CurrentSkillConfig.releaseData.skillAudio);
+        //PlayAudio(CurrentSkillConfig.releaseData.attackData.attackAudio);
         //技能释放时角色的特效
         SpawnSkill(CurrentSkillConfig.releaseData.effectObj);
+        //SpawnSkill(CurrentSkillConfig.releaseData.attackData.skillObj);
         //击中检测
 
         //伤害传递
@@ -174,7 +178,6 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
             DoFreezeFrameTime(skillData.FreezeFrameTime);
 
             DoFreezeGame(skillData.FreezeGameTime);
-            Debug.Log("击中");
         }
         else
         {

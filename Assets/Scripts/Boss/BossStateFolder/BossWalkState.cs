@@ -41,7 +41,7 @@ public class BossWalkState : BossStateBase
     }
     public override void Update()
     {
-        float distance = Vector3.Distance(boss.transform.position, boss.targetPos.transform.position);
+        float distance = Vector3.Distance(boss.transform.position, boss.target.transform.position);
         if (distance > boss.runRange)
         {
             boss.ChangeState(BossStateType.Run);
@@ -49,7 +49,7 @@ public class BossWalkState : BossStateBase
         }
         if (isVigilant)
         {
-            Vector3 playerPos = boss.targetPos.transform.position;
+            Vector3 playerPos = boss.target.transform.position;
             boss.transform.LookAt(new Vector3(playerPos.x, boss.transform.position.y, playerPos.z));
             Vector3 targetPos = (boss.transform.position - playerPos).normalized * boss.vigilantRange + playerPos;
             Vector3 vigilantPos = new Vector3(targetPos.x + Random.Range(0,3), targetPos.y, targetPos.z);
@@ -68,7 +68,7 @@ public class BossWalkState : BossStateBase
             if (distance <= boss.atkRange)
                 boss.ChangeState(BossStateType.Attack);
             else
-                boss.navMeshAgent.SetDestination(boss.targetPos.transform.position);
+                boss.navMeshAgent.SetDestination(boss.target.transform.position);
         }
     }
     public override void Exit()

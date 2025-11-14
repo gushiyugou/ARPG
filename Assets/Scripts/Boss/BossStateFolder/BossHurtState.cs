@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEditor.PlayerSettings;
 
 public class BossHurtState : BossStateBase
 {
@@ -14,6 +15,7 @@ public class BossHurtState : BossStateBase
     private SkillHitData hitData => boss.HitData;
     private float currentHurtTime = 0;
     private Coroutine repelCoroutine;
+    Vector3 pos;
     private ISkillOwner sourceTransform =>boss.HitSource;
 
     private HurtChildState hurtState;
@@ -29,7 +31,7 @@ public class BossHurtState : BossStateBase
                     boss.PlayAnimation("Hurt");
                     break;
                 case HurtChildState.Down:
-                    boss.transform.LookAt(sourceTransform.ModelTransform);
+                    boss.transform.LookAt(new Vector3(pos.x, sourceTransform.ModelTransform.position.y, pos.z));
                     boss.PlayAnimation("Down");
                     break;
                 case HurtChildState.Rise:
@@ -41,6 +43,7 @@ public class BossHurtState : BossStateBase
 
     public override void Enter()
     {
+        pos = sourceTransform.ModelTransform.position;
         currentHurtTime = 0;
         HurtState = hitData.isDown ? HurtChildState.Down : HurtChildState.Normal;
 
@@ -58,6 +61,7 @@ public class BossHurtState : BossStateBase
             boss.characterController.Move(new Vector3(0, boss._gravity * Time.deltaTime, 0));
         }
         currentHurtTime += Time.deltaTime;
+        pos = sourceTransform.ModelTransform.position;
         switch (HurtState)
         {
             case HurtChildState.Normal:
@@ -68,14 +72,17 @@ public class BossHurtState : BossStateBase
                 }
                 break;
             case HurtChildState.Down:
-                boss.transform.LookAt(sourceTransform.ModelTransform);
+                
+                boss.transform.LookAt(new Vector3(pos.x, sourceTransform.ModelTransform.position.y, pos.z));
+                //boss.transform.LookAt(sourceTransform.ModelTransform);
                 if (currentHurtTime >= hitData.stiffTime && repelCoroutine == null)
                 {
                     HurtState = HurtChildState.Rise;
                 }
                 break;
             case HurtChildState.Rise:
-                boss.transform.LookAt(sourceTransform.ModelTransform);
+                boss.transform.LookAt(new Vector3(pos.x, sourceTransform.ModelTransform.position.y, pos.z));
+                //boss.transform.LookAt(sourceTransform.ModelTransform);
                 if (CheckAnimatorStateName("Rise",out float time) && time > 0.99f)
                 {
                     boss.ChangeState(BossStateType.Idle);
