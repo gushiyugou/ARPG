@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4742d41e6c7448040bfcbae9db45c9f0, type: 3}
+  m_Name: axe1h01_blue
+  m_EditorClassIdentifier: 
+  itmeType: 1
+  itemName: axe1h01_blue
+  itmeCount: 1
+  itemIcon: {fileID: 0}
+  stackable: 0
+  description: "\u666E\u901A\u7684\u65A7\u5B50"
+  weaponPrefab: {fileID: 1730254676538691542, guid: e087ea3dabe00394380b5f77d6a7e688, type: 3}
