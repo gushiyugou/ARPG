@@ -10,12 +10,13 @@ public class ItemPickUp : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             //TODO:物体的拾取,添加到背包
-
-            other.gameObject.GetComponent<KeyInteraction>().CanPickUpGoods(this.gameObject);
+            KnapsackManager.Instance.knapsackData.AddItem(itemData, itemData.itmeCount);
+            KnapsackManager.Instance.knapsackUI.RefreshUI();
+            //other.gameObject.GetComponent<KeyInteraction>().CanPickUpGoods(this.gameObject);
 
             //
 
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }
