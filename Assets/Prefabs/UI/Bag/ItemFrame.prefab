@@ -404,6 +404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3365046390726133806}
   - component: {fileID: 6218200880704443592}
+  - component: {fileID: 6272541167883687137}
   m_Layer: 5
   m_Name: ItmeSlot
   m_TagString: Untagged
@@ -426,10 +427,10 @@ RectTransform:
   - {fileID: 6937288309721777334}
   m_Father: {fileID: 178912862056401827}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 90, y: 90}
+  m_SizeDelta: {x: -10, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6218200880704443592
 MonoBehaviour:
@@ -445,3 +446,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 553163299823551776}
   amount: {fileID: 8406362866819218284}
+--- !u!114 &6272541167883687137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7310050076769384037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b0cd4101db77d4478db84c8580689d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

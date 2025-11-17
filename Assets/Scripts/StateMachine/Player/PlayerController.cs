@@ -40,7 +40,7 @@ public class PlayerController : CharacterBase
     {
         Init();
         (Model as PlayerModle).AddAtkEndAudio(PlayAtkEndAudio);
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         //_playerModle = GetComponentWi<PlayerModle>();
         attackDetector = Model.GetComponent<SectorAttackDetector>();
         ChangeState(PlayerStateType.Idle);

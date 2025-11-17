@@ -15,6 +15,8 @@ MonoBehaviour:
   items:
   - itemData: {fileID: 11400000, guid: 246c7f32919e2ca48952137ffd3a3198, type: 2}
     itemCount: 1
+  - itemData: {fileID: 11400000, guid: 246c7f32919e2ca48952137ffd3a3198, type: 2}
+    itemCount: 1
   - itemData: {fileID: 0}
     itemCount: 0
   - itemData: {fileID: 0}
@@ -26,9 +28,7 @@ MonoBehaviour:
   - itemData: {fileID: 0}
     itemCount: 0
   - itemData: {fileID: 0}
-    itemCount: 0
-  - itemData: {fileID: 0}
-    itemCount: 0
+    itemCount: 1
   - itemData: {fileID: 0}
     itemCount: 0
   - itemData: {fileID: 0}

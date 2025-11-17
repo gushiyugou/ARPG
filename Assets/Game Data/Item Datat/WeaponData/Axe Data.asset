@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4742d41e6c7448040bfcbae9db45c9f0, type: 3}
-  m_Name: axe1h01_blue
+  m_Name: Axe Data
   m_EditorClassIdentifier: 
-  itmeType: 1
-  itemName: axe1h01_blue
+  itemType: 1
+  itemName: Axe
   itmeCount: 1
   itemIcon: {fileID: 21300000, guid: e9a4ffa4b55108849a66f1c2809c62ce, type: 3}
   stackable: 0

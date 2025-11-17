@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum ItmeType
+public enum ItemType
 {
     Useable,
     Weapon,
@@ -12,7 +12,7 @@ public enum ItmeType
 [CreateAssetMenu(fileName = "New Item",menuName = "KnapsackSystem/Item Data")]
 public class ItemData_SO : ScriptableObject 
 {
-    public ItmeType itmeType;
+    public ItemType itemType;
     public string itemName;
     public int itmeCount;
     public Sprite itemIcon;
@@ -23,5 +23,7 @@ public class ItemData_SO : ScriptableObject
 
     [Header("weapon")]
     public GameObject weaponPrefab;
+    //TODO:ÎäÆ÷Êý¾Ý
+
 
 }

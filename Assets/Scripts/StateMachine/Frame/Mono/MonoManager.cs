@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.EventSystems;
 
 public class MonoManager : SingletonMono<MonoManager>
 {
@@ -41,16 +42,24 @@ public class MonoManager : SingletonMono<MonoManager>
 
     private void Update()
     {
+        if (InteractWithUI()) return;
         UpdateAction?.Invoke();
     }
 
     private void LateUpdate()
     {
+        if (InteractWithUI()) return;
         LateUpdateAction?.Invoke();
     }
 
     private void FixedUpdate()
     {
+        if (InteractWithUI()) return;
         FixedUpdateAction?.Invoke();
+    }
+
+    bool InteractWithUI()
+    {
+        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 }
