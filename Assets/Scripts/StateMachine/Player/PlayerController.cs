@@ -6,9 +6,9 @@ using UnityEngine;
 public class PlayerController : CharacterBase
 {
     
-    #region ÅäÖÃĞÅÏ¢
+    #region é…ç½®ä¿¡æ¯
     
-    [Space,Header("»ù´¡ĞÅÏ¢ÅäÖÃ")]
+    [Space,Header("åŸºç¡€ä¿¡æ¯é…ç½®")]
     public float _rotationSpeed = 2f;
     public float walkToRunTransition = 1f;
     public float walkSpeed = 1f;
@@ -28,7 +28,7 @@ public class PlayerController : CharacterBase
     public SkillConfig counterattackConfig;
 
     public BossController targetPos;
-    [Header("¼¼ÄÜĞÅÏ¢")]
+    [Header("æŠ€èƒ½ä¿¡æ¯")]
     
     #endregion
 
@@ -49,15 +49,17 @@ public class PlayerController : CharacterBase
 
     private void Update()
     {
-        //Íæ¼ÒËÀÍöÊ±Ò²»áÖ´ĞĞ£¬´æÔÚ²»ÑÏ½÷ĞÔ¡£
+        //ç©å®¶æ­»äº¡æ—¶ä¹Ÿä¼šæ‰§è¡Œï¼Œå­˜åœ¨ä¸ä¸¥è°¨æ€§ã€‚
         UpdateSkillCdTime();
+
+        
     }
 
     private PlayerStateType currentState;
     /// <summary>
-    /// ×´Ì¬ÇĞ»»
+    /// çŠ¶æ€åˆ‡æ¢
     /// </summary>
-    /// <param name="needState">ĞèÒªÇĞ»»µÄ×´Ì¬ÀàĞÍ</param>
+    /// <param name="needState">éœ€è¦åˆ‡æ¢çš„çŠ¶æ€ç±»å‹</param>
     public void ChangeState(PlayerStateType needState,bool reCurrent = false)
     {
         currentState = needState;
@@ -99,17 +101,17 @@ public class PlayerController : CharacterBase
 
     public override void OnHit(IHurt target, Vector3 hitPosition)
     {
-        //Debug.Log("½ÇÉ«¿ØÖÆ£ºÎÒ¹¥»÷µ½ÁË" + ((Component)target).gameObject.name);
-        //OnHitÔÚStopÖ®ºóÖ´ĞĞ£¬ËùÒÔË÷ÒıÒª¼õÒ»
+        //Debug.Log("è§’è‰²æ§åˆ¶ï¼šæˆ‘æ”»å‡»åˆ°äº†" + ((Component)target).gameObject.name);
+        //OnHitåœ¨Stopä¹‹åæ‰§è¡Œï¼Œæ‰€ä»¥ç´¢å¼•è¦å‡ä¸€
         SkillAttackData skillData = CurrentSkillConfig.attackData[currentHitIndex];
         PlayAudio(skillData.hitEffect.hitAudioClip);
 
-        //¶ÔIHurt´«µİÉËº¦Êı¾İ
-        //TODO:ºóĞø×öÌØÊâÇé¿öµÄ´¦Àí
+        //å¯¹IHurtä¼ é€’ä¼¤å®³æ•°æ®
+        //TODO:åç»­åšç‰¹æ®Šæƒ…å†µçš„å¤„ç†
         if (target.Hurt(skillData.hitDatat, this))
         {
             StartCoroutine(DoSkillHitEffect(skillData.hitEffect.skillSpawnObj, hitPosition));
-            //ºó´¦Àí,É«²îĞ§¹û
+            //åå¤„ç†,è‰²å·®æ•ˆæœ
             if (skillData.impulseValue != 0)
                 ScreenImpulse(skillData.impulseValue);
             if (skillData.chromaticValue != 0)
@@ -118,7 +120,7 @@ public class PlayerController : CharacterBase
             DoFreezeFrameTime(skillData.FreezeFrameTime);
 
             DoFreezeGame(skillData.FreezeGameTime);
-            Debug.Log("»÷ÖĞ");
+            Debug.Log("å‡»ä¸­");
         }
         else
         {
@@ -147,9 +149,9 @@ public class PlayerController : CharacterBase
             QueryTriggerInteraction.UseGlobal
         );
 
-        if (numColliders > 0)  // ĞŞ¸ÄÎª > 0 ¶ø²»ÊÇ != 0
+        if (numColliders > 0)  // ä¿®æ”¹ä¸º > 0 è€Œä¸æ˜¯ != 0
         {
-            // ÕÒµ½µÚÒ»¸öÓĞĞ§µÄÅö×²Ìå
+            // æ‰¾åˆ°ç¬¬ä¸€ä¸ªæœ‰æ•ˆçš„ç¢°æ’ä½“
             Collider validCollider = null;
             for (int i = 0; i < numColliders; i++)
             {
@@ -163,12 +165,12 @@ public class PlayerController : CharacterBase
 
             if (validCollider != null)
             {
-                Debug.Log("·¶Î§ÄÚÓĞµĞÈË");
-                Debug.Log("µĞÈËÃû×Ö" + ((Component)enemyList[0]).gameObject.name);
+                Debug.Log("èŒƒå›´å†…æœ‰æ•Œäºº");
+                Debug.Log("æ•Œäººåå­—" + ((Component)enemyList[0]).gameObject.name);
                 SkillAttackData skillData = CurrentSkillConfig.attackData[currentHitIndex];
                 StartCoroutine(DoSkillHitEffect(skillData.skillObj, validCollider.ClosestPoint(weapon.position)));
 
-                //ºó´¦Àí,É«²îĞ§¹û
+                //åå¤„ç†,è‰²å·®æ•ˆæœ
                 if (skillData.impulseValue != 0)
                     ScreenImpulse(skillData.impulseValue);
                 if (skillData.chromaticValue != 0)
@@ -179,13 +181,13 @@ public class PlayerController : CharacterBase
             }
             else
             {
-                Debug.LogWarning("¼ì²âµ½Åö×²Ìåµ«¶¼Îªnull");
+                Debug.LogWarning("æ£€æµ‹åˆ°ç¢°æ’ä½“ä½†éƒ½ä¸ºnull");
                 DrawDebugBox(checkPos, attackData.attackcheck.halfExtents, checkRot, Color.yellow);
             }
         }
         else
         {
-            Debug.LogWarning("Î´¼ì²âµ½ÈÎºÎµĞÈË");
+            Debug.LogWarning("æœªæ£€æµ‹åˆ°ä»»ä½•æ•Œäºº");
             DrawDebugBox(checkPos, attackData.attackcheck.halfExtents, checkRot, Color.red);
         }
     }
@@ -200,7 +202,7 @@ public class PlayerController : CharacterBase
     {
         if (stateMachine.CurrentStateType == typeof(PlayerAirDownState))
         {
-            // ¶¯»­Íê³ÉºóÁ¢¼´¼ì²éÊÇ·ñĞèÒªÇĞ»»×´Ì¬
+            // åŠ¨ç”»å®Œæˆåç«‹å³æ£€æŸ¥æ˜¯å¦éœ€è¦åˆ‡æ¢çŠ¶æ€
             if (characterController.isGrounded)
             {
                 ChangeState(PlayerStateType.Idle);
@@ -211,14 +213,14 @@ public class PlayerController : CharacterBase
     public override bool Hurt(SkillHitData hitData, ISkillOwner hitSource)
     {
         SetHurtData(hitData, hitSource);
-        Debug.Log("Íæ¼ÒÊÜÉË");
+        Debug.Log("ç©å®¶å—ä¼¤");
 
 
         
         bool isDefence = currentState == PlayerStateType.Defence;
         if (isDefence && hitData.isBreak)
         {
-            //ÆÆ·À£¬·ÀÓùÎŞĞ§
+            //ç ´é˜²ï¼Œé˜²å¾¡æ— æ•ˆ
             isDefence = false;
         }
         if (isDefence)
@@ -252,7 +254,7 @@ public class PlayerController : CharacterBase
 
 
     /// <summary>
-    /// ¼¼ÄÜ×´Ì¬¼ì²â
+    /// æŠ€èƒ½çŠ¶æ€æ£€æµ‹
     /// </summary>
     /// <returns></returns>
     public bool CheckAndEnterSkillState()
@@ -266,7 +268,7 @@ public class PlayerController : CharacterBase
                 ChangeState(PlayerStateType.SkillAttack, true);
                 PlayerSkillState skillAttackState = (PlayerSkillState)stateMachine.CurrentState;
                 skillAttackState.InitData(skillList[i].skillConfig);
-                //¼¼ÄÜ½øÈëcd×´Ì¬
+                //æŠ€èƒ½è¿›å…¥cdçŠ¶æ€
                 skillList[i].currentTime = skillList[i].cdTime;
                 return true;
             }
@@ -283,5 +285,14 @@ public class PlayerController : CharacterBase
             skillList[i].currentTime = Mathf.Clamp(skillList[i].currentTime - Time.deltaTime, 0, skillList[i].cdTime);
             skillList[i].skillMaskImg.fillAmount = skillList[i].currentTime/skillList[i].cdTime;
         }
+    }
+
+    public override void UpdateHp(SkillHitData hitData)
+    {
+        if (HpPanelManager.Instance.playerStateInfo.currentHealth - hitData.damageValue > 0)
+            HpPanelManager.Instance.playerStateInfo.currentHealth -= hitData.damageValue;
+        else
+            HpPanelManager.Instance.playerStateInfo.currentHealth = 0;
+        HpPanelManager.Instance.UpdateFillImage();
     }
 }

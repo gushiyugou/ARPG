@@ -36,7 +36,7 @@ public class PlayerStateBase : StateBase
         float velocity = 0f;
         if (!_player.characterController.isGrounded)
         {
-            velocity += _player._gravity * Time.deltaTime;
+            velocity = _player._gravity;
             //_player.characterController.Move(Vector3.down * _player._gravity * Time.deltaTime);
             //Debug.Log(BaseGravityVelocity);
         }

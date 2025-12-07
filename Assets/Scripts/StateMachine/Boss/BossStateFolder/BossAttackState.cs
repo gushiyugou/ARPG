@@ -32,7 +32,6 @@ public class BossAttackState : BossStateBase
 
     private void StandAttck()
     {
-
         //TODO：实现连续普攻
         Vector3 pos = boss.target.transform.position;
         boss.transform.LookAt(new Vector3(pos.x, boss.transform.position.y, pos.z));

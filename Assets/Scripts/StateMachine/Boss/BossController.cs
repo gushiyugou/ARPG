@@ -137,5 +137,14 @@ public class BossController : CharacterBase
         ChangeState(BossStateType.Hurt, true);
         return true;
     }
+
+    public override void UpdateHp(SkillHitData hitData)
+    {
+        if (HpPanelManager.Instance.bossStateInfo.currentHealth - hitData.damageValue > 0)
+            HpPanelManager.Instance.bossStateInfo.currentHealth -= hitData.damageValue;
+        else
+            HpPanelManager.Instance.bossStateInfo.currentHealth = 0;
+        HpPanelManager.Instance.UpdateFillImage();
+    }
 }
 

@@ -15,7 +15,7 @@ public class PlayerIdleState : PlayerStateBase
 
     public override void Update()
     {
-        //UpdataGravity();
+        UpdataGravity();
 
 
         if (_player.CheckAndEnterSkillState())

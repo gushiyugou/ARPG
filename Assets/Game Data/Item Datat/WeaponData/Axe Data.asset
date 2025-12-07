@@ -17,5 +17,8 @@ MonoBehaviour:
   itmeCount: 1
   itemIcon: {fileID: 21300000, guid: e9a4ffa4b55108849a66f1c2809c62ce, type: 3}
   stackable: 0
+  itemPrefab: {fileID: 1730254676538691542, guid: e087ea3dabe00394380b5f77d6a7e688, type: 3}
   description: "\u666E\u901A\u7684\u65A7\u5B50"
-  weaponPrefab: {fileID: 1730254676538691542, guid: e087ea3dabe00394380b5f77d6a7e688, type: 3}
+  useableItemData: {fileID: 0}
+  weaponItemData: {fileID: 11400000, guid: 8db9eb472db6ac94a8678653ec1bf60a, type: 2}
+  armorItemData: {fileID: 0}

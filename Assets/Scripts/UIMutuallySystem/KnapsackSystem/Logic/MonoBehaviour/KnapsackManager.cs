@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using TMPro;
 using UnityEngine;
 
 public class KnapsackManager : SingletonMono<KnapsackManager>
@@ -18,6 +20,8 @@ public class KnapsackManager : SingletonMono<KnapsackManager>
 
     public KnapsackData_SO equipmentData;
 
+    public CharacterBaseInfo_SO characterBaseInfo;
+
 
     [Header("ContainerS")]
     public ContainerUI knapsackUI;
@@ -28,11 +32,34 @@ public class KnapsackManager : SingletonMono<KnapsackManager>
     public Canvas dargCanvas;
     public DargData currentDarg;
 
+    
+    private bool isOpen = false;
+    [Header("UI Panel")]
+    [SerializeField] private GameObject knapsackPanel;
+    [SerializeField] private GameObject characterStatePanel;
+
+    [Header("TextMeshPro")]
+    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI attackText;
+    public TextMeshProUGUI armorText;
+
     private void Start()
     {
         knapsackUI.RefreshUI();
         actionUI.RefreshUI();
         equipmentUI.RefreshUI();
+        characterBaseInfo = HpPanelManager.Instance.playerStateInfo;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            isOpen = !isOpen;
+            knapsackPanel.SetActive(isOpen);
+            characterStatePanel.SetActive(isOpen);
+        }
+        UpdateCharacterInfo();
     }
 
     public bool CheckKnapsackUI(Vector3 position)
@@ -73,5 +100,13 @@ public class KnapsackManager : SingletonMono<KnapsackManager>
             }
         }
         return false;
+    }
+
+
+    public void UpdateCharacterInfo()
+    {
+        healthText.text = characterBaseInfo.currentHealth.ToString();
+        attackText.text = characterBaseInfo.attack.ToString();
+        armorText.text = characterBaseInfo.defense.ToString();
     }
 }

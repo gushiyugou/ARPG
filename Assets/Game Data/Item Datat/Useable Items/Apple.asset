@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4742d41e6c7448040bfcbae9db45c9f0, type: 3}
-  m_Name: Apple Data
+  m_Name: Apple
   m_EditorClassIdentifier: 
   itemType: 0
   itemName: "\u82F9\u679C"
   itmeCount: 1
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: a184d22a03582344e8351a7ccec11afc, type: 3}
   stackable: 1
   description: "\u542C\u8BF4\u662F\u7838\u4E2D\u8FC7\u725B\u987F\u7684\u82F9\u679C\uFF0C\u98DF\u7528\u540E\u751F\u547D\u503C\u56DE\u590D10"
+  useableItemData: {fileID: 11400000, guid: 086744f713d1a5c4f839075463c70c36, type: 2}
   weaponPrefab: {fileID: 0}

@@ -7,7 +7,7 @@ public enum ItemType
 {
     Useable,
     Weapon,
-    Arrow,
+    Armor,
 }
 [CreateAssetMenu(fileName = "New Item",menuName = "KnapsackSystem/Item Data")]
 public class ItemData_SO : ScriptableObject 
@@ -18,12 +18,21 @@ public class ItemData_SO : ScriptableObject
     public Sprite itemIcon;
     public bool stackable;
 
+    public GameObject itemPrefab;
     [TextArea]
     public string description = "";
 
-    [Header("weapon")]
-    public GameObject weaponPrefab;
-    //TODO:武器数据
+    [Header("Useble Item")]
+    public UseableItemData_SO useableItemData;
 
+    [Header("weapon")]
+    //TODO:武器数据
+    public WeaponItemData_SO weaponItemData;
+
+    //防御数据
+    [Header("armor")]
+    public ArmorItmData_SO armorItemData;
+
+    
 
 }

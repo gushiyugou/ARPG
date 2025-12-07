@@ -48,11 +48,14 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                     break;
                 case SlotType.Weapon:
                     if (currentItemUI.Bag.items[currentItemUI.Index].itemData.itemType == ItemType.Weapon)
+                    {
                         SwapItem();
+                    }
                     break;
                 case SlotType.Armor:
-                    if (currentItemUI.Bag.items[currentItemUI.Index].itemData.itemType == ItemType.Arrow)
+                    if (currentItemUI.Bag.items[currentItemUI.Index].itemData.itemType == ItemType.Armor)
                         SwapItem();
+                    //CharacterStates.Instance.ChangeWeapon(currentItemUI.GetItem());
                     break;
                 case SlotType.Action:
                     if (currentItemUI.Bag.items[currentItemUI.Index].itemData.itemType == ItemType.Useable)
@@ -71,6 +74,7 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void SwapItem()
     {
+        
         var targetItem = targetSlotHolder.itemUI.Bag.items[targetSlotHolder.itemUI.Index];
         var darggingItem = currentSlotHolder.itemUI.Bag.items[currentSlotHolder.itemUI.Index];
 
@@ -84,9 +88,13 @@ public class DragItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
         else
         {
+            
             currentSlotHolder.itemUI.Bag.items[currentSlotHolder.itemUI.Index] = targetItem;
-            targetSlotHolder.itemUI.Bag.items[targetSlotHolder.itemUI.Index] = darggingItem;  
-
+            targetSlotHolder.itemUI.Bag.items[targetSlotHolder.itemUI.Index] = darggingItem;
+            if (targetItem.itemData == null)
+            {
+                CharacterStates.Instance.UnEquipmentWeapon(darggingItem.itemData);
+            }
         }
     }
 }

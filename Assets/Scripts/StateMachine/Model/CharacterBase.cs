@@ -41,24 +41,29 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
     //[SerializeField] private float baseAttackDamage = 10f;
 
 
-    [Header("血条相关")]
+    //[Header("血条相关")]
     public Image HpFillImage;
-    [SerializeField]protected float maxHp;
-    protected float currentHp;
-    protected float CurrentHp
-    {
-        get => currentHp;
-        set
-        {
-            currentHp = value;
-            if(currentHp <= 0)
-            {
-                currentHp = 0;
-                SceneManager.LoadScene(0);
-            }else HpFillImage.fillAmount = currentHp/maxHp;
-        }
-    }
+    //public float maxHp;
+    //public float currentHp;
+    //public float CurrentHp
+    //{
+    //    get => currentHp;
+    //    set
+    //    {
+    //        currentHp = value;
+    //        if (currentHp <= 0)
+    //        {
+    //            currentHp = 0;
+    //            SceneManager.LoadScene(0);
+    //        }
+    //        else HpFillImage.fillAmount = currentHp / maxHp;
+    //    }
+    //}
 
+    //private void Update()
+    //{
+    //    CharacterPanelLogic.Instance.
+    //}
 
 
     #region 武器相关
@@ -69,13 +74,15 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
     #endregion
     public virtual void Init()
     {
-        CurrentHp = maxHp;
+        HpPanelManager.Instance.UpdateFillImage();
         Model.OnInit(this, enemyTagList);
         stateMachine = new StateMachine();
         stateMachine.Init(this);
         _characterController = GetComponent<CharacterController>();
         CanSwitchSkill = true;
     }
+
+
 
 
     #region 技能相关
@@ -541,10 +548,7 @@ public abstract class CharacterBase : MonoBehaviour, IStateMachineOwner, ISkillO
     public abstract bool Hurt(SkillHitData hitData, ISkillOwner hitSource);
 
 
-    public void UpdateHp(SkillHitData hitData)
-    {
-        CurrentHp -= hitData.damageValue;
-    }
+    public abstract void UpdateHp(SkillHitData hitData);
 
     #region 调试部分
     protected void DrawDebugBox(Vector3 center, Vector3 halfExtents, Quaternion rotation, Color color, float duration = 5f)

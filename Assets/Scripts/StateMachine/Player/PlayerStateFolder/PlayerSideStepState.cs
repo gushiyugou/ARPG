@@ -47,7 +47,9 @@ public class PlayerSideStepState : PlayerStateBase
     public override void Update()
     {
         if (isRotate) return;
-        if(CheckAnimatorStateName("Sidestep",out float animTime))
+
+        UpdataGravity();
+        if (CheckAnimatorStateName("Sidestep",out float animTime))
         {
             //if (animTime > 0.5f)
             //{
